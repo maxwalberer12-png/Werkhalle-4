@@ -1,0 +1,16 @@
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Temporary archives (uncomment if you wish to exclude zip backups)
+# *.zip

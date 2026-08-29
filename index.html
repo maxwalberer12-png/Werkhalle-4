@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Werkhalle 4 — Raum für Kunst, Workshops & Kultur | Furth im Wald</title>
+  <meta name="description" content="Kreatives Zentrum im Oberen Bayerischen Wald. Neu interpretiertes Bahngebäude am Lagerplatz 4 in Furth im Wald für zeitgenössische Kunst, Workshops, deutsch-tschechische Kulturresidenzen und Zu Gast im Atelier-Loft.">
+  <meta name="keywords" content="Werkhalle 4, Werkhalle vier, Furth im Wald, Kunstatelier, Kunstworkshops, Zirkusresidenz, Seminarhaus Bayern, Cyanotypie Kurs, Lagerplatz 4, Kulturort">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Werkhalle 4 — Raum für Kunst, Workshops & Kultur">
+  <meta property="og:description" content="Historisches Bahngebäude neu interpretiert. Kunst, offene Werkstatt, Kulturbegegnung und Zu Gast im Atelier-Loft.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/images/stephanie_heiduk_atelier.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="site-header">
+    <div class="container nav-inner">
+      <a href="#" class="brand-logo" aria-label="Werkhalle 4 Startseite">
+        <span class="brand-name">Werkhalle 4</span>
+        <span class="brand-tagline">Furth im Wald</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Hauptnavigation">
+        <ul class="nav-links">
+          <li><a href="#ort" class="nav-link">Der Ort</a></li>
+          <li><a href="#workshops" class="nav-link">Workshops</a></li>
+          <li><a href="#residenzen" class="nav-link">Residenzen & Kultur</a></li>
+          <li><a href="#galerie" class="nav-link">Galerie</a></li>
+          <li><a href="#zugast" class="nav-link">Zu Gast</a></li>
+          <li><a href="#kontakt" class="nav-link">Kontakt</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn btn-secondary" data-open-modal="inquiry" data-inquiry-type="allgemein">
+          Anfrage senden
+        </button>
+        <button class="mobile-toggle" aria-label="Menü öffnen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer">
+    <ul class="mobile-nav-links">
+      <li><a href="#ort" class="mobile-nav-link">Der Ort</a></li>
+      <li><a href="#workshops" class="mobile-nav-link">Workshops & Kurse</a></li>
+      <li><a href="#residenzen" class="mobile-nav-link">Residenzen & Kultur</a></li>
+      <li><a href="#galerie" class="mobile-nav-link">Galerie & Kunst</a></li>
+      <li><a href="#zugast" class="mobile-nav-link">Zu Gast im Loft</a></li>
+      <li><a href="#kontakt" class="mobile-nav-link">Kontakt & Anfragen</a></li>
+    </ul>
+    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+      <button class="btn btn-primary" data-open-modal="inquiry" data-inquiry-type="allgemein" style="width: 100%;">
+        Anfrage stellen
+      </button>
+      <p style="font-size: 0.75rem; color: var(--color-ink-500); text-align: center; text-transform: uppercase; letter-spacing: 0.08em;">
+        Werkhalle 4 · Lagerplatz 4 · Furth im Wald
+      </p>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       HERO SECTION: CINEMATIC SCROLL EXPAND & INTERACTIVE TEXT PRESSURE STAGE
+       ========================================================================== -->
+  <section class="hero-section" id="start">
+    <!-- Cinematic ScrollExpand Visual Stage (React Bits Architecture) -->
+    <div class="hero-scroll-expand-container">
+      <div class="scroll-expand" id="hero-scroll-expand">
+        <div class="scroll-expand__track">
+          <div class="scroll-expand__stage">
+            <div class="scroll-expand__frame">
+              <img src="assets/images/werkhalle_hero_building.jpg" alt="Werkhalle 4 — Historisches Bahngebäude am Lagerplatz 4" class="scroll-expand__media" loading="eager" draggable="false">
+              
+              <div class="scroll-expand__scrim"></div>
+
+              <div class="scroll-expand__overlay">
+                <div class="hero-float-badge-top">
+                  <span style="display:inline-block; width:6px; height:6px; background:var(--color-sand); border-radius:50%;"></span>
+                  <span>Bahnareal 1898 · Neu interpretiert</span>
+                </div>
+
+                <div class="hero-float-card-bottom">
+                  <div class="hero-float-info">
+                    <h3>Werkhalle 4 · Atelier & Kulturresidenz</h3>
+                    <p>Stephanie Heiduk · Lagerplatz 4 · 93437 Furth im Wald</p>
+                  </div>
+                  
+                  <div class="hero-quick-chips">
+                    <a href="#workshops" class="hero-chip">Cyanotypie & Kunst</a>
+                    <a href="#residenzen" class="hero-chip">Zirkus-Residenz</a>
+                    <a href="#zugast" class="hero-chip">Atelier-Loft</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="scroll-expand__title">
+              <div id="hero-split-flap" class="hero-split-flap-wrapper"></div>
+              <span class="scroll-expand__title-subtitle">Raum für Kunst, Workshops & Kultur</span>
+            </div>
+
+            <div class="scroll-expand__hint">
+              <span class="scroll-expand__hint-badge">
+                <span>Scrollen zum Eintauchen</span>
+                <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M8 2v12M3 9l5 5 5-5"/>
+                </svg>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Key Metrics Strip -->
+      <div class="hero-metrics-strip">
+        <div class="hero-metric-item">
+          <span class="hero-metric-value">1898</span>
+          <span class="hero-metric-label">Historischer Ursprung</span>
+        </div>
+        <div class="hero-metric-item">
+          <span class="hero-metric-value">30 Jahre</span>
+          <span class="hero-metric-label">Kunsterfahrung</span>
+        </div>
+        <div class="hero-metric-item">
+          <span class="hero-metric-value">Bayern & Böhmen</span>
+          <span class="hero-metric-label">Kulturaustausch</span>
+        </div>
+        <div class="hero-metric-item">
+          <span class="hero-metric-value">4.98 ★</span>
+          <span class="hero-metric-label">Superhost Loft</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       EDITORIAL PRESS & RECOGNITION STRIP (WERKGUT ELEGANCE)
+       ========================================================================== -->
+  <section class="editorial-press-section">
+    <div class="container">
+      <div class="press-grid">
+        <div class="press-card">
+          <p class="press-quote-text">„Wo Furth im Wald ein bisschen wie die Hauptstadt wirkt.“</p>
+          <span class="press-source-tag">idowa Magazin</span>
+        </div>
+
+        <div class="press-card">
+          <p class="press-quote-text">„Vom Lost Place zum lebendigen Treffpunkt für Kunst und Kultur.“</p>
+          <span class="press-source-tag">Regionalberichterstattung Cham</span>
+        </div>
+
+        <div class="press-card">
+          <p class="press-quote-text">„Deutsch-tschechische Kultur- und Zirkus-Residency im Grenzraum.“</p>
+          <span class="press-source-tag">Kultur & Grenzland</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 2: DER ORT & DIE GESCHICHTE (HANDCRAFTED EDITORIAL COMPOSITION)
+       ========================================================================== -->
+  <section class="section section-subtle" id="ort">
+    <div class="container">
+      <div class="story-editorial-wrapper">
+        <!-- Left: Handcrafted Layered Visuals -->
+        <div class="story-visual-stage">
+          <div class="story-visual-primary">
+            <img src="assets/images/werkhalle_entstehung_presse.jpg" alt="Stephanie Heiduk in der Entstehungsphase der Werkhalle 4" loading="lazy">
+          </div>
+          <div class="story-visual-secondary">
+            <img src="assets/images/airbnb_01_wohnbereich_kamin.jpeg" alt="Kamin-Salon und Interieur" loading="lazy">
+          </div>
+        </div>
+
+        <!-- Right: Storytelling & Facts -->
+        <div class="story-text-stage">
+          <span class="eyebrow">Der Ursprung · Lagerplatz 4</span>
+          <h2 class="heading-xl" style="margin-bottom: var(--space-xs);">
+            Vom Lost Place zum Freiraum für Ideen.
+          </h2>
+
+          <div class="story-highlight-facts">
+            <span class="story-fact">30 Jahre Kunsterfahrung</span>
+            <span class="story-fact">Historisches Bahnareal</span>
+            <span class="story-fact">Atelier & Residenzen</span>
+          </div>
+
+          <p style="color: var(--color-ink-700); margin-bottom: var(--space-sm); font-size: 1.05rem;">
+            Nach über 30 Jahren vielschichtiger Erfahrungen in der Kunst- und Gestaltungswelt kehrte Stephanie Heiduk in ihre Heimatstadt Furth im Wald zurück. Am Lagerplatz 4 erwarb sie das ehemalige, marode Gewerbe- und Bahngebäude und verwandelte es eigenhändig in ein lebendiges Zentrum für Kunst, Workshops und Begegnung.
+          </p>
+
+          <p style="color: var(--color-ink-600); margin-bottom: var(--space-md); font-size: 0.9375rem;">
+            Inspiriert von traditionsreichen Werk- und Gutshöfen (wie dem <em>werkgut</em>) ist die Werkhalle 4 ein Ort des Machens. Sichtbares Backsteinmauerwerk, hohe Decken und massives Holz treten in einen Dialog mit zeitgenössischer Kunst und bieten Weite für konzentriertes Arbeiten.
+          </p>
+
+          <div class="story-quote-block">
+            <p>„Ein Ort für alle, die mit den Händen schaffen, Neues lernen oder in inspirierender Umgebung zur Ruhe kommen wollen.“</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 3: WORKSHOPS & KURSE
+       ========================================================================== -->
+  <section class="section" id="workshops">
+    <div class="container">
+      <div style="max-width: 720px; margin-bottom: var(--space-xl);">
+        <span class="eyebrow">Handwerk & Kreation</span>
+        <h2 class="heading-xl">Workshops in der Werkhalle 4</h2>
+        <p class="lead-text" style="margin-top: 6px;">
+          Unter Anleitung erfahrener Gestalter oder in freier Werkstattarbeit: Nimm dir Zeit für handwerkliche Vertiefung und künstlerische Prozesse.
+        </p>
+      </div>
+
+      <div class="workshops-overview-grid">
+        <!-- Cyanotypie -->
+        <article class="workshop-card">
+          <div class="workshop-card-media">
+            <img src="assets/images/stephanie_heiduk_portrait.jpg" alt="Cyanotypie & Botanischer Blaudruck" loading="lazy">
+            <span class="workshop-card-badge">Fotogramm & Natur</span>
+          </div>
+          <div class="workshop-card-body">
+            <h3>Cyanotypie: Bilder aus Pflanzen & Licht</h3>
+            <p>
+              Historisches Edeldruckverfahren: Mit gesammelten Pflanzen, UV-Licht und mineralischen Emulsionen entstehen unverwechselbare preußischblaue Unikate.
+            </p>
+            <div class="workshop-card-footer">
+              <span style="font-size: 0.8125rem; color: var(--color-ink-500);">Tages- & Wochenendkurse</span>
+              <button class="btn btn-subtle" data-open-modal="inquiry" data-inquiry-type="cyanotypie">
+                Termin anfragen
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Asiatische Blumenkunst -->
+        <article class="workshop-card">
+          <div class="workshop-card-media">
+            <img src="assets/images/pressebild_blumenkunst.jpg" alt="Asiatische Blumenkunst und Ikebana" loading="lazy">
+            <span class="workshop-card-badge">Objektkunst</span>
+          </div>
+          <div class="workshop-card-body">
+            <h3>Asiatische Blumenkunst & Florale Plastik</h3>
+            <p>
+              Form, Linie und Reduktion: Gestaltungskurse nach asiatischen Prinzipien und experimenteller Objektkunst mit Naturmaterialien.
+            </p>
+            <div class="workshop-card-footer">
+              <span style="font-size: 0.8125rem; color: var(--color-ink-500);">Saisonale Termine</span>
+              <button class="btn btn-subtle" data-open-modal="inquiry" data-inquiry-type="blumenkunst">
+                Termin anfragen
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Team-Klausuren & Denkwerkstatt -->
+        <article class="workshop-card">
+          <div class="workshop-card-media">
+            <img src="assets/images/airbnb_02_essbereich.jpeg" alt="Massiver Konferenztisch für Teamklausuren" loading="lazy">
+            <span class="workshop-card-badge">Klausuren & Retreats</span>
+          </div>
+          <div class="workshop-card-body">
+            <h3>Team-Klausuren & Denkwerkstatt</h3>
+            <p>
+              Rückzugsort für Arbeitsgruppen, Agenturen und Initiativen. Der massive 8-Personen-Tisch und die Werk-Küche bieten die perfekte Klausur-Infrastruktur.
+            </p>
+            <div class="workshop-card-footer">
+              <span style="font-size: 0.8125rem; color: var(--color-ink-500);">Individuelle Zeiträume</span>
+              <button class="btn btn-subtle" data-open-modal="inquiry" data-inquiry-type="team-klausur">
+                Raumnutzung anfragen
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div style="margin-top: var(--space-2xl); padding: var(--space-xl); background: var(--color-canvas-subtle); border-radius: var(--radius-md); border: var(--border-hairline); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: var(--space-md);">
+        <div>
+          <h4 style="font-size: 1.15rem; font-weight: 600; margin-bottom: 2px;">Eigene Kurse & Formate anbieten?</h4>
+          <p style="font-size: 0.875rem; color: var(--color-ink-600);">Wir freuen uns über Dozenten, Künstler und Trainer, die unsere Räume für Seminare nutzen möchten.</p>
+        </div>
+        <button class="btn btn-primary" data-open-modal="inquiry" data-inquiry-type="kursleiter">
+          Als Kursleiter anfragen
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 4: KULTURRESIDENZEN & ZIRKUS (BAYERN & BÖHMEN)
+       ========================================================================== -->
+  <section class="section section-subtle" id="residenzen">
+    <div class="container">
+      <div class="residency-grid">
+        <div>
+          <span class="eyebrow">Grenzüberschreitende Residenzen</span>
+          <h2 class="heading-xl" style="margin-bottom: var(--space-md);">
+            Kulturbrücke Bayern & Böhmen
+          </h2>
+          <p style="color: var(--color-ink-700); margin-bottom: var(--space-md); font-size: 1rem;">
+            Die Werkhalle 4 ist regelmäßiger Schauplatz grenzüberschreitender Kulturresidenzen. Unter anderem verwandelt sich die Halle für die deutsch-tschechische Zirkus-Residenz in einen lebendigen Proben- und Austauschort.
+          </p>
+
+          <ul class="residency-list">
+            <li class="residency-item">
+              <span class="residency-index">01</span>
+              <div class="residency-details">
+                <h4>Zirkus-Residenz & Fire & Flow</h4>
+                <p>Zeitgenössischer Zirkus, Akrobatik und Feuershows in Zusammenarbeit mit Künstlern aus Bayern und Tschechien (z. B. Los Cirkulos).</p>
+              </div>
+            </li>
+            <li class="residency-item">
+              <span class="residency-index">02</span>
+              <div class="residency-details">
+                <h4>Artists in Residence</h4>
+                <p>Arbeitsaufenthalte für bildende Künstler, Bildhauer und Autoren mit freiem Zugang zu Atelier- und Werkstattflächen.</p>
+              </div>
+            </li>
+            <li class="residency-item">
+              <span class="residency-index">03</span>
+              <div class="residency-details">
+                <h4>Sommerabende & Werkschauen</h4>
+                <p>Öffentliche Werkstattgespräche, Proben-Einblicke und Begegnungsabende für Besucher aus der Region.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div style="position: relative;">
+          <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); aspect-ratio: 4/3.2;">
+            <img src="assets/images/residenz_treffpunkt_kuenstler.jpg" alt="Künstler und Besucher bei der Residenz in der Werkhalle 4" loading="lazy">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 5: GALERIE & RAUMEINBLICKE
+       ========================================================================== -->
+  <section class="section" id="galerie">
+    <div class="container">
+      <div class="gallery-header">
+        <div>
+          <span class="eyebrow">Raum & Kunst</span>
+          <h2 class="heading-xl">Galerie der Werkhalle 4</h2>
+          <p style="color: var(--color-ink-600); margin-top: 4px;">Klicke auf eine Aufnahme für Großansicht und Werkdetails.</p>
+        </div>
+
+        <div class="gallery-filters">
+          <button class="filter-btn active" data-filter="all">Alle Einblicke</button>
+          <button class="filter-btn" data-filter="kunst">Kunst & Residenz</button>
+          <button class="filter-btn" data-filter="raum">Räume & Architektur</button>
+        </div>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item span-8" data-category="kunst" data-title="Künstlerbegegnung Werkhalle 4" data-desc="Austausch und Probenarbeit von Künstlern aus Bayern und Tschechien während der Zirkus-Residency.">
+          <img src="assets/images/residenz_treffpunkt_kuenstler.jpg" alt="Künstlergruppe Werkhalle 4" loading="lazy">
+          <div class="gallery-overlay">
+            <span class="gallery-overlay-title">Kulturresidenz</span>
+            <span class="gallery-overlay-desc">Deutsch-Tschechischer Kulturaustausch</span>
+          </div>
+        </div>
+
+        <div class="gallery-item span-4" data-category="kunst" data-title="Florale Installation" data-desc="Asiatische Blumenkunst und florale Skulptur in den Hallenräumen.">
+          <img src="assets/images/pressebild_blumenkunst.jpg" alt="Florale Kunstinstallation" loading="lazy">
+          <div class="gallery-overlay">
+            <span class="gallery-overlay-title">Florale Skulptur</span>
+            <span class="gallery-overlay-desc">Asiatische Blumenkunst</span>
+          </div>
+        </div>
+
+        <div class="gallery-item span-4" data-category="raum" data-title="Kaminlounge & Salon" data-desc="Wohnbereich mit Kaminofen, botanischer Wandgestaltung und Designermöbeln.">
+          <img src="assets/images/airbnb_01_wohnbereich_kamin.jpeg" alt="Kaminbereich Werkhalle 4" loading="lazy">
+          <div class="gallery-overlay">
+            <span class="gallery-overlay-title">Kaminlounge</span>
+            <span class="gallery-overlay-desc">Zentraler Treffpunkt</span>
+          </div>
+        </div>
+
+        <div class="gallery-item span-4" data-category="raum" data-title="Die Tafel & Essbereich" data-desc="Massiver Holztisch für gemeinsame Mahlzeiten, Kursrunden und Workshops.">
+          <img src="assets/images/airbnb_02_essbereich.jpeg" alt="Großer Holztisch im Essbereich" loading="lazy">
+          <div class="gallery-overlay">
+            <span class="gallery-overlay-title">Die Tafel</span>
+            <span class="gallery-overlay-desc">Gemeinsamer Arbeits- und Essplatz</span>
+          </div>
+        </div>
+
+        <div class="gallery-item span-4" data-category="raum" data-title="Werk-Küche mit Backstein" data-desc="Voll ausgestattete Küche mit historischem Sichtmauerwerk.">
+          <img src="assets/images/airbnb_03_kueche.jpeg" alt="Küche mit Backsteinwand" loading="lazy">
+          <div class="gallery-overlay">
+            <span class="gallery-overlay-title">Werk-Küche</span>
+            <span class="gallery-overlay-desc">Backstein & Holzarbeitsplatte</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 6: ZU GAST SEIN (WOHNEN IM ATELIER-LOFT)
+       ========================================================================== -->
+  <section class="section section-subtle" id="zugast">
+    <div class="container">
+      <div class="lodging-card">
+        <div class="lodging-content">
+          <span class="eyebrow">Zu Gast in der Werkhalle</span>
+          <h2 class="heading-xl" style="margin-bottom: var(--space-md);">
+            Wohnen im Atelier-Loft
+          </h2>
+          <p style="color: var(--color-ink-700); font-size: 1rem; margin-bottom: var(--space-md);">
+            Für Kursteilnehmer, Künstler in Residenz, kleine Teams oder Ruhesuchende steht die gesamte Werkhalle als privates Atelier-Loft zur Verfügung. 
+          </p>
+          <p style="color: var(--color-ink-600); font-size: 0.875rem;">
+            Hier verbindet sich der Charakter des ehemaligen Bahngebäudes mit zeitgenössischer Kunst, Kaminwärme und erholsamer Stille im Oberen Bayerischen Wald.
+          </p>
+
+          <div class="lodging-specs">
+            <div class="spec-item">
+              <span class="spec-title">Kapazität</span>
+              <span class="spec-val">Bis 6 Personen</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-title">Schlafräume</span>
+              <span class="spec-val">4 Bereiche / 3 Betten</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-title">Ausstattung</span>
+              <span class="spec-val">Kamin & Werk-Küche</span>
+            </div>
+            <div class="spec-item">
+              <span class="spec-title">Check-in</span>
+              <span class="spec-val">Schlüsselbox (flexibel)</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center;">
+            <button class="btn btn-primary" data-open-modal="inquiry" data-inquiry-type="unterkunft">
+              Direktanfrage für Aufenthalt
+            </button>
+            <a href="https://www.airbnb.de/rooms/51856910" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="font-size: 0.8125rem;">
+              Auch auf Airbnb buchbar (Superhost 4.98★) ↗
+            </a>
+          </div>
+        </div>
+
+        <div class="lodging-media">
+          <img src="assets/images/airbnb_04_schlafzimmer_blau.jpeg" alt="Blaues Schlafzimmer im Atelier-Loft" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 7: STIMMEN & FEEDBACK (WERKGUT STIL)
+       ========================================================================== -->
+  <section class="section">
+    <div class="container">
+      <div style="text-align: center; max-width: 600px; margin: 0 auto var(--space-xl);">
+        <span class="eyebrow">Erfahrungen</span>
+        <h2 class="heading-xl">Was Teilnehmende & Gäste sagen</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-quote">
+            „Ein inspirierender Ort, der den Geist öffnet. Die Kunst an den Wänden und das Licht in der Halle schaffen eine ganz eigene, beruhigende Atmosphäre.“
+          </p>
+          <div class="testimonial-author">
+            <span class="testimonial-name">Katharina W.</span>
+            <span class="testimonial-role">Workshop-Teilnehmerin</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-quote">
+            „Wir haben hier mit unserem Kreativ-Team drei Tage gearbeitet. Der riesige Tisch, die Küche und der Kamin waren perfekt für intensiven Austausch.“
+          </p>
+          <div class="testimonial-author">
+            <span class="testimonial-name">Julian & Team</span>
+            <span class="testimonial-role">Design-Klausur</span>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-quote">
+            „Das Loft ist mit so viel Hingabe und Detailgefühl gestaltet. Ein absolutes Highlight in Furth im Wald — wir kommen definitiv wieder.“
+          </p>
+          <div class="testimonial-author">
+            <span class="testimonial-name">Marc & Familie</span>
+            <span class="testimonial-role">Loft-Gäste</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SECTION 8: KONTAKT & RAUMANFRAGE
+       ========================================================================== -->
+  <section class="section section-dark" id="kontakt">
+    <div class="container container-narrow" style="text-align: center;">
+      <span class="eyebrow" style="color: var(--color-sand);">Kontakt & Dialog</span>
+      <h2 class="heading-xl" style="color: #FFFFFF; margin-bottom: var(--space-sm);">
+        Tritt mit der Werkhalle 4 in Verbindung
+      </h2>
+      <p class="lead-text" style="color: #B5B0A2; margin-bottom: var(--space-xl);">
+        Ob für Workshop-Teilnahmen, Gastresidenzen, private Klausuren oder allgemeine Fragen zum Haus — wir freuen uns auf deine Nachricht.
+      </p>
+      <button class="btn btn-primary" style="background: #FFFFFF; color: var(--color-ink-950); border-color: #FFFFFF;" data-open-modal="inquiry" data-inquiry-type="allgemein">
+        Nachricht oder Anfrage senden
+      </button>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SITE FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <h3>Werkhalle 4</h3>
+          <p>
+            Historisches Bahngebäude neu interpretiert. Raum für Kunst, Workshops, Kulturprojekte und Wohnen in Furth im Wald.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Bereiche</h4>
+          <ul class="footer-links">
+            <li><a href="#ort" class="footer-link">Der Ort & Historie</a></li>
+            <li><a href="#workshops" class="footer-link">Workshops & Kurse</a></li>
+            <li><a href="#residenzen" class="footer-link">Residenzen & Kultur</a></li>
+            <li><a href="#galerie" class="footer-link">Galerie</a></li>
+            <li><a href="#zugast" class="footer-link">Zu Gast im Loft</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Verbindungen</h4>
+          <ul class="footer-links">
+            <li><a href="https://www.instagram.com/werkhalle_4/" target="_blank" rel="noopener noreferrer" class="footer-link">Instagram (@werkhalle_4)</a></li>
+            <li><a href="https://www.airbnb.de/rooms/51856910" target="_blank" rel="noopener noreferrer" class="footer-link">Airbnb Inserat</a></li>
+            <li><a href="https://www.werkgut.eu" target="_blank" rel="noopener noreferrer" class="footer-link">Referenz: werkgut.eu</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Standort</h4>
+          <p style="font-size: 0.875rem; color: #9C988E; margin-bottom: var(--space-sm);">
+            Werkhalle 4<br>
+            Lagerplatz 4<br>
+            93437 Furth im Wald<br>
+            Oberer Bayerischer Wald
+          </p>
+          <button class="btn btn-secondary" style="border-color: rgba(255,255,255,0.2); color: #FFFFFF; font-size: 0.75rem; padding: 6px 14px;" data-open-modal="inquiry" data-inquiry-type="allgemein">
+            Direkt schreiben
+          </button>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 Werkhalle 4. Alle Rechte vorbehalten.
+        </div>
+        <div style="display: flex; gap: var(--space-md);">
+          <a href="admin.html" class="footer-link" style="color: var(--color-terracotta);">Admin-Bereich</a>
+          <a href="#" class="footer-link">Impressum</a>
+          <a href="#" class="footer-link">Datenschutz</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL: INQUIRY (WORKSHOPS, RESIDENZEN, RAUMMIETE, WOHNEN)
+       ========================================================================== -->
+  <div class="modal-backdrop" id="inquiry-modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="inquiry-modal-close" aria-label="Schließen">✕</button>
+
+      <span class="eyebrow">Werkhalle 4</span>
+      <h3 class="heading-lg" style="margin-bottom: var(--space-2xs);">Anfrage senden</h3>
+      <p style="color: var(--color-ink-600); font-size: 0.875rem; margin-bottom: var(--space-lg);">
+        Schreibe uns unverbindlich zu Workshops, Ateliernutzung, Residenzen oder einem Aufenthalt.
+      </p>
+
+      <form id="inquiry-form">
+        <div class="form-group">
+          <label for="inquiry-name">Name / Organisation *</label>
+          <input type="text" id="inquiry-name" required placeholder="Vor- und Nachname">
+        </div>
+
+        <div class="form-group">
+          <label for="inquiry-email">E-Mail-Adresse *</label>
+          <input type="email" id="inquiry-email" required placeholder="name@beispiel.de">
+        </div>
+
+        <div class="form-group">
+          <label for="inquiry-type">Bereich</label>
+          <select id="inquiry-type">
+            <option value="allgemein">Allgemeine Anfrage</option>
+            <option value="cyanotypie">Cyanotypie-Workshop</option>
+            <option value="blumenkunst">Asiatische Blumenkunst</option>
+            <option value="kursleiter">Eigener Workshop / Kursleiter</option>
+            <option value="residenz">Kultur-Residenz / Zirkus</option>
+            <option value="team-klausur">Team-Klausur / Raumnutzung</option>
+            <option value="unterkunft">Zu Gast im Atelier-Loft</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="inquiry-message">Ihre Nachricht / Zeitraum *</label>
+          <textarea id="inquiry-message" required placeholder="Beschreiben Sie kurz Ihr Vorhaben, gewünschte Termine oder Personenanzahl..."></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: var(--space-sm);">
+          Anfrage absenden
+        </button>
+
+        <div id="inquiry-success" style="display: none; margin-top: var(--space-md); padding: 12px; border-radius: var(--radius-xs); background: #E8F5E9; color: #2E7D32; font-size: 0.875rem; text-align: center;">
+          Vielen Dank! Ihre Nachricht wurde erfolgreich übermittelt.
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: LIGHTBOX
+       ========================================================================== -->
+  <div class="modal-backdrop lightbox-modal" id="gallery-lightbox" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="lightbox-close" style="background: rgba(255,255,255,0.12); color: #FFFFFF;" aria-label="Schließen">✕</button>
+      <div class="lightbox-img-wrapper">
+        <img id="lightbox-img" src="" alt="Großansicht">
+      </div>
+      <div class="lightbox-caption">
+        <div>
+          <h4 id="lightbox-title" style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 2px;"></h4>
+          <p id="lightbox-desc" style="color: #AAA69C; font-size: 0.8125rem;"></p>
+        </div>
+        <span style="font-size: 0.75rem; color: #6E6B63;">[Esc] Schließen · [←] [→] Blättern</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/ScrollExpand.js"></script>
+  <script src="js/SplitFlapText.js"></script>
+  <script src="js/TextPressure.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

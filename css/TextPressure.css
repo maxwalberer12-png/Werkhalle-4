@@ -1,0 +1,63 @@
+/* ==========================================================================
+   TEXT PRESSURE COMPONENT STYLES (React Bits / Variable Font Pressure)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght,slnt@8..144,25..151,100..1000,-10..0&display=swap');
+
+.text-pressure-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.text-pressure-title {
+  font-family: 'Roboto Flex', var(--font-serif, sans-serif);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  user-select: none;
+  white-space: nowrap;
+  font-weight: 200;
+  width: 100%;
+  color: #FFFFFF;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
+  will-change: transform;
+}
+
+.text-pressure-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.text-pressure-char {
+  display: inline-block;
+  color: inherit;
+  will-change: font-variation-settings, transform, opacity;
+  transition: transform 0.05s ease-out;
+}
+
+.text-pressure-stroke span {
+  position: relative;
+  color: #FFFFFF;
+}
+
+.text-pressure-stroke span::after {
+  content: attr(data-char);
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: transparent;
+  z-index: -1;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: var(--color-terracotta, #C46D4E);
+}

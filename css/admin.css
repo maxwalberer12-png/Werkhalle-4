@@ -1,0 +1,370 @@
+/* ==========================================================================
+   WERKHALLE 4 — ADMIN CMS PANEL STYLESHEET
+   Linear / Apple Inspired Minimalist Dashboard
+   ========================================================================== */
+
+@import url('tokens.css');
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #0F0F0E;
+  color: #E8E6E1;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+}
+
+/* --------------------------------------------------------------------------
+   1. SIDEBAR NAVIGATION
+   -------------------------------------------------------------------------- */
+.admin-sidebar {
+  width: 260px;
+  background-color: #161615;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-lg);
+  flex-shrink: 0;
+  height: 100vh;
+  position: sticky;
+  top: 0;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+}
+
+.admin-brand-badge {
+  background: var(--color-terracotta);
+  color: #FFF;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--radius-xs);
+  text-transform: uppercase;
+}
+
+.admin-nav {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-nav-item button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #A3A096;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all var(--transition-fast);
+}
+
+.admin-nav-item button:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #FFF;
+}
+
+.admin-nav-item button.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFF;
+  font-weight: 600;
+}
+
+.admin-nav-badge {
+  margin-left: auto;
+  background: rgba(255, 255, 255, 0.12);
+  color: #E8E6E1;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+/* --------------------------------------------------------------------------
+   2. MAIN CONTENT AREA
+   -------------------------------------------------------------------------- */
+.admin-main {
+  flex: 1;
+  padding: clamp(24px, 4vw, 48px);
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-2xl);
+  padding-bottom: var(--space-lg);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.admin-title h1 {
+  font-family: var(--font-sans);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #FFF;
+}
+
+.admin-title p {
+  font-size: 0.875rem;
+  color: #8C8980;
+}
+
+.admin-actions-bar {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+/* --------------------------------------------------------------------------
+   3. PANELS & SECTIONS
+   -------------------------------------------------------------------------- */
+.admin-tab-pane {
+  display: none;
+}
+
+.admin-tab-pane.active {
+  display: block;
+  animation: fadeIn 0.25s ease;
+}
+
+.admin-card {
+  background-color: #161615;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.admin-card-header h3 {
+  font-family: var(--font-sans);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #FFF;
+}
+
+/* --------------------------------------------------------------------------
+   4. DATA TABLES & LISTS
+   -------------------------------------------------------------------------- */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px 16px;
+  color: #7E7B73;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+}
+
+.admin-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  color: #D8D5CC;
+  vertical-align: middle;
+}
+
+.admin-table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.table-img-thumb {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-xs);
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   5. FORMS & INPUTS
+   -------------------------------------------------------------------------- */
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-lg);
+}
+
+.admin-form-full {
+  grid-column: span 2;
+}
+
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: var(--space-md);
+}
+
+.admin-form-group label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #A3A096;
+}
+
+.admin-form-group input,
+.admin-form-group select,
+.admin-form-group textarea {
+  padding: 10px 14px;
+  background-color: #21211F;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-sm);
+  color: #FFF;
+  font-size: 0.875rem;
+  transition: border-color var(--transition-fast);
+}
+
+.admin-form-group input:focus,
+.admin-form-group select:focus,
+.admin-form-group textarea:focus {
+  outline: none;
+  border-color: var(--color-terracotta);
+  background-color: #272724;
+}
+
+.admin-btn {
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.admin-btn-primary {
+  background-color: #FFF;
+  color: #141413;
+}
+
+.admin-btn-primary:hover {
+  background-color: #E2DFD7;
+}
+
+.admin-btn-terracotta {
+  background-color: var(--color-terracotta);
+  color: #FFF;
+}
+
+.admin-btn-terracotta:hover {
+  background-color: var(--color-terracotta-hover);
+}
+
+.admin-btn-danger {
+  background-color: rgba(220, 53, 69, 0.15);
+  color: #FF6B7A;
+  border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+.admin-btn-danger:hover {
+  background-color: #DC3545;
+  color: #FFF;
+}
+
+.admin-btn-outline {
+  background-color: transparent;
+  color: #D8D5CC;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.admin-btn-outline:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-color: #FFF;
+}
+
+/* --------------------------------------------------------------------------
+   6. GALLERY GRID MANAGER
+   -------------------------------------------------------------------------- */
+.admin-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-md);
+}
+
+.admin-gallery-card {
+  background-color: #21211F;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  position: relative;
+}
+
+.admin-gallery-card-img {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.admin-gallery-card-body {
+  padding: var(--space-sm);
+}
+
+.admin-gallery-card-body h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #FFF;
+  margin-bottom: 2px;
+}
+
+.admin-gallery-card-body p {
+  font-size: 0.75rem;
+  color: #8C8980;
+}
+
+.admin-gallery-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  margin-top: var(--space-xs);
+}
+
+/* Toast Notifications */
+.admin-toast {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  background: #2E7D32;
+  color: #FFF;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-float);
+  z-index: var(--z-toast);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all var(--transition-fast);
+}
+
+.admin-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Werkhalle 4 — CMS Admin Panel</title>
+  <meta name="robots" content="noindex,nofollow">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       SIDEBAR
+       ========================================================================== -->
+  <aside class="admin-sidebar">
+    <div>
+      <div class="admin-brand">
+        <span class="admin-brand-badge">CMS</span>
+        <div>
+          <h2 style="font-size: 1.05rem; font-weight: 700; color: #FFF; line-height: 1;">Werkhalle 4</h2>
+          <span style="font-size: 0.75rem; color: #8C8980;">Verwaltung & Events</span>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="admin-nav">
+          <li class="admin-nav-item">
+            <button class="admin-nav-btn active" data-target="pane-workshops">
+              <span>Workshops & Kurse</span>
+            </button>
+          </li>
+          <li class="admin-nav-item">
+            <button class="admin-nav-btn" data-target="pane-residencies">
+              <span>Residenzen & Kultur</span>
+            </button>
+          </li>
+          <li class="admin-nav-item">
+            <button class="admin-nav-btn" data-target="pane-gallery">
+              <span>Galerie & Medien</span>
+            </button>
+          </li>
+          <li class="admin-nav-item">
+            <button class="admin-nav-btn" data-target="pane-inquiries">
+              <span>Anfragen</span>
+              <span class="admin-nav-badge" id="nav-inquiries-count">Live</span>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div style="padding-top: var(--space-lg); border-top: 1px solid rgba(255, 255, 255, 0.08);">
+      <a href="index.html" target="_blank" class="admin-btn admin-btn-outline" style="width: 100%; justify-content: center;">
+        Live-Website öffnen ↗
+      </a>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       MAIN CONTENT
+       ========================================================================== -->
+  <main class="admin-main">
+    <header class="admin-header">
+      <div class="admin-title">
+        <h1>Content Management</h1>
+        <p>Verwalte Workshops, Veranstaltungen, Galeriebilder und Kundenanfragen in Echtzeit.</p>
+      </div>
+
+      <div class="admin-actions-bar">
+        <button class="admin-btn admin-btn-outline" onclick="location.reload()">Aktualisieren</button>
+      </div>
+    </header>
+
+    <!-- ------------------------------------------------------------------------
+         PANE 1: WORKSHOPS & KURSE
+         ------------------------------------------------------------------------ -->
+    <section class="admin-tab-pane active" id="pane-workshops">
+      <!-- Create / Edit Form -->
+      <div class="admin-card" id="workshop-form-card">
+        <div class="admin-card-header">
+          <h3 id="ws-form-title">Neuen Workshop anlegen</h3>
+          <button class="admin-btn admin-btn-outline" id="ws-cancel-btn" style="display: none;">Abbrechen</button>
+        </div>
+
+        <form id="workshop-form">
+          <input type="hidden" id="ws-id">
+
+          <div class="admin-form-grid">
+            <div class="admin-form-group">
+              <label for="ws-title">Titel des Workshops *</label>
+              <input type="text" id="ws-title" required placeholder="z. B. Cyanotypie: Bilder aus Pflanzen & Licht">
+            </div>
+
+            <div class="admin-form-group">
+              <label for="ws-category">Kategorie / Badge *</label>
+              <input type="text" id="ws-category" required placeholder="z. B. Fotogramm & Natur / Malerei / Handwerk">
+            </div>
+
+            <div class="admin-form-group">
+              <label for="ws-format">Zeitraum / Format *</label>
+              <input type="text" id="ws-format" required placeholder="z. B. Tages- & Wochenendkurse / 24.–26. Okt">
+            </div>
+
+            <div class="admin-form-group">
+              <label for="ws-image">Bild-Pfad oder URL</label>
+              <select id="ws-image">
+                <option value="assets/images/stephanie_heiduk_portrait.jpg">Stephanie Heiduk Porträt / Atelier</option>
+                <option value="assets/images/pressebild_blumenkunst.jpg">Asiatische Blumenkunst / Ikebana</option>
+                <option value="assets/images/airbnb_02_essbereich.jpeg">Die Tafel (8-Personen Holztisch)</option>
+                <option value="assets/images/residenz_treffpunkt_kuenstler.jpg">Zirkus- & Künstlergruppe</option>
+                <option value="assets/images/airbnb_01_wohnbereich_kamin.jpeg">Kaminlounge & Salon</option>
+                <option value="assets/images/airbnb_03_kueche.jpeg">Werk-Küche mit Backstein</option>
+              </select>
+            </div>
+
+            <div class="admin-form-group admin-form-full">
+              <label for="ws-description">Beschreibung & Kursdetails *</label>
+              <textarea id="ws-description" required placeholder="Beschreibe kurz den Inhalt, Techniken, Zielgruppe und Ablauf..."></textarea>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-md);">
+            <button type="submit" class="admin-btn admin-btn-terracotta">
+              Workshop speichern & live schalten
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Workshops Table -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Aktive Workshops & Termine</h3>
+        </div>
+
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Bild</th>
+              <th>Workshop / Kategorie</th>
+              <th>Format</th>
+              <th>Beschreibung</th>
+              <th style="text-align: right;">Aktionen</th>
+            </tr>
+          </thead>
+          <tbody id="workshops-table-body">
+            <!-- Dynamic Injection -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         PANE 2: RESIDENZEN & KULTUR
+         ------------------------------------------------------------------------ -->
+    <section class="admin-tab-pane" id="pane-residencies">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Kultur-Residenz oder Event ankündigen</h3>
+        </div>
+
+        <form id="residency-form">
+          <div class="admin-form-grid">
+            <div class="admin-form-group">
+              <label for="res-title">Titel / Projekt *</label>
+              <input type="text" id="res-title" required placeholder="z. B. Zirkus-Residenz & Fire & Flow">
+            </div>
+
+            <div class="admin-form-group">
+              <label for="res-subtitle">Partner / Schwerpunkt *</label>
+              <input type="text" id="res-subtitle" required placeholder="z. B. Bayern & Böhmen / Los Cirkulos">
+            </div>
+
+            <div class="admin-form-group admin-form-full">
+              <label for="res-image">Titelbild</label>
+              <select id="res-image">
+                <option value="assets/images/residenz_treffpunkt_kuenstler.jpg">Zirkus- & Künstlergruppe Werkhalle 4</option>
+                <option value="assets/images/stephanie_heiduk_atelier.jpg">Stephanie Heiduk Atelier</option>
+                <option value="assets/images/werkhalle_entstehung_presse.jpg">Entstehung am Lagerplatz</option>
+                <option value="assets/images/pressebild_blumenkunst.jpg">Florale Kunstinstallation</option>
+              </select>
+            </div>
+
+            <div class="admin-form-group admin-form-full">
+              <label for="res-description">Projektbeschreibung *</label>
+              <textarea id="res-description" required placeholder="Beschreibe die Residenz, Termine, Vorführungen oder Teilnehmer..."></textarea>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-md);">
+            <button type="submit" class="admin-btn admin-btn-terracotta">
+              Residenz veröffentlichen
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Aktive Residenzen & Kulturprojekte</h3>
+        </div>
+
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Bild</th>
+              <th>Titel</th>
+              <th>Schwerpunkt</th>
+              <th>Beschreibung</th>
+              <th style="text-align: right;">Aktionen</th>
+            </tr>
+          </thead>
+          <tbody id="residencies-table-body">
+            <!-- Dynamic Injection -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         PANE 3: GALERIE & MEDIEN
+         ------------------------------------------------------------------------ -->
+    <section class="admin-tab-pane" id="pane-gallery">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Neues Werk oder Raumbild zur Galerie hinzufügen</h3>
+        </div>
+
+        <form id="gallery-form">
+          <div class="admin-form-grid">
+            <div class="admin-form-group">
+              <label for="gal-title">Titel des Motivs / Kunstwerks *</label>
+              <input type="text" id="gal-title" required placeholder="z. B. Rauminstallation / Florale Plastik">
+            </div>
+
+            <div class="admin-form-group">
+              <label for="gal-category">Kategorie *</label>
+              <select id="gal-category">
+                <option value="kunst">Kunst & Residenz</option>
+                <option value="raum">Räume & Architektur</option>
+              </select>
+            </div>
+
+            <div class="admin-form-group admin-form-full">
+              <label for="gal-image">Bild auswählen *</label>
+              <select id="gal-image">
+                <option value="assets/images/residenz_treffpunkt_kuenstler.jpg">Künstlergruppe Zirkus-Residenz</option>
+                <option value="assets/images/pressebild_blumenkunst.jpg">Asiatische Blumenkunst</option>
+                <option value="assets/images/stephanie_heiduk_atelier.jpg">Stephanie Heiduk im Atelier</option>
+                <option value="assets/images/werkhalle_entstehung_presse.jpg">Entstehung Lagerplatz 4</option>
+                <option value="assets/images/airbnb_01_wohnbereich_kamin.jpeg">Kaminlounge & Salon</option>
+                <option value="assets/images/airbnb_02_essbereich.jpeg">Die Tafel & Essbereich</option>
+                <option value="assets/images/airbnb_03_kueche.jpeg">Werk-Küche mit Backstein</option>
+                <option value="assets/images/airbnb_04_schlafzimmer_blau.jpeg">Blaue Suite</option>
+                <option value="assets/images/airbnb_07_schlafzimmer_2_queensize.jpeg">Atelier-Suite YES!</option>
+              </select>
+            </div>
+
+            <div class="admin-form-group admin-form-full">
+              <label for="gal-desc">Bildunterschrift / Raumdetail *</label>
+              <input type="text" id="gal-desc" required placeholder="Kurze Beschreibung für die Großansicht">
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-sm); margin-top: var(--space-md);">
+            <button type="submit" class="admin-btn admin-btn-terracotta">
+              Zur Galerie hinzufügen
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Galerieübersicht (Live auf Website)</h3>
+        </div>
+
+        <div class="admin-gallery-grid" id="admin-gallery-grid">
+          <!-- Dynamic Injection -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------------------
+         PANE 4: ANFRAGEN POSTEINGANG
+         ------------------------------------------------------------------------ -->
+    <section class="admin-tab-pane" id="pane-inquiries">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Eingegangene Anfragen & Buchungswünsche</h3>
+        </div>
+
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Datum</th>
+              <th>Absender / E-Mail</th>
+              <th>Bereich</th>
+              <th>Nachricht / Details</th>
+              <th style="text-align: right;">Status</th>
+            </tr>
+          </thead>
+          <tbody id="inquiries-table-body">
+            <!-- Dynamic Injection -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/admin.js"></script>
+</body>
+</html>
