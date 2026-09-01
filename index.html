@@ -13,14 +13,13 @@
   <meta property="og:type" content="website">
   <meta property="og:image" content="assets/images/stephanie_heiduk_atelier.jpg">
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Local Webfonts (100% DSGVO-compliant / Zero external CDN calls) -->
+  <link rel="stylesheet" href="css/fonts.css">
 
   <!-- Styles -->
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/InfiniteScrollGallery.css">
 </head>
 <body>
 
@@ -179,46 +178,100 @@
   </section>
 
   <!-- ==========================================================================
-       SECTION 2: DER ORT & DIE GESCHICHTE (HANDCRAFTED EDITORIAL COMPOSITION)
+       SECTION 2: DER ORT & DIE GESCHICHTE (THEO PLAWINSKI STICKY GRID SCROLL)
        ========================================================================== -->
-  <section class="section section-subtle" id="ort">
-    <div class="container">
-      <div class="story-editorial-wrapper">
-        <!-- Left: Handcrafted Layered Visuals -->
-        <div class="story-visual-stage">
-          <div class="story-visual-primary">
-            <img src="assets/images/werkhalle_entstehung_presse.jpg" alt="Stephanie Heiduk in der Entstehungsphase der Werkhalle 4" loading="lazy">
+  <section class="section section-subtle sticky-grid-section" id="ort">
+    <div class="sticky-grid-viewport">
+      <div class="container sticky-grid-container">
+
+        <!-- Left Slot: Phase 1 Text & Phase 2 Media (Mirrored) -->
+        <div class="sticky-slot sticky-slot-left">
+          
+          <!-- Phase 1 Text: Vom Lost Place... -->
+          <div class="sticky-text-phase phase-1">
+            <h2 class="story-title-unconventional">
+              <span class="story-title-main">Vom <em class="story-title-emphasis">Lost Place...</em></span>
+            </h2>
+
+            <div class="story-facts-pills">
+              <span class="story-pill">Bahnareal 1898</span>
+              <span class="story-pill">30 Jahre Expertise</span>
+              <span class="story-pill">Lagerplatz 4</span>
+            </div>
+
+            <p class="story-lead-para">
+              Nach über 30 Jahren vielschichtiger Erfahrungen in der Kunst- und Gestaltungswelt kehrte <strong>Stephanie Heiduk</strong> in ihre Heimatstadt Furth im Wald zurück.
+            </p>
+            
+            <p class="story-body-para">
+              Am Lagerplatz 4 erwarb sie das ehemalige, marode Gewerbe- und Bahngebäude von 1898. Was für viele ein vergessener, verfallener Industriebau war, wurde für sie zur leeren Leinwand für ein neues kreatives Zentrum im Grenzraum.
+            </p>
           </div>
-          <div class="story-visual-secondary">
-            <img src="assets/images/airbnb_01_wohnbereich_kamin.jpeg" alt="Kamin-Salon und Interieur" loading="lazy">
+
+          <!-- Phase 2 Media (Mirrored Left): Heutiger Freiraum (Kamin-Salon & Atelier) -->
+          <div class="sticky-media-phase media-phase-2">
+            <div class="sticky-grid-matrix">
+              <div class="sticky-col sticky-col-1">
+                <div class="sticky-grid-card card-living">
+                  <img src="assets/images/airbnb_01_wohnbereich_kamin.jpeg" alt="Kamin-Salon und Interieur der Werkhalle 4" loading="lazy">
+                  <span class="sticky-card-tag">Kamin-Salon & Loft</span>
+                </div>
+              </div>
+              <div class="sticky-col sticky-col-2">
+                <div class="sticky-grid-card card-atelier">
+                  <img src="assets/images/stephanie_heiduk_atelier.jpg" alt="Atelier-Einblick Werkhalle 4" loading="lazy">
+                  <span class="sticky-card-tag">Atelier & Freiraum</span>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
 
-        <!-- Right: Storytelling & Facts -->
-        <div class="story-text-stage">
-          <span class="eyebrow">Der Ursprung · Lagerplatz 4</span>
-          <h2 class="heading-xl" style="margin-bottom: var(--space-xs);">
-            Vom Lost Place zum Freiraum für Ideen.
-          </h2>
-
-          <div class="story-highlight-facts">
-            <span class="story-fact">30 Jahre Kunsterfahrung</span>
-            <span class="story-fact">Historisches Bahnareal</span>
-            <span class="story-fact">Atelier & Residenzen</span>
+        <!-- Right Slot: Phase 1 Media & Phase 2 Text (Mirrored) -->
+        <div class="sticky-slot sticky-slot-right">
+          
+          <!-- Phase 1 Media: Historischer Ursprung (Lagerplatz 4 & Bahnareal 1898) -->
+          <div class="sticky-media-phase media-phase-1">
+            <div class="sticky-grid-matrix">
+              <div class="sticky-col sticky-col-1">
+                <div class="sticky-grid-card card-historic">
+                  <img src="assets/images/werkhalle_entstehung_presse.jpg" alt="Stephanie Heiduk in der Entstehungsphase der Werkhalle 4" loading="lazy">
+                  <span class="sticky-card-tag">Lagerplatz 4 · Entstehung</span>
+                </div>
+              </div>
+              <div class="sticky-col sticky-col-2">
+                <div class="sticky-grid-card card-building">
+                  <img src="assets/images/werkhalle_hero_building.jpg" alt="Historisches Industrie-Erbe von 1898" loading="lazy">
+                  <span class="sticky-card-tag">Bahnareal 1898</span>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <p style="color: var(--color-ink-700); margin-bottom: var(--space-sm); font-size: 1.05rem;">
-            Nach über 30 Jahren vielschichtiger Erfahrungen in der Kunst- und Gestaltungswelt kehrte Stephanie Heiduk in ihre Heimatstadt Furth im Wald zurück. Am Lagerplatz 4 erwarb sie das ehemalige, marode Gewerbe- und Bahngebäude und verwandelte es eigenhändig in ein lebendiges Zentrum für Kunst, Workshops und Begegnung.
-          </p>
+          <!-- Phase 2 Text (Mirrored Right): ...zum Freiraum für Ideen. -->
+          <div class="sticky-text-phase phase-2">
+            <h2 class="story-title-unconventional">
+              <span class="story-title-sub">...zum</span>
+              <span class="story-title-main">Freiraum für <em class="story-title-emphasis">Ideen.</em></span>
+            </h2>
 
-          <p style="color: var(--color-ink-600); margin-bottom: var(--space-md); font-size: 0.9375rem;">
-            Inspiriert von traditionsreichen Werk- und Gutshöfen (wie dem <em>werkgut</em>) ist die Werkhalle 4 ein Ort des Machens. Sichtbares Backsteinmauerwerk, hohe Decken und massives Holz treten in einen Dialog mit zeitgenössischer Kunst und bieten Weite für konzentriertes Arbeiten.
-          </p>
+            <p class="story-lead-para">
+              Inspiriert von traditionsreichen Werk- und Gutshöfen ist die Werkhalle 4 ein <strong>lebendiger Ort des Machens</strong> geworden.
+            </p>
+            
+            <p class="story-body-para">
+              Sichtbares Backsteinmauerwerk, hohe Decken und massives Holz treten in einen ständigen Dialog mit zeitgenössischer Kunst, offenen Werkstätten und Kulturbegegnungen im Bayerischen Wald.
+            </p>
 
-          <div class="story-quote-block">
-            <p>„Ein Ort für alle, die mit den Händen schaffen, Neues lernen oder in inspirierender Umgebung zur Ruhe kommen wollen.“</p>
+            <blockquote class="story-quote-unconventional">
+              <p>„Ein Ort für alle, die mit den Händen schaffen, Neues lernen oder in inspirierender Umgebung zur Ruhe kommen wollen.“</p>
+              <cite>— Stephanie Heiduk, Gründerin & Gestalterin</cite>
+            </blockquote>
           </div>
+
         </div>
+
       </div>
     </div>
   </section>
@@ -360,65 +413,128 @@
   </section>
 
   <!-- ==========================================================================
-       SECTION 5: GALERIE & RAUMEINBLICKE
+       SECTION 5: GALERIE & RAUMEINBLICKE (IMMERSIVE STREAM PASS-BY GALLERY)
        ========================================================================== -->
-  <section class="section" id="galerie">
-    <div class="container">
-      <div class="gallery-header">
-        <div>
-          <span class="eyebrow">Raum & Kunst</span>
-          <h2 class="heading-xl">Galerie der Werkhalle 4</h2>
-          <p style="color: var(--color-ink-600); margin-top: 4px;">Klicke auf eine Aufnahme für Großansicht und Werkdetails.</p>
-        </div>
-
-        <div class="gallery-filters">
-          <button class="filter-btn active" data-filter="all">Alle Einblicke</button>
-          <button class="filter-btn" data-filter="kunst">Kunst & Residenz</button>
-          <button class="filter-btn" data-filter="raum">Räume & Architektur</button>
-        </div>
-      </div>
-
-      <div class="gallery-grid">
-        <div class="gallery-item span-8" data-category="kunst" data-title="Künstlerbegegnung Werkhalle 4" data-desc="Austausch und Probenarbeit von Künstlern aus Bayern und Tschechien während der Zirkus-Residency.">
-          <img src="assets/images/residenz_treffpunkt_kuenstler.jpg" alt="Künstlergruppe Werkhalle 4" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-overlay-title">Kulturresidenz</span>
-            <span class="gallery-overlay-desc">Deutsch-Tschechischer Kulturaustausch</span>
-          </div>
-        </div>
-
-        <div class="gallery-item span-4" data-category="kunst" data-title="Florale Installation" data-desc="Asiatische Blumenkunst und florale Skulptur in den Hallenräumen.">
-          <img src="assets/images/pressebild_blumenkunst.jpg" alt="Florale Kunstinstallation" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-overlay-title">Florale Skulptur</span>
-            <span class="gallery-overlay-desc">Asiatische Blumenkunst</span>
-          </div>
-        </div>
-
-        <div class="gallery-item span-4" data-category="raum" data-title="Kaminlounge & Salon" data-desc="Wohnbereich mit Kaminofen, botanischer Wandgestaltung und Designermöbeln.">
-          <img src="assets/images/airbnb_01_wohnbereich_kamin.jpeg" alt="Kaminbereich Werkhalle 4" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-overlay-title">Kaminlounge</span>
-            <span class="gallery-overlay-desc">Zentraler Treffpunkt</span>
-          </div>
-        </div>
-
-        <div class="gallery-item span-4" data-category="raum" data-title="Die Tafel & Essbereich" data-desc="Massiver Holztisch für gemeinsame Mahlzeiten, Kursrunden und Workshops.">
-          <img src="assets/images/airbnb_02_essbereich.jpeg" alt="Großer Holztisch im Essbereich" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-overlay-title">Die Tafel</span>
-            <span class="gallery-overlay-desc">Gemeinsamer Arbeits- und Essplatz</span>
-          </div>
-        </div>
-
-        <div class="gallery-item span-4" data-category="raum" data-title="Werk-Küche mit Backstein" data-desc="Voll ausgestattete Küche mit historischem Sichtmauerwerk.">
-          <img src="assets/images/airbnb_03_kueche.jpeg" alt="Küche mit Backsteinwand" loading="lazy">
-          <div class="gallery-overlay">
-            <span class="gallery-overlay-title">Werk-Küche</span>
-            <span class="gallery-overlay-desc">Backstein & Holzarbeitsplatte</span>
+  <section class="parallax-gallery-section" id="galerie">
+    <div class="parallax-gallery-viewport">
+      
+      <!-- Top Prominent Header (Fades away smoothly upon scrolling) -->
+      <div class="parallax-gallery-header-wrapper">
+        <div class="container">
+          <div class="parallax-gallery-header">
+            <span class="eyebrow">Raum & Kunst</span>
+            <h2 class="heading-xl">Galerie der Werkhalle 4</h2>
+            <p style="color: var(--color-ink-600); max-width: 540px; margin: 6px auto 0;">
+              Scrolle, um durch die Dimensionen der Werkhalle zu reisen.
+            </p>
           </div>
         </div>
       </div>
+
+      <!-- Vertical Floating Stream Stage (Guaranteed Zero Overlap 2-Column Grid) -->
+      <div class="stream-columns-stage">
+        <div class="stream-columns-grid">
+          
+          <!-- Column 1 (Left Track - 5 Cards) -->
+          <div class="stream-col stream-col-1">
+            <div class="stream-card tall" id="sc-1" data-category="kunst" data-title="Kulturresidenz & Begegnung" data-desc="Grenzüberschreitender Austausch und Probenarbeit von Künstlern aus Bayern und Böhmen.">
+              <img src="assets/images/residenz_treffpunkt_kuenstler.jpg" alt="Künstlergruppe Werkhalle 4" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Kulturresidenz</h3>
+                <p class="stream-card-desc">Deutsch-Tschechischer Kulturaustausch & Artist-in-Residence</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+
+            <div class="stream-card square offset-right-sm" id="sc-3" data-category="raum" data-title="Werk-Küche mit Backstein" data-desc="Historisches Sichtmauerwerk, Holzarbeitsplatten und vollwertige Ausstattung.">
+              <img src="assets/images/airbnb_03_kueche.jpeg" alt="Küche mit Backsteinwand" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Werk-Küche</h3>
+                <p class="stream-card-desc">Original-Sichtmauerwerk von 1898</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+
+            <div class="stream-card tall offset-left-sm" id="sc-5" data-category="kunst" data-title="Florale Skulptur" data-desc="Form, Linie und Reduktion: Kunst nach asiatischen Gestaltungsprinzipien.">
+              <img src="assets/images/pressebild_blumenkunst.jpg" alt="Florale Kunstinstallation" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Florale Skulptur</h3>
+                <p class="stream-card-desc">Asiatische Blumenkunst & Ikebana-Installationen</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+
+            <div class="stream-card wide offset-right-sm" id="sc-7" data-category="raum" data-title="Blaues Schlafgemach" data-desc="Beruhigende Farbgebung, erstklassiger Schlafkomfort und Blick in den Garten.">
+              <img src="assets/images/airbnb_04_schlafzimmer_blau.jpeg" alt="Blaues Schlafzimmer" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Blaues Schlafgemach</h3>
+                <p class="stream-card-desc">Ruhiger Rückzugsort im Loft</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+
+            <div class="stream-card medium" id="sc-9" data-category="raum" data-title="Studio-Schlafbereich" data-desc="Spielerische Typografie, angenehme Lichtstimmungen und hochwertige Bettwäsche.">
+              <img src="assets/images/airbnb_07_schlafzimmer_2_queensize.jpeg" alt="Queensize Schlafbereich" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Studio-Schlafbereich</h3>
+                <p class="stream-card-desc">Designkomfort für Gäste & Residenzkünstler</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2 (Right Track - 4 Cards, Staggered) -->
+          <div class="stream-col stream-col-2">
+            <div class="stream-card medium offset-right-sm" id="sc-2" data-category="raum" data-title="Kaminlounge & Salon" data-desc="Gemütlicher Mittelpunkt des Lofts mit knisterndem Feuer und kuratierter Kunst.">
+              <img src="assets/images/airbnb_01_wohnbereich_kamin.jpeg" alt="Kaminbereich Werkhalle 4" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Kaminlounge</h3>
+                <p class="stream-card-desc">Botanische Wandgestaltung & Designer-Kaminofen</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+
+            <div class="stream-card medium offset-left-sm" id="sc-4" data-category="kunst" data-title="Atelier & Werkstatt" data-desc="Offener Freiraum für künstlerische Prozesse, Entwürfe und handwerkliche Vertiefung.">
+              <img src="assets/images/stephanie_heiduk_atelier.jpg" alt="Atelieraufnahme Werkhalle 4" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Atelier & Werkstatt</h3>
+                <p class="stream-card-desc">Raum für Cyanotypie, Malerei & Skulptur</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+
+            <div class="stream-card wide offset-right-sm" id="sc-6" data-category="raum" data-title="Die Tafel" data-desc="Massiver Eichentisch für bis zu 8 Personen: Perfekt für Team-Retreats und Kursrunden.">
+              <img src="assets/images/airbnb_02_essbereich.jpeg" alt="Großer Holztisch im Essbereich" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Die Tafel</h3>
+                <p class="stream-card-desc">Gemeinsamer Treffpunkt für Mahlzeiten & Seminare</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+
+            <div class="stream-card tall offset-left-sm" id="sc-8" data-category="raum" data-title="Bahnareal 1898" data-desc="Industrie-Erbe neu interpretiert am Lagerplatz 4 in Furth im Wald.">
+              <img src="assets/images/werkhalle_hero_building.jpg" alt="Werkhalle 4 Außenansicht" class="stream-card-media" loading="lazy">
+              <div class="stream-card-overlay">
+                <h3 class="stream-card-title">Bahnareal 1898</h3>
+                <p class="stream-card-desc">Historische Architektur mit neuem kreativem Geist</p>
+                <span class="stream-card-expand">Großansicht öffnen ↗</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bottom Hint -->
+      <div class="parallax-gallery-bottom">
+        <div class="parallax-scroll-indicator">
+          <span>Weiter nach unten scrollen</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M12 5v14M19 12l-7 7-7-7"/>
+          </svg>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -529,7 +645,7 @@
       <h2 class="heading-xl" style="color: #FFFFFF; margin-bottom: var(--space-sm);">
         Tritt mit der Werkhalle 4 in Verbindung
       </h2>
-      <p class="lead-text" style="color: #B5B0A2; margin-bottom: var(--space-xl);">
+      <p class="lead-text" style="color: #B5B0A2; margin-bottom: var(--space-xl); max-width: 600px; margin-left: auto; margin-right: auto;">
         Ob für Workshop-Teilnahmen, Gastresidenzen, private Klausuren oder allgemeine Fragen zum Haus — wir freuen uns auf deine Nachricht.
       </p>
       <button class="btn btn-primary" style="background: #FFFFFF; color: var(--color-ink-950); border-color: #FFFFFF;" data-open-modal="inquiry" data-inquiry-type="allgemein">
@@ -670,9 +786,12 @@
     </div>
   </div>
 
+  <script src="js/vendor/gsap.min.js"></script>
+  <script src="js/vendor/ScrollTrigger.min.js"></script>
   <script src="js/ScrollExpand.js"></script>
   <script src="js/SplitFlapText.js"></script>
   <script src="js/TextPressure.js"></script>
+  <script src="js/InfiniteScrollGallery.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

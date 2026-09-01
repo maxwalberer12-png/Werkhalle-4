@@ -60,29 +60,72 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   syncDynamicContent();
-  initGalleryFilters();
+  
+  let galleryController = null;
+  if (typeof initInfiniteScrollGallery === 'function') {
+    galleryController = initInfiniteScrollGallery('#galerie', {
+      speedCol1: -28,
+      speedCol2: 32,
+      speedCol3: -38,
+      scrub: 1.2
+    });
+  }
+
+  initGalleryFilters(galleryController);
   initLightbox();
   initInquiryModal();
   initSmoothScrollSpy();
+  initCylinderPerspectiveScroll();
+  initStickyGridScroll();
+  initPaintbrushInteraction();
 });
 
-
-
-
-
 /* --------------------------------------------------------------------------
-   1. STICKY HEADER & SCROLL BEHAVIOR
+   1. STICKY AUTO-HIDING HEADER & SCROLL BEHAVIOR
    -------------------------------------------------------------------------- */
 function initStickyHeader() {
   const header = document.querySelector('.site-header');
   if (!header) return;
 
+  let lastScrollY = window.scrollY;
+  const scrollThreshold = 8; // Minimum scroll delta to trigger change
+
   const handleScroll = () => {
-    if (window.scrollY > 40) {
+    const currentScrollY = window.scrollY;
+
+    // Background style when scrolled
+    if (currentScrollY > 40) {
       header.classList.add('scrolled');
     } else {
       header.classList.remove('scrolled');
     }
+
+    // Calculate the end of the first section (unter dem Bild des Werks)
+    const heroSection = document.querySelector('.hero-section') || document.querySelector('#start');
+    const heroBottom = heroSection ? (heroSection.offsetTop + heroSection.offsetHeight - 120) : window.innerHeight;
+
+    // Always visible while in the first section or if mobile menu is open
+    const isDrawerOpen = document.querySelector('.mobile-drawer.is-open');
+    if (isDrawerOpen || currentScrollY < heroBottom) {
+      header.classList.remove('header-hidden');
+      document.body.classList.remove('navbar-is-hidden');
+      lastScrollY = currentScrollY;
+      return;
+    }
+
+    // Only active after scrolling past the first section:
+    // Scroll Down -> Hide Header & activate Viewport Edge Curvature
+    if (currentScrollY > lastScrollY && currentScrollY - lastScrollY > scrollThreshold) {
+      header.classList.add('header-hidden');
+      document.body.classList.add('navbar-is-hidden');
+    }
+    // Scroll Up -> Show Header & deactivate Viewport Edge Curvature
+    else if (currentScrollY < lastScrollY && lastScrollY - currentScrollY > scrollThreshold) {
+      header.classList.remove('header-hidden');
+      document.body.classList.remove('navbar-is-hidden');
+    }
+
+    lastScrollY = currentScrollY;
   };
 
   window.addEventListener('scroll', handleScroll, { passive: true });
@@ -151,25 +194,35 @@ function syncDynamicContent() {
     }
   }
 
-  // Sync Gallery
+  // Sync Gallery into Columns
   const savedGallery = localStorage.getItem(STORAGE_KEYS.GALLERY);
-  const galleryGrid = document.querySelector('.gallery-grid');
-  if (savedGallery && galleryGrid) {
+  const col1 = document.querySelector('.parallax-col-1');
+  const col2 = document.querySelector('.parallax-col-2');
+  const col3 = document.querySelector('.parallax-col-3');
+  if (savedGallery && col1 && col2 && col3) {
     try {
       const items = JSON.parse(savedGallery);
       if (items.length > 0) {
-        galleryGrid.innerHTML = items.map((item, idx) => {
-          const spanClass = idx === 0 ? 'span-8' : (idx === items.length - 1 ? 'span-6' : 'span-4');
-          return `
-            <div class="gallery-item ${spanClass}" data-category="${item.category}" data-title="${item.title}" data-desc="${item.description}">
-              <img src="${item.image}" alt="${item.title}" loading="lazy">
-              <div class="gallery-overlay">
-                <span class="gallery-overlay-title">${item.title}</span>
-                <span class="gallery-overlay-desc">${item.description}</span>
+        col1.innerHTML = '';
+        col2.innerHTML = '';
+        col3.innerHTML = '';
+        items.forEach((item, idx) => {
+          const ratioClass = idx % 3 === 0 ? 'tall' : (idx % 3 === 1 ? 'medium' : 'wide');
+          const cardHtml = `
+            <div class="parallax-card ${ratioClass}" data-category="${item.category}" data-title="${item.title}" data-desc="${item.description}">
+              <span class="parallax-card-badge">${item.category === 'kunst' ? 'Kunst & Residenz' : 'Raum & Interieur'}</span>
+              <img src="${item.image}" alt="${item.title}" class="parallax-card-media" loading="lazy">
+              <div class="parallax-card-overlay">
+                <h3 class="parallax-card-title">${item.title}</h3>
+                <p class="parallax-card-desc">${item.description}</p>
+                <span class="parallax-card-expand">Großansicht öffnen ↗</span>
               </div>
             </div>
           `;
-        }).join('');
+          if (idx % 3 === 0) col1.innerHTML += cardHtml;
+          else if (idx % 3 === 1) col2.innerHTML += cardHtml;
+          else col3.innerHTML += cardHtml;
+        });
       }
     } catch (e) {
       console.warn('Error parsing dynamic gallery:', e);
@@ -180,9 +233,8 @@ function syncDynamicContent() {
 /* --------------------------------------------------------------------------
    4. GALLERY FILTERING
    -------------------------------------------------------------------------- */
-function initGalleryFilters() {
+function initGalleryFilters(galleryController) {
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const items = document.querySelectorAll('.gallery-item');
 
   if (!filterBtns.length) return;
 
@@ -193,16 +245,20 @@ function initGalleryFilters() {
       filterBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      const currentItems = document.querySelectorAll('.gallery-item');
-      currentItems.forEach(item => {
-        const category = item.getAttribute('data-category');
-        if (filter === 'all' || category === filter) {
-          item.style.display = 'block';
-          item.style.animation = 'fadeIn 0.3s ease forwards';
-        } else {
-          item.style.display = 'none';
-        }
-      });
+      if (galleryController && typeof galleryController.filterCategory === 'function') {
+        galleryController.filterCategory(filter);
+      } else {
+        const cards = document.querySelectorAll('.stream-card, .fly-card, .parallax-card, .gallery-item');
+        cards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          if (filter === 'all' || category === filter) {
+            card.style.display = 'block';
+            card.style.animation = 'fadeIn 0.35s ease forwards';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      }
     });
   });
 }
@@ -221,23 +277,24 @@ function initLightbox() {
 
   let currentIndex = 0;
 
-  const getItemsData = () => {
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    return Array.from(galleryItems).map(item => ({
-      src: item.querySelector('img').getAttribute('src'),
-      title: item.getAttribute('data-title') || '',
-      desc: item.getAttribute('data-desc') || ''
-    }));
+  const getVisibleCards = () => {
+    const cards = Array.from(document.querySelectorAll('.stream-card, .fly-card, .parallax-card, .gallery-item'));
+    return cards.filter(card => card.style.display !== 'none');
   };
 
   const openLightbox = (index) => {
-    const itemData = getItemsData();
-    if (!itemData[index]) return;
+    const visibleCards = getVisibleCards();
+    if (!visibleCards[index]) return;
     currentIndex = index;
-    const data = itemData[index];
-    lightboxImg.src = data.src;
-    if (lightboxTitle) lightboxTitle.textContent = data.title;
-    if (lightboxDesc) lightboxDesc.textContent = data.desc;
+    const card = visibleCards[index];
+    const img = card.querySelector('img');
+    const title = card.getAttribute('data-title') || '';
+    const desc = card.getAttribute('data-desc') || '';
+
+    if (img) lightboxImg.src = img.getAttribute('src');
+    if (lightboxTitle) lightboxTitle.textContent = title;
+    if (lightboxDesc) lightboxDesc.textContent = desc;
+
     lightbox.classList.add('is-active');
     document.body.style.overflow = 'hidden';
   };
@@ -248,10 +305,10 @@ function initLightbox() {
   };
 
   document.addEventListener('click', (e) => {
-    const galleryItem = e.target.closest('.gallery-item');
-    if (galleryItem) {
-      const allItems = Array.from(document.querySelectorAll('.gallery-item'));
-      const idx = allItems.indexOf(galleryItem);
+    const card = e.target.closest('.stream-card, .fly-card, .parallax-card, .gallery-item');
+    if (card) {
+      const visibleCards = getVisibleCards();
+      const idx = visibleCards.indexOf(card);
       if (idx >= 0) openLightbox(idx);
     }
   });
@@ -264,14 +321,14 @@ function initLightbox() {
 
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('is-active')) return;
-    const itemData = getItemsData();
+    const visibleCards = getVisibleCards();
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowRight') {
-      currentIndex = (currentIndex + 1) % itemData.length;
+      currentIndex = (currentIndex + 1) % visibleCards.length;
       openLightbox(currentIndex);
     }
     if (e.key === 'ArrowLeft') {
-      currentIndex = (currentIndex - 1 + itemData.length) % itemData.length;
+      currentIndex = (currentIndex - 1 + visibleCards.length) % visibleCards.length;
       openLightbox(currentIndex);
     }
   });
@@ -367,37 +424,298 @@ function initInquiryModal() {
             closeModal();
           }, 2400);
         }
-      }, 500);
+        if (statusMsg) {
+          statusMsg.textContent = 'Vielen Dank für Ihre Anfrage! Wir melden uns innerhalb von 24 Stunden bei Ihnen.';
+          statusMsg.style.color = 'var(--color-terracotta)';
+        }
+        setTimeout(closeModal, 2500);
+      }, 800);
     });
   }
 }
 
 /* --------------------------------------------------------------------------
-   7. SMOOTH SCROLL SPY
+   6. SMOOTH SCROLL SPY & ANCHOR NAVIGATION
    -------------------------------------------------------------------------- */
 function initSmoothScrollSpy() {
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-link');
 
-  if (!sections.length || !navLinks.length) return;
+  function updateActiveSpy() {
+    const scrollPos = window.scrollY + 120;
+    sections.forEach((section) => {
+      const top = section.offsetTop;
+      const height = section.offsetHeight;
+      const id = section.getAttribute('id');
+      if (scrollPos >= top && scrollPos < top + height) {
+        navLinks.forEach((link) => {
+          if (link.getAttribute('href') === `#${id}`) {
+            link.classList.add('active');
+          } else {
+            link.classList.remove('active');
+          }
+        });
+      }
+    });
+  }
 
-  window.addEventListener('scroll', () => {
-    let current = '';
-    const scrollPos = window.scrollY + 200;
+  window.addEventListener('scroll', updateActiveSpy, { passive: true });
 
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-        current = section.getAttribute('id');
+  navLinks.forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const targetId = link.getAttribute('href');
+      if (targetId && targetId.startsWith('#') && targetId.length > 1) {
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          e.preventDefault();
+          const targetOffset = targetElement.offsetTop - 70;
+          window.scrollTo({
+            top: targetOffset,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   8. 3D CYLINDER PERSPECTIVE SCROLL (WARM EDITORIAL KINETIC)
+   -------------------------------------------------------------------------- */
+function initCylinderPerspectiveScroll() {
+  if (window.innerWidth <= 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  const targetElements = document.querySelectorAll(
+    '.hero-metrics-strip, .press-card, .section-header, .workshop-card-luxury, .workshop-curated-card, .workshops-cta-box, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container'
+  );
+
+  targetElements.forEach((el) => {
+    gsap.set(el, {
+      transformPerspective: 800,
+      transformOrigin: 'center center',
+      force3D: true,
+      willChange: 'transform, opacity'
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 96%',
+        end: 'bottom 4%',
+        scrub: 0.75,
+        invalidateOnRefresh: true
       }
     });
 
-    navLinks.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === `#${current}`) {
-        link.classList.add('active');
-      }
+    // Phase 1: Entry from bottom
+    tl.fromTo(
+      el,
+      { rotateX: -15, scale: 0.85, z: -80, y: 35, opacity: 0.70 },
+      { rotateX: 0, scale: 1, z: 0, y: 0, opacity: 1, ease: 'power1.out', duration: 0.5 }
+    );
+
+    // Phase 2: Exit to top
+    tl.to(el, {
+      rotateX: 15,
+      scale: 0.85,
+      z: -80,
+      y: -35,
+      opacity: 0.70,
+      ease: 'power1.in',
+      duration: 0.5
     });
-  }, { passive: true });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   9. STICKY GRID SCROLL CONTROLLER (THEO PLAWINSKI CODROPS ANIMATION WITH 3D CYLINDER KINETICS)
+   -------------------------------------------------------------------------- */
+function initStickyGridScroll() {
+  if (window.innerWidth <= 992 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  const section = document.querySelector('.sticky-grid-section');
+  const container = document.querySelector('.sticky-grid-container');
+  const textPhase1 = document.querySelector('.sticky-text-phase.phase-1');
+  const textPhase2 = document.querySelector('.sticky-text-phase.phase-2');
+  const mediaPhase1 = document.querySelector('.sticky-media-phase.media-phase-1');
+  const mediaPhase2 = document.querySelector('.sticky-media-phase.media-phase-2');
+
+  if (!section || !container || !textPhase1 || !textPhase2 || !mediaPhase1 || !mediaPhase2) return;
+
+  const col1_p1 = mediaPhase1.querySelector('.sticky-col-1');
+  const col2_p1 = mediaPhase1.querySelector('.sticky-col-2');
+  const col1_p2 = mediaPhase2.querySelector('.sticky-col-1');
+  const col2_p2 = mediaPhase2.querySelector('.sticky-col-2');
+
+  // 3D perspective setup on container
+  gsap.set(container, {
+    transformPerspective: 1000,
+    transformOrigin: 'center center',
+    force3D: true
+  });
+
+  // Initial hardware accelerated states
+  gsap.set(textPhase1, { opacity: 1, yPercent: -50, pointerEvents: 'auto' });
+  gsap.set(textPhase2, { opacity: 0, yPercent: -38, pointerEvents: 'none' });
+  
+  gsap.set(mediaPhase1, { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' });
+  gsap.set(mediaPhase2, { opacity: 0, y: 35, scale: 0.95, pointerEvents: 'none' });
+
+  if (col1_p1) gsap.set(col1_p1, { y: 25 });
+  if (col2_p1) gsap.set(col2_p1, { y: -25 });
+  if (col1_p2) gsap.set(col1_p2, { y: 25 });
+  if (col2_p2) gsap.set(col2_p2, { y: -25 });
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1.4
+    }
+  });
+
+  // 1. Phase 0: Gentle 3D Cylinder Curve Entry (0.0 -> 0.14)
+  tl.fromTo(
+    container,
+    {
+      rotateX: -8,
+      scale: 0.92,
+      z: -50,
+      y: 30,
+      opacity: 0.75
+    },
+    {
+      rotateX: 0,
+      scale: 1,
+      z: 0,
+      y: 0,
+      opacity: 1,
+      duration: 0.14,
+      ease: 'power1.out'
+    },
+    0
+  );
+
+  // 2. Phase 1 Internal Column Parallax Flow (0.0 -> 0.5)
+  if (col1_p1) tl.to(col1_p1, { y: -45, ease: 'none', duration: 0.5 }, 0);
+  if (col2_p1) tl.to(col2_p1, { y: 45, ease: 'none', duration: 0.5 }, 0);
+
+  // 3. Synchronized Butter-Smooth Transition: Phase 1 Out (0.36 -> 0.56)
+  tl.to(
+    textPhase1,
+    {
+      opacity: 0,
+      yPercent: -62,
+      duration: 0.20,
+      ease: 'power2.inOut',
+      pointerEvents: 'none'
+    },
+    0.36
+  );
+
+  tl.to(
+    mediaPhase1,
+    {
+      opacity: 0,
+      y: -30,
+      scale: 0.96,
+      duration: 0.20,
+      ease: 'power2.inOut',
+      pointerEvents: 'none'
+    },
+    0.36
+  );
+
+  // 4. Synchronized Butter-Smooth Transition: Phase 2 In (0.44 -> 0.64)
+  tl.to(
+    textPhase2,
+    {
+      opacity: 1,
+      yPercent: -50,
+      duration: 0.20,
+      ease: 'power2.inOut',
+      pointerEvents: 'auto'
+    },
+    0.44
+  );
+
+  tl.to(
+    mediaPhase2,
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.20,
+      ease: 'power2.inOut',
+      pointerEvents: 'auto'
+    },
+    0.44
+  );
+
+  // 5. Phase 2 Internal Column Parallax Flow (0.5 -> 1.0)
+  if (col1_p2) tl.to(col1_p2, { y: -45, ease: 'none', duration: 0.5 }, 0.5);
+  if (col2_p2) tl.to(col2_p2, { y: 45, ease: 'none', duration: 0.5 }, 0.5);
+
+  // 6. Phase Final: Gentle 3D Cylinder Curve Exit (0.86 -> 1.0)
+  tl.to(
+    container,
+    {
+      rotateX: 8,
+      scale: 0.92,
+      z: -50,
+      y: -30,
+      opacity: 0.75,
+      duration: 0.14,
+      ease: 'power1.in'
+    },
+    0.86
+  );
+}
+
+/* --------------------------------------------------------------------------
+   10. ATELIER PAINTBRUSH TACTILE CLICK SPLASH (DESKTOP ONLY)
+   -------------------------------------------------------------------------- */
+function initPaintbrushInteraction() {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  const colors = ['#A44C2E', '#C85A36', '#8A4B38', '#D4AF37'];
+
+  window.addEventListener('pointerdown', (e) => {
+    if (!e.isPrimary) return;
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+
+    const splash = document.createElement('div');
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const size = Math.floor(Math.random() * 8) + 14;
+
+    splash.style.cssText = `
+      position: fixed;
+      left: ${e.clientX}px;
+      top: ${e.clientY}px;
+      width: ${size}px;
+      height: ${size}px;
+      border-radius: 50%;
+      background: radial-gradient(circle, ${color} 30%, rgba(164, 76, 46, 0.35) 70%, transparent 100%);
+      transform: translate(-50%, -50%) scale(0.3);
+      pointer-events: none;
+      z-index: 999999;
+      opacity: 0.85;
+      mix-blend-mode: multiply;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease-out;
+    `;
+
+    document.body.appendChild(splash);
+
+    requestAnimationFrame(() => {
+      splash.style.transform = `translate(-50%, -50%) scale(${1.15 + Math.random() * 0.35})`;
+      splash.style.opacity = '0';
+    });
+
+    setTimeout(() => {
+      if (splash.parentNode) splash.parentNode.removeChild(splash);
+    }, 500);
+  });
 }

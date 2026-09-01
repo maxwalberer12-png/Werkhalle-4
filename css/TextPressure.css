@@ -2,8 +2,6 @@
    TEXT PRESSURE COMPONENT STYLES (React Bits / Variable Font Pressure)
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght,slnt@8..144,25..151,100..1000,-10..0&display=swap');
-
 .text-pressure-container {
   position: relative;
   width: 100%;
