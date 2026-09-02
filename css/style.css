@@ -364,6 +364,7 @@ h1, h2, h3, h4, h5, .font-serif {
   pointer-events: none;
   transition: transform var(--transition-smooth), opacity var(--transition-fast), visibility var(--transition-fast);
   overflow-y: auto;
+  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
 }
 

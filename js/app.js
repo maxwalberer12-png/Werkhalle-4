@@ -131,6 +131,38 @@ function initStickyHeader() {
 }
 
 /* --------------------------------------------------------------------------
+   BODY SCROLL LOCK MANAGER (iOS & TOUCH BULLETPROOF)
+   -------------------------------------------------------------------------- */
+let activeScrollLocks = 0;
+let savedScrollY = 0;
+
+function lockBodyScroll() {
+  activeScrollLocks++;
+  if (activeScrollLocks === 1) {
+    savedScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function unlockBodyScroll() {
+  activeScrollLocks = Math.max(0, activeScrollLocks - 1);
+  if (activeScrollLocks === 0) {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, savedScrollY);
+  }
+}
+
+/* --------------------------------------------------------------------------
    2. MOBILE NAVIGATION DRAWER & TOUCH INTERACTION
    -------------------------------------------------------------------------- */
 function initMobileNav() {
@@ -145,14 +177,14 @@ function initMobileNav() {
     drawer.classList.add('is-open');
     toggleBtn.classList.add('is-open');
     toggleBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
   };
 
   const closeDrawer = () => {
     drawer.classList.remove('is-open');
     toggleBtn.classList.remove('is-open');
     toggleBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+    unlockBodyScroll();
   };
 
   const toggleDrawer = (e) => {
@@ -351,12 +383,12 @@ function initLightbox() {
     if (lightboxDesc) lightboxDesc.textContent = desc;
 
     lightbox.classList.add('is-active');
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
   };
 
   const closeLightbox = () => {
     lightbox.classList.remove('is-active');
-    document.body.style.overflow = '';
+    unlockBodyScroll();
   };
 
   // Direct click bindings on all cards
@@ -466,7 +498,7 @@ function initInquiryModal() {
 
   const openModal = (inquiryType) => {
     modal.classList.add('is-active');
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
     if (inquiryType && form) {
       const typeSelect = form.querySelector('#inquiry-type');
       if (typeSelect) {
@@ -485,7 +517,7 @@ function initInquiryModal() {
 
   const closeModal = () => {
     modal.classList.remove('is-active');
-    document.body.style.overflow = '';
+    unlockBodyScroll();
   };
 
   document.addEventListener('click', (e) => {
