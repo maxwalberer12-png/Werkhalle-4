@@ -21,16 +21,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const isTablet = window.innerWidth < 1200;
     initSplitFlapText('#hero-split-flap', {
       words: [
-        'BAHNAREAL 98',
-        'WORKSHOPS   ',
+        'WERKHALLE 4 ',
         'KUNSTATELIER',
-        'ATELIER LOFT'
+        'WORKSHOPS   ',
+        'KULTURRAUM  ',
+        'ATELIER LOFT',
+        'BAHNAREAL 98'
       ],
-      flipDuration: 0.12,
+      flipDuration: 0.14,
       stagger: 0.04,
-      cycleDelay: 3200,
-      charset: 'alphanumeric',
-      flipsPerChar: 4,
+      cycleDelay: 3400,
       tileColor: '#141413',
       textColor: '#FAF7F2',
       tileRadius: 6,

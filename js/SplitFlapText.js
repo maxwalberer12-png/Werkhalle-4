@@ -1,40 +1,27 @@
 /**
  * ==========================================================================
- * SPLIT FLAP TEXT CONTROLLER (Vanilla JS / React Bits Architecture)
- * Mechanical split-flap departure board simulation with 3D flap physics
+ * SPLIT FLAP TEXT CONTROLLER (Clean Mechanical Atelier Flap Engine)
+ * Direct 3D mechanical tile flip physics with zero character corruption
  * ==========================================================================
  */
 
 (function (global) {
-  const DEFAULT_WORDS = ['WERKHALLE 4', 'KUNSTATELIER', 'WORKSHOPS', 'KULTUR RAUM', 'ATELIER LOFT'];
+  'use strict';
 
-  const CHARSETS = {
-    alpha: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-    alphanumeric: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789',
-    numeric: '0123456789'
-  };
+  const DEFAULT_WORDS = [
+    'WERKHALLE 4 ',
+    'KUNSTATELIER',
+    'WORKSHOPS   ',
+    'KULTURRAUM  ',
+    'ATELIER LOFT',
+    'BAHNAREAL 98'
+  ];
 
   const toCssUnit = value => (typeof value === 'number' ? `${value}px` : value);
 
-  const resolveCharset = charset => {
-    if (CHARSETS[charset]) return CHARSETS[charset];
-    return typeof charset === 'string' && charset.length > 0 ? charset : CHARSETS.alphanumeric;
-  };
-
   const normalizePhrase = (phrase, width) => {
-    const safe = String(phrase ?? '');
+    const safe = String(phrase ?? '').toUpperCase();
     return safe.padEnd(width, ' ').slice(0, width);
-  };
-
-  const sampleChar = charset => charset.charAt(Math.floor(Math.random() * charset.length)) || ' ';
-
-  const buildSequence = (target, flips, charset) => {
-    const steps = [];
-    for (let i = 0; i < flips; i += 1) {
-      steps.push(sampleChar(charset));
-    }
-    steps.push(target);
-    return steps;
   };
 
   class SplitFlapTextController {
@@ -44,12 +31,10 @@
 
       this.config = {
         words: DEFAULT_WORDS,
-        flipDuration: 0.12,
-        stagger: 0.05,
-        cycleDelay: 2600,
-        charset: 'alphanumeric',
-        flipsPerChar: 6,
-        tileColor: '#181816',
+        flipDuration: 0.14,
+        stagger: 0.04,
+        cycleDelay: 3400,
+        tileColor: '#141413',
         textColor: '#FAF7F2',
         tileRadius: 6,
         gap: 5,
@@ -64,6 +49,7 @@
       this.currentText = '';
       this.phraseIndex = 0;
       this.tiles = [];
+      this.isAnimating = false;
 
       this.init();
     }
@@ -79,6 +65,7 @@
       this.normalizedPhrases = sourceWords.map(phrase => normalizePhrase(phrase, this.width));
 
       this.renderInitialBoard();
+      this.bindVisibility();
       this.startCycle();
     }
 
@@ -89,7 +76,7 @@
       this.container.style.setProperty('--split-flap-radius', toCssUnit(this.config.tileRadius));
       this.container.style.setProperty('--split-flap-gap', toCssUnit(this.config.gap));
       this.container.style.setProperty('--split-flap-font-size', toCssUnit(this.config.fontSize));
-      this.container.style.setProperty('--split-flap-flip-duration', `${Math.max(0.04, Number(this.config.flipDuration) || 0.12)}s`);
+      this.container.style.setProperty('--split-flap-flip-duration', `${Math.max(0.06, Number(this.config.flipDuration) || 0.14)}s`);
 
       this.container.innerHTML = '';
       this.tiles = [];
@@ -127,21 +114,58 @@
           charTop,
           charBottom,
           current: char,
-          next: char,
           flaps: null
         });
       }
     }
 
+    bindVisibility() {
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') {
+          // Snap immediately to clean target word to prevent frozen intermediate states
+          this.snapToCurrentPhrase();
+        }
+      });
+    }
+
+    snapToCurrentPhrase() {
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId);
+        this.rafId = null;
+      }
+      const targetPhrase = this.normalizedPhrases[this.phraseIndex] || '';
+      this.currentText = targetPhrase;
+      this.isAnimating = false;
+
+      for (let i = 0; i < this.width; i += 1) {
+        const char = targetPhrase[i] || ' ';
+        const tile = this.tiles[i];
+        if (!tile) continue;
+
+        tile.current = char;
+        tile.charTop.textContent = char === ' ' ? '\u00A0' : char;
+        tile.charBottom.textContent = char === ' ' ? '\u00A0' : char;
+
+        if (tile.flaps) {
+          tile.flaps.remove();
+          tile.flaps = null;
+        }
+      }
+    }
+
     animateTo(targetPhrase) {
+      if (this.rafId) {
+        cancelAnimationFrame(this.rafId);
+        this.rafId = null;
+      }
+
       const fromPhrase = normalizePhrase(this.currentText, this.width);
       const targetChars = targetPhrase.split('');
 
-      const safeFlipMs = Math.max(40, (Number(this.config.flipDuration) || 0.12) * 1000);
-      const safeStaggerMs = Math.max(0, (Number(this.config.stagger) || 0) * 1000);
-      const safeFlips = Math.max(0, Math.floor(Number(this.config.flipsPerChar) || 0));
-      const activeCharset = resolveCharset(this.config.charset);
+      const safeFlipMs = Math.max(60, (Number(this.config.flipDuration) || 0.14) * 1000);
+      const safeStaggerMs = Math.max(0, (Number(this.config.stagger) || 0.04) * 1000);
 
+      // Build clean 1-to-1 flip plans (fromChar -> targetChar directly, NO random corruption)
       const plans = targetChars
         .map((targetChar, index) => {
           const fromChar = fromPhrase[index] || ' ';
@@ -151,9 +175,8 @@
             index,
             from: fromChar,
             target: targetChar,
-            sequence: buildSequence(targetChar, safeFlips, activeCharset),
             start: index * safeStaggerMs,
-            step: -1,
+            flipping: false,
             done: false
           };
         })
@@ -164,22 +187,17 @@
         return 0;
       }
 
+      this.isAnimating = true;
       const totalDuration = plans.reduce(
-        (max, plan) => Math.max(max, plan.start + plan.sequence.length * safeFlipMs),
+        (max, plan) => Math.max(max, plan.start + safeFlipMs + 50),
         0
       );
 
       const startedAt = performance.now();
 
-      const updateTileDOM = (index, current, next, flipping) => {
+      const updateTileDOM = (index, fromChar, toChar, flipping) => {
         const tile = this.tiles[index];
         if (!tile) return;
-
-        tile.current = current;
-        tile.next = next;
-
-        tile.charTop.textContent = current === ' ' ? '\u00A0' : current;
-        tile.charBottom.textContent = (flipping ? next : current) === ' ' ? '\u00A0' : (flipping ? next : current);
 
         if (tile.flaps) {
           tile.flaps.remove();
@@ -187,53 +205,55 @@
         }
 
         if (flipping) {
-          const flapFrag = document.createDocumentFragment();
+          tile.current = fromChar;
+          tile.charTop.textContent = fromChar === ' ' ? '\u00A0' : fromChar;
+          tile.charBottom.textContent = toChar === ' ' ? '\u00A0' : toChar;
+
+          const wrapper = document.createElement('span');
 
           const flapFront = document.createElement('span');
           flapFront.className = 'split-flap-text__flap split-flap-text__flap--front';
           const charFront = document.createElement('span');
           charFront.className = 'split-flap-text__char';
-          charFront.textContent = current === ' ' ? '\u00A0' : current;
+          charFront.textContent = fromChar === ' ' ? '\u00A0' : fromChar;
           flapFront.appendChild(charFront);
 
           const flapBack = document.createElement('span');
           flapBack.className = 'split-flap-text__flap split-flap-text__flap--back';
           const charBack = document.createElement('span');
           charBack.className = 'split-flap-text__char';
-          charBack.textContent = next === ' ' ? '\u00A0' : next;
+          charBack.textContent = toChar === ' ' ? '\u00A0' : toChar;
           flapBack.appendChild(charBack);
 
-          const wrapper = document.createElement('span');
           wrapper.appendChild(flapFront);
           wrapper.appendChild(flapBack);
 
           tile.element.appendChild(wrapper);
           tile.flaps = wrapper;
+        } else {
+          tile.current = toChar;
+          tile.charTop.textContent = toChar === ' ' ? '\u00A0' : toChar;
+          tile.charBottom.textContent = toChar === ' ' ? '\u00A0' : toChar;
         }
       };
 
       const tick = now => {
         const elapsed = now - startedAt;
-        let shouldContinue = false;
+        let allDone = true;
 
         plans.forEach(plan => {
           const localElapsed = elapsed - plan.start;
 
           if (localElapsed < 0) {
-            shouldContinue = true;
+            allDone = false;
             return;
           }
 
-          const step = Math.floor(localElapsed / safeFlipMs);
-
-          if (step < plan.sequence.length) {
-            shouldContinue = true;
-
-            if (step !== plan.step) {
-              plan.step = step;
-              const current = step === 0 ? plan.from : plan.sequence[step - 1];
-              const next = plan.sequence[step];
-              updateTileDOM(plan.index, current, next, true);
+          if (localElapsed < safeFlipMs) {
+            allDone = false;
+            if (!plan.flipping) {
+              plan.flipping = true;
+              updateTileDOM(plan.index, plan.from, plan.target, true);
             }
           } else if (!plan.done) {
             plan.done = true;
@@ -241,11 +261,13 @@
           }
         });
 
-        if (shouldContinue) {
+        if (!allDone) {
           this.rafId = requestAnimationFrame(tick);
         } else {
           this.currentText = targetPhrase;
+          this.isAnimating = false;
           this.rafId = null;
+          this.snapToCurrentPhrase(); // 100% guarantee of clean final state
         }
       };
 
@@ -257,18 +279,23 @@
       if (this.normalizedPhrases.length <= 1) return;
 
       const scheduleNext = delay => {
+        if (this.cycleTimer) clearTimeout(this.cycleTimer);
         this.cycleTimer = window.setTimeout(() => {
-          const nextIndex = this.phraseIndex + 1;
+          if (document.hidden) {
+            scheduleNext(1000);
+            return;
+          }
 
+          const nextIndex = this.phraseIndex + 1;
           if (nextIndex >= this.normalizedPhrases.length && !this.config.loop) return;
 
           this.phraseIndex = nextIndex % this.normalizedPhrases.length;
           const animDuration = this.animateTo(this.normalizedPhrases[this.phraseIndex]);
-          scheduleNext((this.config.cycleDelay || 2600) + animDuration);
+          scheduleNext((this.config.cycleDelay || 3400) + animDuration);
         }, delay);
       };
 
-      scheduleNext(this.config.cycleDelay || 2600);
+      scheduleNext(this.config.cycleDelay || 3400);
     }
 
     destroy() {
