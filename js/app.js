@@ -704,7 +704,7 @@ function initStickyGridScroll() {
 function initPaintbrushInteraction() {
   if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
-  const colors = ['#A44C2E', '#C85A36', '#8A4B38', '#D4AF37'];
+  const colors = ['rgba(164, 76, 46, 0.45)', 'rgba(200, 90, 54, 0.40)', 'rgba(212, 175, 55, 0.35)'];
 
   window.addEventListener('pointerdown', (e) => {
     if (!e.isPrimary) return;
@@ -712,33 +712,32 @@ function initPaintbrushInteraction() {
 
     const splash = document.createElement('div');
     const color = colors[Math.floor(Math.random() * colors.length)];
-    const size = Math.floor(Math.random() * 8) + 14;
 
     splash.style.cssText = `
       position: fixed;
       left: ${e.clientX}px;
       top: ${e.clientY}px;
-      width: ${size}px;
-      height: ${size}px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      background: radial-gradient(circle, ${color} 30%, rgba(164, 76, 46, 0.35) 70%, transparent 100%);
-      transform: translate(-50%, -50%) scale(0.3);
+      background: ${color};
+      filter: blur(1px);
+      transform: translate(-50%, -50%) scale(0.4);
       pointer-events: none;
       z-index: 999999;
-      opacity: 0.85;
-      mix-blend-mode: multiply;
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease-out;
+      opacity: 0.8;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease-out;
     `;
 
     document.body.appendChild(splash);
 
     requestAnimationFrame(() => {
-      splash.style.transform = `translate(-50%, -50%) scale(${1.15 + Math.random() * 0.35})`;
+      splash.style.transform = `translate(-50%, -50%) scale(1.4)`;
       splash.style.opacity = '0';
     });
 
     setTimeout(() => {
       if (splash.parentNode) splash.parentNode.removeChild(splash);
-    }, 500);
+    }, 400);
   });
 }
