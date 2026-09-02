@@ -359,13 +359,19 @@ h1, h2, h3, h4, h5, .font-serif {
   flex-direction: column;
   justify-content: space-between;
   transform: translateX(100%);
-  transition: transform var(--transition-smooth);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform var(--transition-smooth), opacity var(--transition-fast), visibility var(--transition-fast);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 
 .mobile-drawer.is-open {
   transform: translateX(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .mobile-drawer-header {
@@ -2108,6 +2114,51 @@ h1, h2, h3, h4, h5, .font-serif {
     overflow-x: hidden !important;
     max-width: 100% !important;
     width: 100% !important;
+  }
+
+  .lodging-card {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .lodging-content {
+    padding: clamp(16px, 4vw, 24px) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .lodging-amenities {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    margin: var(--space-md) 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .amenity-tag {
+    display: inline-flex !important;
+    align-items: center !important;
+    font-size: 0.8125rem !important;
+    padding: 6px 12px !important;
+    background: rgba(20, 20, 19, 0.05) !important;
+    border-radius: var(--radius-sm) !important;
+    color: var(--color-ink-800) !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    max-width: 100% !important;
+  }
+
+  .lodging-media {
+    width: 100% !important;
+    max-width: 100% !important;
+    aspect-ratio: 16 / 10 !important;
+    overflow: hidden !important;
   }
 
   .mobile-quick-action-bar {
