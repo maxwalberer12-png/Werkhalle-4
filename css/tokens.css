@@ -79,7 +79,8 @@
   /* Z-Index Hierarchy */
   --z-base: 1;
   --z-sticky: 1000;
-  --z-drawer: 9000;
-  --z-header: 9500;
+  --z-sticky-bar: 8500;
+  --z-header: 9000;
+  --z-drawer: 9800;
   --z-modal: 10000;
 }

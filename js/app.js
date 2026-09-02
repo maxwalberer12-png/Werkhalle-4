@@ -177,6 +177,7 @@ function initMobileNav() {
     drawer.classList.add('is-open');
     toggleBtn.classList.add('is-open');
     toggleBtn.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('mobile-drawer-is-open');
     lockBodyScroll();
   };
 
@@ -184,6 +185,7 @@ function initMobileNav() {
     drawer.classList.remove('is-open');
     toggleBtn.classList.remove('is-open');
     toggleBtn.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('mobile-drawer-is-open');
     unlockBodyScroll();
   };
 

@@ -2176,11 +2176,20 @@ h1, h2, h3, h4, h5, .font-serif {
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: var(--radius-full);
     padding: 6px 8px;
-    z-index: 999;
+    z-index: var(--z-sticky-bar);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
     justify-content: space-around;
     align-items: center;
     gap: 6px;
+    transition: opacity var(--transition-fast), transform var(--transition-fast), visibility var(--transition-fast);
+  }
+
+  body.mobile-drawer-is-open .mobile-quick-action-bar,
+  .mobile-drawer.is-open ~ .mobile-quick-action-bar {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: translateY(100px) !important;
   }
 
   .mobile-quick-action-item {
