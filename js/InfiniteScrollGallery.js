@@ -225,26 +225,54 @@
       if (this.bottomIndicator) {
         gsap.set(this.bottomIndicator, { display: 'none' });
       }
-      if (this.col1) gsap.set(this.col1, { y: 0, clearProps: 'transform' });
-      if (this.col2) gsap.set(this.col2, { y: 0, clearProps: 'transform' });
 
-      // Animate gallery cards on mobile scroll with clean 2D animations (zero 3D projection overflow)
-      this.cards.forEach((card) => {
+      // Smooth subtle counter-parallax on mobile columns
+      if (this.col1) {
+        gsap.to(this.col1, {
+          y: -60,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: this.root,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.8
+          }
+        });
+      }
+
+      if (this.col2) {
+        gsap.to(this.col2, {
+          y: 60,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: this.root,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.8
+          }
+        });
+      }
+
+      // Rich entrance reveals for each card
+      this.cards.forEach((card, idx) => {
         gsap.fromTo(
           card,
           {
-            opacity: 0.82,
-            y: 20
+            opacity: 0,
+            y: 45,
+            scale: 0.93
           },
           {
             opacity: 1,
             y: 0,
-            ease: 'power1.out',
+            scale: 1,
+            duration: 0.85,
+            delay: (idx % 2) * 0.12,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: card,
-              start: 'top 95%',
-              end: 'top 70%',
-              scrub: 0.6,
+              start: 'top 90%',
+              toggleActions: 'play none none reverse',
               invalidateOnRefresh: true
             }
           }

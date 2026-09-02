@@ -42,15 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   if (typeof initScrollExpand === 'function') {
+    const isMobile = window.innerWidth < 768;
     initScrollExpand('#hero-scroll-expand', {
-      startWidth: window.innerWidth < 768 ? 86 : 56,
-      startHeight: window.innerWidth < 768 ? 68 : 62,
-      startRadius: 24,
+      startWidth: isMobile ? 60 : 56,
+      startHeight: isMobile ? 48 : 62,
+      startRadius: isMobile ? 20 : 24,
       endRadius: 0,
       mediaZoom: 1.35,
-      scrollDistance: 1.2,
-      holdDistance: 0.35,
-      smoothing: 0.1,
+      scrollDistance: isMobile ? 1.0 : 1.2,
+      holdDistance: isMobile ? 0.2 : 0.35,
+      smoothing: isMobile ? 0 : 0.1,
       overlayScrim: 0.52,
       useWindowScroll: true,
       keepTitleOnScroll: true
@@ -642,30 +643,29 @@ function initCylinderPerspectiveScroll() {
   const isMobile = window.innerWidth <= 768;
 
   const targetElements = document.querySelectorAll(
-    '.hero-metrics-strip, .press-card, .section-header, .workshop-card, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container, .stream-card, .faq-item, .sticky-grid-card, .story-quote-unconventional, .story-text-group, .story-visual-stage'
+    '.hero-metrics-strip, .press-card, .section-header, .workshop-card, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container, .faq-item, .story-quote-unconventional, .story-text-group, .story-visual-stage'
   );
 
   targetElements.forEach((el) => {
     if (isMobile) {
-      // Mobile: Pure buttery smooth 2D kinetic reveal
+      // Mobile: Punchy, elegant, distinct spring reveals on viewport enter
       gsap.fromTo(
         el,
         {
-          opacity: 0.2,
-          y: 28,
-          scale: 0.96
+          opacity: 0,
+          y: 40,
+          scale: 0.95
         },
         {
           opacity: 1,
           y: 0,
           scale: 1,
-          duration: 0.7,
-          ease: 'power2.out',
+          duration: 0.8,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: el,
-            start: 'top 94%',
-            end: 'top 65%',
-            scrub: 0.5,
+            start: 'top 88%',
+            toggleActions: 'play none none reverse',
             invalidateOnRefresh: true
           }
         }
@@ -742,7 +742,7 @@ function initStickyGridScroll() {
   if (!section || !container || !textPhase1 || !textPhase2 || !mediaPhase1 || !mediaPhase2) return;
 
   if (isMobile) {
-    // Mobile: Staggered smooth kinetic reveal for both story phases
+    // Mobile: Dynamic staggered reveals for story headings and image cards
     const phases = [
       { text: textPhase1, media: mediaPhase1 },
       { text: textPhase2, media: mediaPhase2 }
@@ -752,17 +752,16 @@ function initStickyGridScroll() {
       if (text) {
         gsap.fromTo(
           text,
-          { opacity: 0.25, y: 25 },
+          { opacity: 0, y: 35 },
           {
             opacity: 1,
             y: 0,
-            duration: 0.75,
-            ease: 'power2.out',
+            duration: 0.85,
+            ease: 'power3.out',
             scrollTrigger: {
               trigger: text,
-              start: 'top 92%',
-              end: 'top 65%',
-              scrub: 0.5,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse',
               invalidateOnRefresh: true
             }
           }
@@ -773,18 +772,18 @@ function initStickyGridScroll() {
         cards.forEach((card, idx) => {
           gsap.fromTo(
             card,
-            { opacity: 0.25, y: 25 + idx * 8, scale: 0.95 },
+            { opacity: 0, y: 45 + idx * 12, scale: 0.93 },
             {
               opacity: 1,
               y: 0,
               scale: 1,
-              duration: 0.75,
-              ease: 'power2.out',
+              duration: 0.85,
+              delay: idx * 0.1,
+              ease: 'power3.out',
               scrollTrigger: {
                 trigger: card,
-                start: 'top 94%',
-                end: 'top 68%',
-                scrub: 0.5,
+                start: 'top 88%',
+                toggleActions: 'play none none reverse',
                 invalidateOnRefresh: true
               }
             }
