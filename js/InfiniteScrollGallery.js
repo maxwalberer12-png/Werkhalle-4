@@ -220,13 +220,13 @@
 
     initMobileFallback() {
       if (this.header) {
-        gsap.set(this.header, { opacity: 1, y: 0, scale: 1, display: 'block' });
+        gsap.set(this.header, { opacity: 1, y: 0, scale: 1, display: 'block', clearProps: 'transform' });
       }
       if (this.bottomIndicator) {
-        gsap.set(this.bottomIndicator, { opacity: 1, y: 0 });
+        gsap.set(this.bottomIndicator, { display: 'none' });
       }
-      if (this.col1) gsap.set(this.col1, { y: 0 });
-      if (this.col2) gsap.set(this.col2, { y: 0 });
+      if (this.col1) gsap.set(this.col1, { y: 0, clearProps: 'transform' });
+      if (this.col2) gsap.set(this.col2, { y: 0, clearProps: 'transform' });
 
       // Animate gallery cards on mobile scroll with ScrollTrigger
       this.cards.forEach((card) => {
@@ -240,10 +240,10 @@
         gsap.fromTo(
           card,
           {
-            rotateX: -10,
-            scale: 0.90,
-            opacity: 0.72,
-            y: 28
+            rotateX: -8,
+            scale: 0.92,
+            opacity: 0.75,
+            y: 24
           },
           {
             rotateX: 0,
@@ -253,8 +253,8 @@
             ease: 'power1.out',
             scrollTrigger: {
               trigger: card,
-              start: 'top 94%',
-              end: 'top 60%',
+              start: 'top 95%',
+              end: 'top 65%',
               scrub: 0.8,
               invalidateOnRefresh: true
             }

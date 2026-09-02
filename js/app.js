@@ -498,7 +498,7 @@ function initCylinderPerspectiveScroll() {
   const isMobile = window.innerWidth <= 768;
 
   const targetElements = document.querySelectorAll(
-    '.hero-metrics-strip, .press-card, .section-header, .workshop-card, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container, .stream-card, .faq-item'
+    '.hero-metrics-strip, .press-card, .section-header, .workshop-card, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container, .stream-card, .faq-item, .sticky-grid-card, .story-quote-unconventional'
   );
 
   targetElements.forEach((el) => {
@@ -554,13 +554,12 @@ function initCylinderPerspectiveScroll() {
 }
 
 /* --------------------------------------------------------------------------
-   9. STICKY GRID SCROLL CONTROLLER (THEO PLAWINSKI CODROPS ANIMATION — DESKTOP & MOBILE)
+   9. STICKY GRID SCROLL CONTROLLER (THEO PLAWINSKI CODROPS ANIMATION — DESKTOP)
    -------------------------------------------------------------------------- */
 function initStickyGridScroll() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.innerWidth <= 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-  const isMobile = window.innerWidth <= 1024;
   const section = document.querySelector('.sticky-grid-section');
   const container = document.querySelector('.sticky-grid-container');
   const textPhase1 = document.querySelector('.sticky-text-phase.phase-1');
