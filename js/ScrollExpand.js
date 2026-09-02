@@ -21,14 +21,14 @@
       const isMobile = window.innerWidth < 768;
 
       this.config = {
-        startWidth: isMobile ? 86 : 56,
-        startHeight: isMobile ? 68 : 62,
-        startRadius: 24,
+        startWidth: isMobile ? 62 : 56,
+        startHeight: isMobile ? 50 : 62,
+        startRadius: isMobile ? 20 : 24,
         endRadius: 0,
         mediaZoom: 1.35,
-        scrollDistance: 1.2,
-        holdDistance: 0.35,
-        smoothing: 0.1,
+        scrollDistance: isMobile ? 1.0 : 1.2,
+        holdDistance: isMobile ? 0.2 : 0.35,
+        smoothing: isMobile ? 0 : 0.1,
         overlayScrim: 0.52,
         useWindowScroll: true,
         keepTitleOnScroll: true,
@@ -101,8 +101,9 @@
     measure() {
       const c = this.config;
       const isMobile = window.innerWidth < 768;
-      c.startWidth = isMobile ? 86 : 56;
-      c.startHeight = isMobile ? 68 : 62;
+      c.startWidth = isMobile ? 62 : 56;
+      c.startHeight = isMobile ? 50 : 62;
+      c.smoothing = isMobile ? 0 : 0.1;
 
       this.stageH = c.useWindowScroll ? window.innerHeight : this.root.clientHeight;
       if (this.stageH <= 0) return;

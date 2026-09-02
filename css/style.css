@@ -37,7 +37,7 @@ html {
 }
 
 html, body {
-  overflow-x: hidden !important;
+  overflow-x: clip;
   position: relative;
   width: 100%;
   max-width: 100%;
@@ -48,7 +48,7 @@ html, body {
 }
 
 .site-wrapper {
-  overflow-x: hidden !important;
+  overflow-x: clip;
   position: relative;
   width: 100%;
   max-width: 100%;
@@ -501,7 +501,7 @@ h1, h2, h3, h4, h5, .font-serif {
   padding-top: 0;
   padding-bottom: clamp(48px, 6vw, 80px);
   position: relative;
-  overflow: hidden !important;
+  overflow: visible;
   max-width: 100%;
   width: 100%;
 }
@@ -2083,16 +2083,19 @@ h1, h2, h3, h4, h5, .font-serif {
   }
 
   html, body, .site-wrapper {
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
     width: 100% !important;
     max-width: 100% !important;
     position: relative !important;
   }
 
-  section, header, footer, main, .container, .hero-section, .sticky-grid-section, .parallax-gallery-section {
+  section, header, footer, main, .container {
     max-width: 100% !important;
-    overflow-x: hidden !important;
     box-sizing: border-box !important;
+  }
+
+  .hero-section {
+    overflow: visible !important;
   }
 
   .hero-section::before {
@@ -2102,7 +2105,7 @@ h1, h2, h3, h4, h5, .font-serif {
   .hero-scroll-expand-container {
     width: 100% !important;
     max-width: 100% !important;
-    overflow: hidden !important;
+    overflow: visible !important;
   }
 
   .sticky-grid-section,
@@ -2111,7 +2114,6 @@ h1, h2, h3, h4, h5, .font-serif {
   .parallax-gallery-section,
   .parallax-gallery-viewport,
   .stream-columns-stage {
-    overflow-x: hidden !important;
     max-width: 100% !important;
     width: 100% !important;
   }
