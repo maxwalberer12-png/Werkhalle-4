@@ -574,29 +574,29 @@ function initStickyGridScroll() {
 
   // 3D perspective setup on container
   gsap.set(container, {
-    transformPerspective: isMobile ? 700 : 1000,
+    transformPerspective: 1000,
     transformOrigin: 'center center',
     force3D: true
   });
 
   // Initial hardware accelerated states
-  gsap.set(textPhase1, { opacity: 1, yPercent: isMobile ? 0 : -50, pointerEvents: 'auto' });
-  gsap.set(textPhase2, { opacity: 0, yPercent: isMobile ? 15 : -38, pointerEvents: 'none' });
+  gsap.set(textPhase1, { opacity: 1, yPercent: -50, pointerEvents: 'auto' });
+  gsap.set(textPhase2, { opacity: 0, yPercent: -38, pointerEvents: 'none' });
   
   gsap.set(mediaPhase1, { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' });
-  gsap.set(mediaPhase2, { opacity: 0, y: isMobile ? 25 : 35, scale: 0.95, pointerEvents: 'none' });
+  gsap.set(mediaPhase2, { opacity: 0, y: 35, scale: 0.95, pointerEvents: 'none' });
 
-  if (col1_p1) gsap.set(col1_p1, { y: isMobile ? 12 : 25 });
-  if (col2_p1) gsap.set(col2_p1, { y: isMobile ? -12 : -25 });
-  if (col1_p2) gsap.set(col1_p2, { y: isMobile ? 12 : 25 });
-  if (col2_p2) gsap.set(col2_p2, { y: isMobile ? -12 : -25 });
+  if (col1_p1) gsap.set(col1_p1, { y: 25 });
+  if (col2_p1) gsap.set(col2_p1, { y: -25 });
+  if (col1_p2) gsap.set(col1_p2, { y: 25 });
+  if (col2_p2) gsap.set(col2_p2, { y: -25 });
 
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: section,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: isMobile ? 1.0 : 1.4
+      scrub: 1.4
     }
   });
 
@@ -604,10 +604,10 @@ function initStickyGridScroll() {
   tl.fromTo(
     container,
     {
-      rotateX: isMobile ? -6 : -8,
-      scale: isMobile ? 0.94 : 0.92,
-      z: isMobile ? -30 : -50,
-      y: isMobile ? 18 : 30,
+      rotateX: -8,
+      scale: 0.92,
+      z: -50,
+      y: 30,
       opacity: 0.75
     },
     {
@@ -623,15 +623,15 @@ function initStickyGridScroll() {
   );
 
   // 2. Phase 1 Internal Column Parallax Flow (0.0 -> 0.5)
-  if (col1_p1) tl.to(col1_p1, { y: isMobile ? -25 : -45, ease: 'none', duration: 0.5 }, 0);
-  if (col2_p1) tl.to(col2_p1, { y: isMobile ? 25 : 45, ease: 'none', duration: 0.5 }, 0);
+  if (col1_p1) tl.to(col1_p1, { y: -45, ease: 'none', duration: 0.5 }, 0);
+  if (col2_p1) tl.to(col2_p1, { y: 45, ease: 'none', duration: 0.5 }, 0);
 
   // 3. Synchronized Butter-Smooth Transition: Phase 1 Out (0.36 -> 0.56)
   tl.to(
     textPhase1,
     {
       opacity: 0,
-      yPercent: isMobile ? -15 : -62,
+      yPercent: -62,
       duration: 0.20,
       ease: 'power2.inOut',
       pointerEvents: 'none'
@@ -643,7 +643,7 @@ function initStickyGridScroll() {
     mediaPhase1,
     {
       opacity: 0,
-      y: isMobile ? -20 : -30,
+      y: -30,
       scale: 0.96,
       duration: 0.20,
       ease: 'power2.inOut',
@@ -657,7 +657,7 @@ function initStickyGridScroll() {
     textPhase2,
     {
       opacity: 1,
-      yPercent: isMobile ? 0 : -50,
+      yPercent: -50,
       duration: 0.20,
       ease: 'power2.inOut',
       pointerEvents: 'auto'
@@ -679,17 +679,17 @@ function initStickyGridScroll() {
   );
 
   // 5. Phase 2 Internal Column Parallax Flow (0.5 -> 1.0)
-  if (col1_p2) tl.to(col1_p2, { y: isMobile ? -25 : -45, ease: 'none', duration: 0.5 }, 0.5);
-  if (col2_p2) tl.to(col2_p2, { y: isMobile ? 25 : 45, ease: 'none', duration: 0.5 }, 0.5);
+  if (col1_p2) tl.to(col1_p2, { y: -45, ease: 'none', duration: 0.5 }, 0.5);
+  if (col2_p2) tl.to(col2_p2, { y: 45, ease: 'none', duration: 0.5 }, 0.5);
 
   // 6. Phase Final: Gentle 3D Cylinder Curve Exit (0.86 -> 1.0)
   tl.to(
     container,
     {
-      rotateX: isMobile ? 6 : 8,
-      scale: isMobile ? 0.94 : 0.92,
-      z: isMobile ? -30 : -50,
-      y: isMobile ? -18 : -30,
+      rotateX: 8,
+      scale: 0.92,
+      z: -50,
+      y: -30,
       opacity: 0.75,
       duration: 0.14,
       ease: 'power1.in'
