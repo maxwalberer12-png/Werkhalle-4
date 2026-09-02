@@ -19,7 +19,7 @@ const DEFAULT_WORKSHOPS = [
     title: 'Cyanotypie: Bilder aus Pflanzen & Licht',
     category: 'Fotogramm & Natur',
     format: 'Tages- & Wochenendkurse',
-    image: 'assets/images/stephanie_heiduk_portrait.jpg',
+    image: 'assets/images/stephanie_heiduk_portrait.webp',
     description: 'Historisches Edeldruckverfahren: Mit gesammelten Pflanzen, UV-Licht und mineralischen Emulsionen entstehen unverwechselbare preußischblaue Unikate.',
     isBooked: false
   },
@@ -28,7 +28,7 @@ const DEFAULT_WORKSHOPS = [
     title: 'Asiatische Blumenkunst & Florale Plastik',
     category: 'Objektkunst',
     format: 'Saisonale Termine',
-    image: 'assets/images/pressebild_blumenkunst.jpg',
+    image: 'assets/images/pressebild_blumenkunst.webp',
     description: 'Form, Linie und Reduktion: Gestaltungskurse nach asiatischen Prinzipien und experimenteller Objektkunst mit Naturmaterialien.',
     isBooked: false
   },
@@ -37,7 +37,7 @@ const DEFAULT_WORKSHOPS = [
     title: 'Team-Klausuren & Denkwerkstatt',
     category: 'Klausuren & Retreats',
     format: 'Individuelle Zeiträume',
-    image: 'assets/images/airbnb_02_essbereich.jpeg',
+    image: 'assets/images/airbnb_02_essbereich.webp',
     description: 'Rückzugsort für Arbeitsgruppen, Agenturen und Initiativen. Der massive 8-Personen-Tisch und die Werk-Küche bieten die perfekte Klausur-Infrastruktur.',
     isBooked: false
   }
@@ -48,14 +48,14 @@ const DEFAULT_RESIDENCIES = [
     id: 'res-1',
     title: 'Zirkus-Residenz & Fire & Flow',
     subtitle: 'Bayern & Böhmen',
-    image: 'assets/images/residenz_treffpunkt_kuenstler.jpg',
+    image: 'assets/images/residenz_treffpunkt_kuenstler.webp',
     description: 'Zeitgenössischer Zirkus, Akrobatik und Feuershows in Zusammenarbeit mit Künstlern aus Bayern und Tschechien (z. B. Los Cirkulos).'
   },
   {
     id: 'res-2',
     title: 'Artists in Residence & Skulptur',
     subtitle: 'Freies Atelier',
-    image: 'assets/images/stephanie_heiduk_atelier.jpg',
+    image: 'assets/images/stephanie_heiduk_atelier.webp',
     description: 'Arbeitsaufenthalte für bildende Künstler, Bildhauer und Autoren mit freiem Zugang zu Atelier- und Werkstattflächen.'
   }
 ];
@@ -65,35 +65,35 @@ const DEFAULT_GALLERY = [
     id: 'gal-1',
     title: 'Künstlerbegegnung Werkhalle 4',
     category: 'kunst',
-    image: 'assets/images/residenz_treffpunkt_kuenstler.jpg',
+    image: 'assets/images/residenz_treffpunkt_kuenstler.webp',
     description: 'Austausch und Probenarbeit von Künstlern aus Bayern und Tschechien während der Zirkus-Residency.'
   },
   {
     id: 'gal-2',
     title: 'Florale Installation',
     category: 'kunst',
-    image: 'assets/images/pressebild_blumenkunst.jpg',
+    image: 'assets/images/pressebild_blumenkunst.webp',
     description: 'Asiatische Blumenkunst und florale Skulptur in den Hallenräumen.'
   },
   {
     id: 'gal-3',
     title: 'Kaminlounge & Salon',
     category: 'raum',
-    image: 'assets/images/airbnb_01_wohnbereich_kamin.jpeg',
+    image: 'assets/images/airbnb_01_wohnbereich_kamin.webp',
     description: 'Wohnbereich mit Kaminofen, botanischer Wandgestaltung und Designermöbeln.'
   },
   {
     id: 'gal-4',
     title: 'Die Tafel & Essbereich',
     category: 'raum',
-    image: 'assets/images/airbnb_02_essbereich.jpeg',
+    image: 'assets/images/airbnb_02_essbereich.webp',
     description: 'Massiver Holztisch für gemeinsame Mahlzeiten, Kursrunden und Workshops.'
   },
   {
     id: 'gal-5',
     title: 'Werk-Küche mit Backstein',
     category: 'raum',
-    image: 'assets/images/airbnb_03_kueche.jpeg',
+    image: 'assets/images/airbnb_03_kueche.webp',
     description: 'Voll ausgestattete Küche mit historischem Sichtmauerwerk.'
   }
 ];

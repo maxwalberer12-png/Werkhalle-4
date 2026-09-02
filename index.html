@@ -11,7 +11,10 @@
   <meta property="og:title" content="Werkhalle 4 — Raum für Kunst, Workshops & Kultur">
   <meta property="og:description" content="Historisches Bahngebäude neu interpretiert. Kunst, offene Werkstatt, Kulturbegegnung und Zu Gast im Atelier-Loft.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="assets/images/stephanie_heiduk_atelier.jpg">
+  <meta property="og:image" content="assets/images/stephanie_heiduk_atelier.webp">
+
+  <!-- LCP Critical Image Preload -->
+  <link rel="preload" as="image" href="assets/images/werkhalle_hero_building.webp" type="image/webp" fetchpriority="high">
 
   <!-- Local Webfonts (100% DSGVO-compliant / Zero external CDN calls) -->
   <link rel="stylesheet" href="css/fonts.css">
@@ -45,10 +48,8 @@
       </nav>
 
       <div class="nav-actions">
-        <button class="btn btn-secondary" data-open-modal="inquiry" data-inquiry-type="allgemein">
-          Anfrage senden
-        </button>
-        <button class="mobile-toggle" aria-label="Menü öffnen">
+        <a href="#kontakt" class="btn btn-primary" data-open-modal="inquiry">Anfragen</a>
+        <button class="mobile-toggle" aria-label="Menü öffnen" aria-expanded="false">
           <span></span>
           <span></span>
           <span></span>
@@ -57,23 +58,21 @@
     </div>
   </header>
 
-  <!-- Mobile Drawer -->
-  <div class="mobile-drawer">
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer" aria-label="Mobiles Navigationsmenü">
     <ul class="mobile-nav-links">
       <li><a href="#ort" class="mobile-nav-link">Der Ort</a></li>
-      <li><a href="#workshops" class="mobile-nav-link">Workshops & Kurse</a></li>
+      <li><a href="#workshops" class="mobile-nav-link">Workshops</a></li>
       <li><a href="#residenzen" class="mobile-nav-link">Residenzen & Kultur</a></li>
-      <li><a href="#galerie" class="mobile-nav-link">Galerie & Kunst</a></li>
+      <li><a href="#galerie" class="mobile-nav-link">Galerie & Einblicke</a></li>
       <li><a href="#zugast" class="mobile-nav-link">Zu Gast im Loft</a></li>
-      <li><a href="#kontakt" class="mobile-nav-link">Kontakt & Anfragen</a></li>
+      <li><a href="#kontakt" class="mobile-nav-link">Kontakt</a></li>
     </ul>
-    <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
-      <button class="btn btn-primary" data-open-modal="inquiry" data-inquiry-type="allgemein" style="width: 100%;">
-        Anfrage stellen
-      </button>
-      <p style="font-size: 0.75rem; color: var(--color-ink-500); text-align: center; text-transform: uppercase; letter-spacing: 0.08em;">
-        Werkhalle 4 · Lagerplatz 4 · Furth im Wald
-      </p>
+    <div>
+      <a href="#kontakt" class="btn btn-primary" style="width: 100%;" data-open-modal="inquiry">Termin / Raum anfragen</a>
+      <div style="margin-top: var(--space-md); font-size: 0.8125rem; color: var(--color-ink-500);">
+        Stephanie Heiduk · Lagerplatz 4 · 93437 Furth im Wald
+      </div>
     </div>
   </div>
 
@@ -87,7 +86,7 @@
         <div class="scroll-expand__track">
           <div class="scroll-expand__stage">
             <div class="scroll-expand__frame">
-              <img src="assets/images/werkhalle_hero_building.jpg" alt="Werkhalle 4 — Historisches Bahngebäude am Lagerplatz 4" class="scroll-expand__media" loading="eager" draggable="false">
+              <img src="assets/images/werkhalle_hero_building.webp" alt="Werkhalle 4 — Historisches Bahngebäude am Lagerplatz 4" class="scroll-expand__media" fetchpriority="high" decoding="async" width="1400" height="933" draggable="false">
               
               <div class="scroll-expand__scrim"></div>
 
@@ -204,13 +203,13 @@
             <div class="sticky-grid-matrix">
               <div class="sticky-col sticky-col-1">
                 <div class="sticky-grid-card card-living">
-                  <img src="assets/images/airbnb_01_wohnbereich_kamin.jpeg" alt="Kamin-Salon und Interieur der Werkhalle 4" loading="lazy">
+                  <img src="assets/images/airbnb_01_wohnbereich_kamin.webp" alt="Kamin-Salon und Interieur der Werkhalle 4" loading="lazy" decoding="async" width="600" height="450">
                   <span class="sticky-card-tag">Atelier Loft</span>
                 </div>
               </div>
               <div class="sticky-col sticky-col-2">
                 <div class="sticky-grid-card card-atelier">
-                  <img src="assets/images/stephanie_heiduk_atelier.jpg" alt="Atelier-Einblick Werkhalle 4" loading="lazy">
+                  <img src="assets/images/stephanie_heiduk_atelier.webp" alt="Atelier-Einblick Werkhalle 4" loading="lazy" decoding="async" width="600" height="450">
                   <span class="sticky-card-tag">Kunstatelier</span>
                 </div>
               </div>
@@ -227,13 +226,13 @@
             <div class="sticky-grid-matrix">
               <div class="sticky-col sticky-col-1">
                 <div class="sticky-grid-card card-historic">
-                  <img src="assets/images/werkhalle_entstehung_presse.jpg" alt="Stephanie Heiduk in der Entstehungsphase der Werkhalle 4" loading="lazy">
+                  <img src="assets/images/werkhalle_entstehung_presse.webp" alt="Stephanie Heiduk in der Entstehungsphase der Werkhalle 4" loading="lazy" decoding="async" width="600" height="450">
                   <span class="sticky-card-tag">Workshops</span>
                 </div>
               </div>
               <div class="sticky-col sticky-col-2">
                 <div class="sticky-grid-card card-building">
-                  <img src="assets/images/werkhalle_hero_building.jpg" alt="Historisches Industrie-Erbe von 1898" loading="lazy">
+                  <img src="assets/images/werkhalle_hero_building.webp" alt="Historisches Industrie-Erbe von 1898" loading="lazy" decoding="async" width="600" height="450">
                   <span class="sticky-card-tag">Bahnareal 98</span>
                 </div>
               </div>
@@ -284,7 +283,7 @@
         <!-- Cyanotypie -->
         <article class="workshop-card">
           <div class="workshop-card-media">
-            <img src="assets/images/stephanie_heiduk_portrait.jpg" alt="Cyanotypie & Botanischer Blaudruck" loading="lazy">
+            <img src="assets/images/stephanie_heiduk_portrait.webp" alt="Cyanotypie & Botanischer Blaudruck" loading="lazy" decoding="async" width="600" height="400">
             <span class="workshop-card-badge">Fotogramm & Natur</span>
           </div>
           <div class="workshop-card-body">
@@ -304,7 +303,7 @@
         <!-- Asiatische Blumenkunst -->
         <article class="workshop-card">
           <div class="workshop-card-media">
-            <img src="assets/images/pressebild_blumenkunst.jpg" alt="Asiatische Blumenkunst und Ikebana" loading="lazy">
+            <img src="assets/images/pressebild_blumenkunst.webp" alt="Asiatische Blumenkunst und Ikebana" loading="lazy" decoding="async" width="600" height="400">
             <span class="workshop-card-badge">Objektkunst</span>
           </div>
           <div class="workshop-card-body">
@@ -324,7 +323,7 @@
         <!-- Team-Klausuren & Denkwerkstatt -->
         <article class="workshop-card">
           <div class="workshop-card-media">
-            <img src="assets/images/airbnb_02_essbereich.jpeg" alt="Massiver Konferenztisch für Teamklausuren" loading="lazy">
+            <img src="assets/images/airbnb_02_essbereich.webp" alt="Massiver Konferenztisch für Teamklausuren" loading="lazy" decoding="async" width="600" height="400">
             <span class="workshop-card-badge">Klausuren & Retreats</span>
           </div>
           <div class="workshop-card-body">
@@ -396,7 +395,7 @@
 
         <div style="position: relative;">
           <div style="border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-card); aspect-ratio: 4/3.2;">
-            <img src="assets/images/residenz_treffpunkt_kuenstler.jpg" alt="Künstler und Besucher bei der Residenz in der Werkhalle 4" loading="lazy">
+            <img src="assets/images/residenz_treffpunkt_kuenstler.webp" alt="Künstler und Besucher bei der Residenz in der Werkhalle 4" loading="lazy" decoding="async" width="800" height="600">
           </div>
         </div>
       </div>
@@ -429,7 +428,7 @@
           <!-- Column 1 (Left Track - 5 Cards) -->
           <div class="stream-col stream-col-1">
             <div class="stream-card tall" id="sc-1" data-category="kunst" data-title="Kulturresidenz & Begegnung" data-desc="Grenzüberschreitender Austausch und Probenarbeit von Künstlern aus Bayern und Böhmen.">
-              <img src="assets/images/residenz_treffpunkt_kuenstler.jpg" alt="Künstlergruppe Werkhalle 4" class="stream-card-media" loading="lazy">
+              <img src="assets/images/residenz_treffpunkt_kuenstler.webp" alt="Künstlergruppe Werkhalle 4" class="stream-card-media" loading="lazy" decoding="async" width="600" height="800">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Kulturresidenz</h3>
                 <p class="stream-card-desc">Deutsch-Tschechischer Kulturaustausch & Artist-in-Residence</p>
@@ -438,7 +437,7 @@
             </div>
 
             <div class="stream-card square offset-right-sm" id="sc-3" data-category="raum" data-title="Werk-Küche mit Backstein" data-desc="Historisches Sichtmauerwerk, Holzarbeitsplatten und vollwertige Ausstattung.">
-              <img src="assets/images/airbnb_03_kueche.jpeg" alt="Küche mit Backsteinwand" class="stream-card-media" loading="lazy">
+              <img src="assets/images/airbnb_03_kueche.webp" alt="Küche mit Backsteinwand" class="stream-card-media" loading="lazy" decoding="async" width="600" height="600">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Werk-Küche</h3>
                 <p class="stream-card-desc">Original-Sichtmauerwerk von 1898</p>
@@ -447,7 +446,7 @@
             </div>
 
             <div class="stream-card tall offset-left-sm" id="sc-5" data-category="kunst" data-title="Florale Skulptur" data-desc="Form, Linie und Reduktion: Kunst nach asiatischen Gestaltungsprinzipien.">
-              <img src="assets/images/pressebild_blumenkunst.jpg" alt="Florale Kunstinstallation" class="stream-card-media" loading="lazy">
+              <img src="assets/images/pressebild_blumenkunst.webp" alt="Florale Kunstinstallation" class="stream-card-media" loading="lazy" decoding="async" width="600" height="800">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Florale Skulptur</h3>
                 <p class="stream-card-desc">Asiatische Blumenkunst & Ikebana-Installationen</p>
@@ -456,7 +455,7 @@
             </div>
 
             <div class="stream-card wide offset-right-sm" id="sc-7" data-category="raum" data-title="Blaues Schlafgemach" data-desc="Beruhigende Farbgebung, erstklassiger Schlafkomfort und Blick in den Garten.">
-              <img src="assets/images/airbnb_04_schlafzimmer_blau.jpeg" alt="Blaues Schlafzimmer" class="stream-card-media" loading="lazy">
+              <img src="assets/images/airbnb_04_schlafzimmer_blau.webp" alt="Blaues Schlafzimmer" class="stream-card-media" loading="lazy" decoding="async" width="800" height="500">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Blaues Schlafgemach</h3>
                 <p class="stream-card-desc">Ruhiger Rückzugsort im Loft</p>
@@ -465,7 +464,7 @@
             </div>
 
             <div class="stream-card medium" id="sc-9" data-category="raum" data-title="Studio-Schlafbereich" data-desc="Spielerische Typografie, angenehme Lichtstimmungen und hochwertige Bettwäsche.">
-              <img src="assets/images/airbnb_07_schlafzimmer_2_queensize.jpeg" alt="Queensize Schlafbereich" class="stream-card-media" loading="lazy">
+              <img src="assets/images/airbnb_07_schlafzimmer_2_queensize.webp" alt="Queensize Schlafbereich" class="stream-card-media" loading="lazy" decoding="async" width="600" height="600">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Studio-Schlafbereich</h3>
                 <p class="stream-card-desc">Designkomfort für Gäste & Residenzkünstler</p>
@@ -477,7 +476,7 @@
           <!-- Column 2 (Right Track - 4 Cards, Staggered) -->
           <div class="stream-col stream-col-2">
             <div class="stream-card medium offset-right-sm" id="sc-2" data-category="raum" data-title="Kaminlounge & Salon" data-desc="Gemütlicher Mittelpunkt des Lofts mit knisterndem Feuer und kuratierter Kunst.">
-              <img src="assets/images/airbnb_01_wohnbereich_kamin.jpeg" alt="Kaminbereich Werkhalle 4" class="stream-card-media" loading="lazy">
+              <img src="assets/images/airbnb_01_wohnbereich_kamin.webp" alt="Kaminbereich Werkhalle 4" class="stream-card-media" loading="lazy" decoding="async" width="600" height="600">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Kaminlounge</h3>
                 <p class="stream-card-desc">Botanische Wandgestaltung & Designer-Kaminofen</p>
@@ -486,7 +485,7 @@
             </div>
 
             <div class="stream-card medium offset-left-sm" id="sc-4" data-category="kunst" data-title="Atelier & Werkstatt" data-desc="Offener Freiraum für künstlerische Prozesse, Entwürfe und handwerkliche Vertiefung.">
-              <img src="assets/images/stephanie_heiduk_atelier.jpg" alt="Atelieraufnahme Werkhalle 4" class="stream-card-media" loading="lazy">
+              <img src="assets/images/stephanie_heiduk_atelier.webp" alt="Atelieraufnahme Werkhalle 4" class="stream-card-media" loading="lazy" decoding="async" width="600" height="600">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Atelier & Werkstatt</h3>
                 <p class="stream-card-desc">Raum für Cyanotypie, Malerei & Skulptur</p>
@@ -495,7 +494,7 @@
             </div>
 
             <div class="stream-card wide offset-right-sm" id="sc-6" data-category="raum" data-title="Die Tafel" data-desc="Massiver Eichentisch für bis zu 8 Personen: Perfekt für Team-Retreats und Kursrunden.">
-              <img src="assets/images/airbnb_02_essbereich.jpeg" alt="Großer Holztisch im Essbereich" class="stream-card-media" loading="lazy">
+              <img src="assets/images/airbnb_02_essbereich.webp" alt="Großer Holztisch im Essbereich" class="stream-card-media" loading="lazy" decoding="async" width="800" height="500">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Die Tafel</h3>
                 <p class="stream-card-desc">Gemeinsamer Treffpunkt für Mahlzeiten & Seminare</p>
@@ -504,7 +503,7 @@
             </div>
 
             <div class="stream-card tall offset-left-sm" id="sc-8" data-category="raum" data-title="Bahnareal 1898" data-desc="Industrie-Erbe neu interpretiert am Lagerplatz 4 in Furth im Wald.">
-              <img src="assets/images/werkhalle_hero_building.jpg" alt="Werkhalle 4 Außenansicht" class="stream-card-media" loading="lazy">
+              <img src="assets/images/werkhalle_hero_building.webp" alt="Werkhalle 4 Außenansicht" class="stream-card-media" loading="lazy" decoding="async" width="600" height="800">
               <div class="stream-card-overlay">
                 <h3 class="stream-card-title">Bahnareal 1898</h3>
                 <p class="stream-card-desc">Historische Architektur mit neuem kreativem Geist</p>
@@ -519,10 +518,7 @@
       <!-- Bottom Hint -->
       <div class="parallax-gallery-bottom">
         <div class="parallax-scroll-indicator">
-          <span>Weiter nach unten scrollen</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-            <path d="M12 5v14M19 12l-7 7-7-7"/>
-          </svg>
+          <span>Tippe auf ein Bild für Details</span>
         </div>
       </div>
 
@@ -530,43 +526,29 @@
   </section>
 
   <!-- ==========================================================================
-       SECTION 6: ZU GAST SEIN (WOHNEN IM ATELIER-LOFT)
+       SECTION 6: ZU GAST IM ATELIER-LOFT (WERKGUT ATMOSPHÄRE)
        ========================================================================== -->
-  <section class="section section-subtle" id="zugast">
+  <section class="section" id="zugast">
     <div class="container">
       <div class="lodging-card">
         <div class="lodging-content">
-          <span class="eyebrow">Zu Gast in der Werkhalle</span>
-          <h2 class="heading-xl" style="margin-bottom: var(--space-md);">
-            Wohnen im Atelier-Loft
-          </h2>
-          <p style="color: var(--color-ink-700); font-size: 1rem; margin-bottom: var(--space-md);">
-            Für Kursteilnehmer, Künstler in Residenz, kleine Teams oder Ruhesuchende steht die gesamte Werkhalle als privates Atelier-Loft zur Verfügung. 
-          </p>
-          <p style="color: var(--color-ink-600); font-size: 0.875rem;">
-            Hier verbindet sich der Charakter des ehemaligen Bahngebäudes mit zeitgenössischer Kunst, Kaminwärme und erholsamer Stille im Oberen Bayerischen Wald.
+          <span class="eyebrow">Exklusiver Rückzugsort</span>
+          <h2 class="heading-l" style="margin-top: 4px;">Zu Gast in der Werkhalle 4</h2>
+          
+          <p class="lead-text" style="font-size: 1.0625rem; margin-top: var(--space-sm);">
+            Wohnen inmitten von Originalkunst und historischem Industriecharme: Das 120m² große Atelier-Loft bietet Platz für bis zu 4 Personen.
           </p>
 
-          <div class="lodging-specs">
-            <div class="spec-item">
-              <span class="spec-title">Kapazität</span>
-              <span class="spec-val">Bis 6 Personen</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-title">Schlafräume</span>
-              <span class="spec-val">4 Bereiche / 3 Betten</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-title">Ausstattung</span>
-              <span class="spec-val">Kamin & Werk-Küche</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-title">Check-in</span>
-              <span class="spec-val">Schlüsselbox (flexibel)</span>
-            </div>
+          <div class="lodging-amenities">
+            <span class="amenity-tag">✓ 120m² Wohnfläche</span>
+            <span class="amenity-tag">✓ Kaminofen & Holz</span>
+            <span class="amenity-tag">✓ Voll ausgestattete Werk-Küche</span>
+            <span class="amenity-tag">✓ 2 Schlafzimmer</span>
+            <span class="amenity-tag">✓ Privater Garten & Terrasse</span>
+            <span class="amenity-tag">✓ Highspeed WLAN & Parkplatz</span>
           </div>
 
-          <div style="display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center;">
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm); align-items: center; margin-top: var(--space-md);">
             <button class="btn btn-primary" data-open-modal="inquiry" data-inquiry-type="unterkunft">
               Direktanfrage für Aufenthalt
             </button>
@@ -577,7 +559,7 @@
         </div>
 
         <div class="lodging-media">
-          <img src="assets/images/airbnb_04_schlafzimmer_blau.jpeg" alt="Blaues Schlafzimmer im Atelier-Loft" loading="lazy">
+          <img src="assets/images/airbnb_04_schlafzimmer_blau.webp" alt="Blaues Schlafzimmer im Atelier-Loft" loading="lazy" decoding="async" width="800" height="600">
         </div>
       </div>
     </div>
@@ -792,12 +774,12 @@
     </div>
   </div>
 
-  <script src="js/vendor/gsap.min.js"></script>
-  <script src="js/vendor/ScrollTrigger.min.js"></script>
-  <script src="js/ScrollExpand.js"></script>
-  <script src="js/SplitFlapText.js"></script>
-  <script src="js/TextPressure.js"></script>
-  <script src="js/InfiniteScrollGallery.js"></script>
-  <script src="js/app.js"></script>
+  <script defer src="js/vendor/gsap.min.js"></script>
+  <script defer src="js/vendor/ScrollTrigger.min.js"></script>
+  <script defer src="js/ScrollExpand.js"></script>
+  <script defer src="js/SplitFlapText.js"></script>
+  <script defer src="js/TextPressure.js"></script>
+  <script defer src="js/InfiniteScrollGallery.js"></script>
+  <script defer src="js/app.js"></script>
 </body>
 </html>
