@@ -294,19 +294,31 @@
     gap: var(--space-lg) !important;
     padding: 0 var(--space-md) !important;
     width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
   .stream-col {
     display: flex !important;
     flex-direction: column !important;
     gap: var(--space-lg) !important;
     width: 100% !important;
+    max-width: 100% !important;
     transform: none !important;
+    box-sizing: border-box !important;
   }
   .stream-card {
     position: relative;
-    width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
     aspect-ratio: 16 / 11;
     margin-bottom: 0;
+    transform: none !important;
+  }
+  .stream-card.offset-left-sm,
+  .stream-card.offset-right-sm,
+  .stream-card.offset-left-md,
+  .stream-card.offset-right-md {
+    transform: none !important;
   }
   .parallax-gallery-bottom {
     display: none !important;

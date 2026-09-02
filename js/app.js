@@ -131,29 +131,60 @@ function initStickyHeader() {
 }
 
 /* --------------------------------------------------------------------------
-   2. MOBILE NAVIGATION DRAWER
+   2. MOBILE NAVIGATION DRAWER & TOUCH INTERACTION
    -------------------------------------------------------------------------- */
 function initMobileNav() {
   const toggleBtn = document.querySelector('.mobile-toggle');
   const drawer = document.querySelector('.mobile-drawer');
+  const drawerCloseBtn = document.getElementById('mobile-drawer-close');
   const navLinks = document.querySelectorAll('.mobile-nav-link');
 
   if (!toggleBtn || !drawer) return;
 
-  const toggleDrawer = () => {
-    const isOpen = drawer.classList.toggle('is-open');
-    toggleBtn.classList.toggle('is-open');
-    document.body.style.overflow = isOpen ? 'hidden' : '';
+  const openDrawer = () => {
+    drawer.classList.add('is-open');
+    toggleBtn.classList.add('is-open');
+    toggleBtn.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeDrawer = () => {
+    drawer.classList.remove('is-open');
+    toggleBtn.classList.remove('is-open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  };
+
+  const toggleDrawer = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    if (drawer.classList.contains('is-open')) {
+      closeDrawer();
+    } else {
+      openDrawer();
+    }
   };
 
   toggleBtn.addEventListener('click', toggleDrawer);
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-      drawer.classList.remove('is-open');
-      toggleBtn.classList.remove('is-open');
-      document.body.style.overflow = '';
+  if (drawerCloseBtn) {
+    drawerCloseBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      closeDrawer();
     });
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+      closeDrawer();
+    }
   });
 }
 
