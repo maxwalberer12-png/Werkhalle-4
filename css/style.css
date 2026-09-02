@@ -37,11 +37,23 @@ html {
 }
 
 html, body {
-  overflow-x: hidden;
+  overflow-x: hidden !important;
   position: relative;
   width: 100%;
   max-width: 100%;
+  margin: 0;
+  padding: 0;
+  touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
+}
+
+.site-wrapper {
+  overflow-x: hidden !important;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 body {
@@ -483,7 +495,9 @@ h1, h2, h3, h4, h5, .font-serif {
   padding-top: 0;
   padding-bottom: clamp(48px, 6vw, 80px);
   position: relative;
-  overflow: visible;
+  overflow: hidden !important;
+  max-width: 100%;
+  width: 100%;
 }
 
 /* Background Ambient Glow */
@@ -2052,6 +2066,40 @@ h1, h2, h3, h4, h5, .font-serif {
 }
 
 @media (max-width: 768px) {
+  html, body, .site-wrapper {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    touch-action: pan-y !important;
+  }
+
+  section, header, footer, main, .container, .hero-section, .sticky-grid-section, .parallax-gallery-section {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .hero-section::before {
+    display: none !important;
+  }
+
+  .hero-scroll-expand-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .sticky-grid-section,
+  .sticky-grid-viewport,
+  .sticky-grid-container,
+  .parallax-gallery-section,
+  .parallax-gallery-viewport,
+  .stream-columns-stage {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
   .mobile-quick-action-bar {
     display: flex;
     position: fixed;
