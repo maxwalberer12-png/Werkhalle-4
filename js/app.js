@@ -599,75 +599,105 @@ function initSmoothScrollSpy() {
 }
 
 /* --------------------------------------------------------------------------
-   8. 3D CYLINDER PERSPECTIVE SCROLL (WARM EDITORIAL KINETIC — DESKTOP & MOBILE)
+   8. CINEMATIC KINETIC SCROLL ANIMATIONS (DESKTOP 3D & MOBILE SMOOTH 2D)
    -------------------------------------------------------------------------- */
 function initCylinderPerspectiveScroll() {
-  if (window.innerWidth <= 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
+  const isMobile = window.innerWidth <= 768;
+
   const targetElements = document.querySelectorAll(
-    '.hero-metrics-strip, .press-card, .section-header, .workshop-card, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container, .stream-card, .faq-item, .sticky-grid-card, .story-quote-unconventional'
+    '.hero-metrics-strip, .press-card, .section-header, .workshop-card, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container, .stream-card, .faq-item, .sticky-grid-card, .story-quote-unconventional, .story-text-group, .story-visual-stage'
   );
 
   targetElements.forEach((el) => {
-    gsap.set(el, {
-      transformPerspective: 800,
-      transformOrigin: 'center center',
-      force3D: true,
-      willChange: 'transform, opacity'
-    });
+    if (isMobile) {
+      // Mobile: Pure buttery smooth 2D kinetic reveal
+      gsap.fromTo(
+        el,
+        {
+          opacity: 0.2,
+          y: 28,
+          scale: 0.96
+        },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.7,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 94%',
+            end: 'top 65%',
+            scrub: 0.5,
+            invalidateOnRefresh: true
+          }
+        }
+      );
+    } else {
+      // Desktop: Rich 3D Cylinder Kinetic Perspective
+      gsap.set(el, {
+        transformPerspective: 800,
+        transformOrigin: 'center center',
+        force3D: true,
+        willChange: 'transform, opacity'
+      });
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 96%',
-        end: 'bottom 4%',
-        scrub: 0.75,
-        invalidateOnRefresh: true
-      }
-    });
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 96%',
+          end: 'bottom 4%',
+          scrub: 0.75,
+          invalidateOnRefresh: true
+        }
+      });
 
-    // Phase 1: Entry from bottom
-    tl.fromTo(
-      el,
-      {
-        rotateX: isMobile ? -7 : -14,
-        scale: isMobile ? 0.92 : 0.86,
-        z: isMobile ? -35 : -70,
-        y: isMobile ? 22 : 35,
-        opacity: 0.75
-      },
-      {
-        rotateX: 0,
-        scale: 1,
-        z: 0,
-        y: 0,
-        opacity: 1,
-        ease: 'power1.out',
+      // Phase 1: Entry from bottom
+      tl.fromTo(
+        el,
+        {
+          rotateX: -14,
+          scale: 0.86,
+          z: -70,
+          y: 35,
+          opacity: 0.75
+        },
+        {
+          rotateX: 0,
+          scale: 1,
+          z: 0,
+          y: 0,
+          opacity: 1,
+          ease: 'power1.out',
+          duration: 0.5
+        }
+      );
+
+      // Phase 2: Exit to top
+      tl.to(el, {
+        rotateX: 14,
+        scale: 0.86,
+        z: -70,
+        y: -35,
+        opacity: 0.75,
+        ease: 'power1.in',
         duration: 0.5
-      }
-    );
-
-    // Phase 2: Exit to top
-    tl.to(el, {
-      rotateX: isMobile ? 7 : 14,
-      scale: isMobile ? 0.92 : 0.86,
-      z: isMobile ? -35 : -70,
-      y: isMobile ? -22 : -35,
-      opacity: 0.75,
-      ease: 'power1.in',
-      duration: 0.5
-    });
+      });
+    }
   });
 }
 
 /* --------------------------------------------------------------------------
-   9. STICKY GRID SCROLL CONTROLLER (THEO PLAWINSKI CODROPS ANIMATION — DESKTOP)
+   9. STICKY GRID SCROLL CONTROLLER (THEO PLAWINSKI CODROPS ANIMATION — DESKTOP & MOBILE)
    -------------------------------------------------------------------------- */
 function initStickyGridScroll() {
-  if (window.innerWidth <= 1024 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
+  const isMobile = window.innerWidth <= 1024;
   const section = document.querySelector('.sticky-grid-section');
   const container = document.querySelector('.sticky-grid-container');
   const textPhase1 = document.querySelector('.sticky-text-phase.phase-1');
@@ -676,6 +706,60 @@ function initStickyGridScroll() {
   const mediaPhase2 = document.querySelector('.sticky-media-phase.media-phase-2');
 
   if (!section || !container || !textPhase1 || !textPhase2 || !mediaPhase1 || !mediaPhase2) return;
+
+  if (isMobile) {
+    // Mobile: Staggered smooth kinetic reveal for both story phases
+    const phases = [
+      { text: textPhase1, media: mediaPhase1 },
+      { text: textPhase2, media: mediaPhase2 }
+    ];
+
+    phases.forEach(({ text, media }) => {
+      if (text) {
+        gsap.fromTo(
+          text,
+          { opacity: 0.25, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.75,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: text,
+              start: 'top 92%',
+              end: 'top 65%',
+              scrub: 0.5,
+              invalidateOnRefresh: true
+            }
+          }
+        );
+      }
+      if (media) {
+        const cards = media.querySelectorAll('.sticky-grid-card');
+        cards.forEach((card, idx) => {
+          gsap.fromTo(
+            card,
+            { opacity: 0.25, y: 25 + idx * 8, scale: 0.95 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.75,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 94%',
+                end: 'top 68%',
+                scrub: 0.5,
+                invalidateOnRefresh: true
+              }
+            }
+          );
+        });
+      }
+    });
+    return;
+  }
 
   const col1_p1 = mediaPhase1.querySelector('.sticky-col-1');
   const col2_p1 = mediaPhase1.querySelector('.sticky-col-2');
