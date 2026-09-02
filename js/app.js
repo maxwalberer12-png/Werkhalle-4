@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof initScrollExpand === 'function') {
     const isMobile = window.innerWidth < 768;
     initScrollExpand('#hero-scroll-expand', {
-      startWidth: isMobile ? 60 : 56,
-      startHeight: isMobile ? 48 : 62,
+      startWidth: isMobile ? 88 : 56,
+      startHeight: isMobile ? 58 : 62,
       startRadius: isMobile ? 20 : 24,
       endRadius: 0,
       mediaZoom: 1.35,
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
       smoothing: isMobile ? 0 : 0.1,
       overlayScrim: 0.52,
       useWindowScroll: true,
-      keepTitleOnScroll: true
+      keepTitleOnScroll: false
     });
   }
 
