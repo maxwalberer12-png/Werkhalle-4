@@ -489,19 +489,21 @@ function initSmoothScrollSpy() {
 }
 
 /* --------------------------------------------------------------------------
-   8. 3D CYLINDER PERSPECTIVE SCROLL (WARM EDITORIAL KINETIC)
+   8. 3D CYLINDER PERSPECTIVE SCROLL (WARM EDITORIAL KINETIC — DESKTOP & MOBILE)
    -------------------------------------------------------------------------- */
 function initCylinderPerspectiveScroll() {
-  if (window.innerWidth <= 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
+  const isMobile = window.innerWidth <= 768;
+
   const targetElements = document.querySelectorAll(
-    '.hero-metrics-strip, .press-card, .section-header, .workshop-card-luxury, .workshop-curated-card, .workshops-cta-box, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container'
+    '.hero-metrics-strip, .press-card, .section-header, .workshop-card, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container, .stream-card, .faq-item'
   );
 
   targetElements.forEach((el) => {
     gsap.set(el, {
-      transformPerspective: 800,
+      transformPerspective: isMobile ? 600 : 800,
       transformOrigin: 'center center',
       force3D: true,
       willChange: 'transform, opacity'
@@ -510,9 +512,9 @@ function initCylinderPerspectiveScroll() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: el,
-        start: 'top 96%',
-        end: 'bottom 4%',
-        scrub: 0.75,
+        start: isMobile ? 'top 98%' : 'top 96%',
+        end: isMobile ? 'bottom 2%' : 'bottom 4%',
+        scrub: isMobile ? 0.8 : 0.75,
         invalidateOnRefresh: true
       }
     });
@@ -520,17 +522,31 @@ function initCylinderPerspectiveScroll() {
     // Phase 1: Entry from bottom
     tl.fromTo(
       el,
-      { rotateX: -15, scale: 0.85, z: -80, y: 35, opacity: 0.70 },
-      { rotateX: 0, scale: 1, z: 0, y: 0, opacity: 1, ease: 'power1.out', duration: 0.5 }
+      {
+        rotateX: isMobile ? -7 : -14,
+        scale: isMobile ? 0.92 : 0.86,
+        z: isMobile ? -35 : -70,
+        y: isMobile ? 22 : 35,
+        opacity: 0.75
+      },
+      {
+        rotateX: 0,
+        scale: 1,
+        z: 0,
+        y: 0,
+        opacity: 1,
+        ease: 'power1.out',
+        duration: 0.5
+      }
     );
 
     // Phase 2: Exit to top
     tl.to(el, {
-      rotateX: 15,
-      scale: 0.85,
-      z: -80,
-      y: -35,
-      opacity: 0.70,
+      rotateX: isMobile ? 7 : 14,
+      scale: isMobile ? 0.92 : 0.86,
+      z: isMobile ? -35 : -70,
+      y: isMobile ? -22 : -35,
+      opacity: 0.75,
       ease: 'power1.in',
       duration: 0.5
     });
@@ -538,12 +554,13 @@ function initCylinderPerspectiveScroll() {
 }
 
 /* --------------------------------------------------------------------------
-   9. STICKY GRID SCROLL CONTROLLER (THEO PLAWINSKI CODROPS ANIMATION WITH 3D CYLINDER KINETICS)
+   9. STICKY GRID SCROLL CONTROLLER (THEO PLAWINSKI CODROPS ANIMATION — DESKTOP & MOBILE)
    -------------------------------------------------------------------------- */
 function initStickyGridScroll() {
-  if (window.innerWidth <= 992 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
+  const isMobile = window.innerWidth <= 1024;
   const section = document.querySelector('.sticky-grid-section');
   const container = document.querySelector('.sticky-grid-container');
   const textPhase1 = document.querySelector('.sticky-text-phase.phase-1');
@@ -560,29 +577,29 @@ function initStickyGridScroll() {
 
   // 3D perspective setup on container
   gsap.set(container, {
-    transformPerspective: 1000,
+    transformPerspective: isMobile ? 700 : 1000,
     transformOrigin: 'center center',
     force3D: true
   });
 
   // Initial hardware accelerated states
-  gsap.set(textPhase1, { opacity: 1, yPercent: -50, pointerEvents: 'auto' });
-  gsap.set(textPhase2, { opacity: 0, yPercent: -38, pointerEvents: 'none' });
+  gsap.set(textPhase1, { opacity: 1, yPercent: isMobile ? 0 : -50, pointerEvents: 'auto' });
+  gsap.set(textPhase2, { opacity: 0, yPercent: isMobile ? 15 : -38, pointerEvents: 'none' });
   
   gsap.set(mediaPhase1, { opacity: 1, y: 0, scale: 1, pointerEvents: 'auto' });
-  gsap.set(mediaPhase2, { opacity: 0, y: 35, scale: 0.95, pointerEvents: 'none' });
+  gsap.set(mediaPhase2, { opacity: 0, y: isMobile ? 25 : 35, scale: 0.95, pointerEvents: 'none' });
 
-  if (col1_p1) gsap.set(col1_p1, { y: 25 });
-  if (col2_p1) gsap.set(col2_p1, { y: -25 });
-  if (col1_p2) gsap.set(col1_p2, { y: 25 });
-  if (col2_p2) gsap.set(col2_p2, { y: -25 });
+  if (col1_p1) gsap.set(col1_p1, { y: isMobile ? 12 : 25 });
+  if (col2_p1) gsap.set(col2_p1, { y: isMobile ? -12 : -25 });
+  if (col1_p2) gsap.set(col1_p2, { y: isMobile ? 12 : 25 });
+  if (col2_p2) gsap.set(col2_p2, { y: isMobile ? -12 : -25 });
 
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: section,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 1.4
+      scrub: isMobile ? 1.0 : 1.4
     }
   });
 
@@ -590,10 +607,10 @@ function initStickyGridScroll() {
   tl.fromTo(
     container,
     {
-      rotateX: -8,
-      scale: 0.92,
-      z: -50,
-      y: 30,
+      rotateX: isMobile ? -6 : -8,
+      scale: isMobile ? 0.94 : 0.92,
+      z: isMobile ? -30 : -50,
+      y: isMobile ? 18 : 30,
       opacity: 0.75
     },
     {
@@ -609,15 +626,15 @@ function initStickyGridScroll() {
   );
 
   // 2. Phase 1 Internal Column Parallax Flow (0.0 -> 0.5)
-  if (col1_p1) tl.to(col1_p1, { y: -45, ease: 'none', duration: 0.5 }, 0);
-  if (col2_p1) tl.to(col2_p1, { y: 45, ease: 'none', duration: 0.5 }, 0);
+  if (col1_p1) tl.to(col1_p1, { y: isMobile ? -25 : -45, ease: 'none', duration: 0.5 }, 0);
+  if (col2_p1) tl.to(col2_p1, { y: isMobile ? 25 : 45, ease: 'none', duration: 0.5 }, 0);
 
   // 3. Synchronized Butter-Smooth Transition: Phase 1 Out (0.36 -> 0.56)
   tl.to(
     textPhase1,
     {
       opacity: 0,
-      yPercent: -62,
+      yPercent: isMobile ? -15 : -62,
       duration: 0.20,
       ease: 'power2.inOut',
       pointerEvents: 'none'
@@ -629,7 +646,7 @@ function initStickyGridScroll() {
     mediaPhase1,
     {
       opacity: 0,
-      y: -30,
+      y: isMobile ? -20 : -30,
       scale: 0.96,
       duration: 0.20,
       ease: 'power2.inOut',
@@ -643,7 +660,7 @@ function initStickyGridScroll() {
     textPhase2,
     {
       opacity: 1,
-      yPercent: -50,
+      yPercent: isMobile ? 0 : -50,
       duration: 0.20,
       ease: 'power2.inOut',
       pointerEvents: 'auto'
@@ -665,17 +682,17 @@ function initStickyGridScroll() {
   );
 
   // 5. Phase 2 Internal Column Parallax Flow (0.5 -> 1.0)
-  if (col1_p2) tl.to(col1_p2, { y: -45, ease: 'none', duration: 0.5 }, 0.5);
-  if (col2_p2) tl.to(col2_p2, { y: 45, ease: 'none', duration: 0.5 }, 0.5);
+  if (col1_p2) tl.to(col1_p2, { y: isMobile ? -25 : -45, ease: 'none', duration: 0.5 }, 0.5);
+  if (col2_p2) tl.to(col2_p2, { y: isMobile ? 25 : 45, ease: 'none', duration: 0.5 }, 0.5);
 
   // 6. Phase Final: Gentle 3D Cylinder Curve Exit (0.86 -> 1.0)
   tl.to(
     container,
     {
-      rotateX: 8,
-      scale: 0.92,
-      z: -50,
-      y: -30,
+      rotateX: isMobile ? 6 : 8,
+      scale: isMobile ? 0.94 : 0.92,
+      z: isMobile ? -30 : -50,
+      y: isMobile ? -18 : -30,
       opacity: 0.75,
       duration: 0.14,
       ease: 'power1.in'

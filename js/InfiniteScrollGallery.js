@@ -222,10 +222,44 @@
       if (this.header) {
         gsap.set(this.header, { opacity: 1, y: 0, scale: 1, display: 'block' });
       }
+      if (this.bottomIndicator) {
+        gsap.set(this.bottomIndicator, { opacity: 1, y: 0 });
+      }
       if (this.col1) gsap.set(this.col1, { y: 0 });
       if (this.col2) gsap.set(this.col2, { y: 0 });
+
+      // Animate gallery cards on mobile scroll with ScrollTrigger
       this.cards.forEach((card) => {
-        gsap.set(card, { opacity: 1, scale: 1, rotateX: 0, z: 0 });
+        gsap.set(card, {
+          transformPerspective: 600,
+          transformOrigin: 'center center',
+          force3D: true,
+          willChange: 'transform, opacity'
+        });
+
+        gsap.fromTo(
+          card,
+          {
+            rotateX: -10,
+            scale: 0.90,
+            opacity: 0.72,
+            y: 28
+          },
+          {
+            rotateX: 0,
+            scale: 1,
+            opacity: 1,
+            y: 0,
+            ease: 'power1.out',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top 94%',
+              end: 'top 60%',
+              scrub: 0.8,
+              invalidateOnRefresh: true
+            }
+          }
+        );
       });
     }
 
