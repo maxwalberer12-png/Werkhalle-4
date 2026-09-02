@@ -34,8 +34,8 @@
   left: 0;
   right: 0;
   transform: translateY(-50%);
-  z-index: 50;
-  pointer-events: auto;
+  z-index: 5;
+  pointer-events: none;
   will-change: transform, opacity;
 }
 
