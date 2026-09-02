@@ -454,12 +454,9 @@ h1, h2, h3, h4, h5, .font-serif {
 
 /* Hero Scroll Expand Container */
 .hero-scroll-expand-container {
-  width: 100vw;
+  width: 100%;
+  max-width: 100%;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
   margin-top: 0;
   margin-bottom: var(--space-lg);
   overflow: visible;
