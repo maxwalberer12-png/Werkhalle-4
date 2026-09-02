@@ -27,7 +27,7 @@ const debounce = (func, delay) => {
 const TextPressure = ({
   text = 'WERKHALLE 4',
   fontFamily = 'Roboto Flex',
-  fontUrl = 'https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wdth,wght,slnt@8..144,25..151,100..1000,-10..0&display=swap',
+  fontUrl = '',
 
   width = true,
   weight = true,
@@ -163,8 +163,6 @@ const TextPressure = ({
   const styleElement = useMemo(() => {
     return (
       <style>{`
-        @import url('${fontUrl}');
-
         .text-pressure-flex {
           display: flex;
           justify-content: space-between;
