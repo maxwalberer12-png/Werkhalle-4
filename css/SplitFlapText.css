@@ -181,14 +181,18 @@
 /* Responsive Scaling for Departure Board */
 @media (max-width: 768px) {
   .split-flap-text {
-    --split-flap-font-size: 26px !important;
-    --split-flap-gap: 3px !important;
+    --split-flap-font-size: 20px !important;
+    --split-flap-gap: 2px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 390px) {
   .split-flap-text {
-    --split-flap-font-size: 20px !important;
+    --split-flap-font-size: 16px !important;
     --split-flap-gap: 2px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
   }
 }

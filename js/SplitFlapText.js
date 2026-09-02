@@ -70,13 +70,31 @@
     }
 
     renderInitialBoard() {
+      const isSmallMobile = window.innerWidth <= 390;
+      const isMobile = window.innerWidth <= 768;
+      const isTablet = window.innerWidth <= 1024;
+
+      const dynamicFontSize = isSmallMobile ? 17 : (isMobile ? 22 : (isTablet ? 34 : (this.config.fontSize || 44)));
+      const dynamicGap = isMobile ? 2 : (this.config.gap || 5);
+
       this.container.classList.add('split-flap-text');
       this.container.style.setProperty('--split-flap-tile-color', this.config.tileColor);
       this.container.style.setProperty('--split-flap-text-color', this.config.textColor);
       this.container.style.setProperty('--split-flap-radius', toCssUnit(this.config.tileRadius));
-      this.container.style.setProperty('--split-flap-gap', toCssUnit(this.config.gap));
-      this.container.style.setProperty('--split-flap-font-size', toCssUnit(this.config.fontSize));
+      this.container.style.setProperty('--split-flap-gap', `${dynamicGap}px`);
+      this.container.style.setProperty('--split-flap-font-size', `${dynamicFontSize}px`);
       this.container.style.setProperty('--split-flap-flip-duration', `${Math.max(0.06, Number(this.config.flipDuration) || 0.14)}s`);
+
+      // Window resize listener
+      window.addEventListener('resize', () => {
+        const sm = window.innerWidth <= 390;
+        const mob = window.innerWidth <= 768;
+        const tab = window.innerWidth <= 1024;
+        const fs = sm ? 17 : (mob ? 22 : (tab ? 34 : (this.config.fontSize || 44)));
+        const g = mob ? 2 : (this.config.gap || 5);
+        this.container.style.setProperty('--split-flap-font-size', `${fs}px`);
+        this.container.style.setProperty('--split-flap-gap', `${g}px`);
+      }, { passive: true });
 
       this.container.innerHTML = '';
       this.tiles = [];

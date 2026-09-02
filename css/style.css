@@ -2066,11 +2066,21 @@ h1, h2, h3, h4, h5, .font-serif {
 }
 
 @media (max-width: 768px) {
+  *, *::before, *::after {
+    touch-action: pan-y !important;
+    max-width: 100%;
+    box-sizing: border-box !important;
+  }
+
+  a, button, input, textarea, select, .btn, .mobile-toggle, .mobile-drawer-close, .modal-close-btn, .lightbox-nav-btn, .mobile-quick-action-item {
+    touch-action: manipulation !important;
+  }
+
   html, body, .site-wrapper {
     overflow-x: hidden !important;
     width: 100% !important;
     max-width: 100% !important;
-    touch-action: pan-y !important;
+    position: relative !important;
   }
 
   section, header, footer, main, .container, .hero-section, .sticky-grid-section, .parallax-gallery-section {
