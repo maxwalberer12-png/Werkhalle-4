@@ -602,10 +602,8 @@ function initSmoothScrollSpy() {
    8. 3D CYLINDER PERSPECTIVE SCROLL (WARM EDITORIAL KINETIC — DESKTOP & MOBILE)
    -------------------------------------------------------------------------- */
 function initCylinderPerspectiveScroll() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (window.innerWidth <= 768 || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-
-  const isMobile = window.innerWidth <= 768;
 
   const targetElements = document.querySelectorAll(
     '.hero-metrics-strip, .press-card, .section-header, .workshop-card, .residency-item, .residency-grid > div, .lodging-card, .amenities-strip, .testimonial-card, .contact-container, .stream-card, .faq-item, .sticky-grid-card, .story-quote-unconventional'
@@ -613,7 +611,7 @@ function initCylinderPerspectiveScroll() {
 
   targetElements.forEach((el) => {
     gsap.set(el, {
-      transformPerspective: isMobile ? 600 : 800,
+      transformPerspective: 800,
       transformOrigin: 'center center',
       force3D: true,
       willChange: 'transform, opacity'
@@ -622,9 +620,9 @@ function initCylinderPerspectiveScroll() {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: el,
-        start: isMobile ? 'top 98%' : 'top 96%',
-        end: isMobile ? 'bottom 2%' : 'bottom 4%',
-        scrub: isMobile ? 0.8 : 0.75,
+        start: 'top 96%',
+        end: 'bottom 4%',
+        scrub: 0.75,
         invalidateOnRefresh: true
       }
     });

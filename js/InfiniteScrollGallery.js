@@ -228,34 +228,23 @@
       if (this.col1) gsap.set(this.col1, { y: 0, clearProps: 'transform' });
       if (this.col2) gsap.set(this.col2, { y: 0, clearProps: 'transform' });
 
-      // Animate gallery cards on mobile scroll with ScrollTrigger
+      // Animate gallery cards on mobile scroll with clean 2D animations (zero 3D projection overflow)
       this.cards.forEach((card) => {
-        gsap.set(card, {
-          transformPerspective: 600,
-          transformOrigin: 'center center',
-          force3D: true,
-          willChange: 'transform, opacity'
-        });
-
         gsap.fromTo(
           card,
           {
-            rotateX: -8,
-            scale: 0.92,
-            opacity: 0.75,
-            y: 24
+            opacity: 0.82,
+            y: 20
           },
           {
-            rotateX: 0,
-            scale: 1,
             opacity: 1,
             y: 0,
             ease: 'power1.out',
             scrollTrigger: {
               trigger: card,
               start: 'top 95%',
-              end: 'top 65%',
-              scrub: 0.8,
+              end: 'top 70%',
+              scrub: 0.6,
               invalidateOnRefresh: true
             }
           }
