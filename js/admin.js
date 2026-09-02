@@ -20,7 +20,8 @@ const DEFAULT_WORKSHOPS = [
     category: 'Fotogramm & Natur',
     format: 'Tages- & Wochenendkurse',
     image: 'assets/images/stephanie_heiduk_portrait.jpg',
-    description: 'Historisches Edeldruckverfahren: Mit gesammelten Pflanzen, UV-Licht und mineralischen Emulsionen entstehen unverwechselbare preußischblaue Unikate.'
+    description: 'Historisches Edeldruckverfahren: Mit gesammelten Pflanzen, UV-Licht und mineralischen Emulsionen entstehen unverwechselbare preußischblaue Unikate.',
+    isBooked: false
   },
   {
     id: 'ws-2',
@@ -28,7 +29,8 @@ const DEFAULT_WORKSHOPS = [
     category: 'Objektkunst',
     format: 'Saisonale Termine',
     image: 'assets/images/pressebild_blumenkunst.jpg',
-    description: 'Form, Linie und Reduktion: Gestaltungskurse nach asiatischen Prinzipien und experimenteller Objektkunst mit Naturmaterialien.'
+    description: 'Form, Linie und Reduktion: Gestaltungskurse nach asiatischen Prinzipien und experimenteller Objektkunst mit Naturmaterialien.',
+    isBooked: false
   },
   {
     id: 'ws-3',
@@ -36,7 +38,8 @@ const DEFAULT_WORKSHOPS = [
     category: 'Klausuren & Retreats',
     format: 'Individuelle Zeiträume',
     image: 'assets/images/airbnb_02_essbereich.jpeg',
-    description: 'Rückzugsort für Arbeitsgruppen, Agenturen und Initiativen. Der massive 8-Personen-Tisch und die Werk-Küche bieten die perfekte Klausur-Infrastruktur.'
+    description: 'Rückzugsort für Arbeitsgruppen, Agenturen und Initiativen. Der massive 8-Personen-Tisch und die Werk-Küche bieten die perfekte Klausur-Infrastruktur.',
+    isBooked: false
   }
 ];
 
@@ -163,13 +166,27 @@ function renderWorkshopsTable() {
   tbody.innerHTML = '';
 
   workshops.forEach(ws => {
+    const isBooked = !!ws.isBooked;
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><img src="${ws.image}" class="table-img-thumb" alt="${ws.title}"></td>
-      <td><strong>${ws.title}</strong><br><span style="font-size: 0.75rem; color: #8C8980;">${ws.category}</span></td>
+      <td>
+        <strong>${ws.title}</strong><br>
+        <span style="font-size: 0.75rem; color: #8C8980;">${ws.category}</span>
+      </td>
       <td>${ws.format}</td>
+      <td>
+        ${
+          isBooked
+            ? '<span class="admin-status-pill status-booked">🔴 Ausgebucht</span>'
+            : '<span class="admin-status-pill status-open">🟢 Plätze frei</span>'
+        }
+      </td>
       <td style="max-width: 280px; font-size: 0.8125rem; color: #AAA69C;">${ws.description}</td>
-      <td style="text-align: right;">
+      <td style="text-align: right; white-space: nowrap;">
+        <button class="admin-btn ${isBooked ? 'admin-btn-outline' : 'admin-btn-warning'}" onclick="toggleWorkshopBooked('${ws.id}')" title="${isBooked ? 'Wieder für Buchungen freigeben' : 'Als ausgebucht markieren'}">
+          ${isBooked ? 'Wieder öffnen' : 'Als ausgebucht'}
+        </button>
         <button class="admin-btn admin-btn-outline" onclick="editWorkshop('${ws.id}')">Bearbeiten</button>
         <button class="admin-btn admin-btn-danger" onclick="deleteWorkshop('${ws.id}')">Löschen</button>
       </td>
@@ -177,6 +194,22 @@ function renderWorkshopsTable() {
     tbody.appendChild(tr);
   });
 }
+
+window.toggleWorkshopBooked = function(id) {
+  let workshops = JSON.parse(localStorage.getItem(STORAGE_KEYS.WORKSHOPS) || '[]');
+  const ws = workshops.find(w => w.id === id);
+  if (!ws) return;
+
+  ws.isBooked = !ws.isBooked;
+  localStorage.setItem(STORAGE_KEYS.WORKSHOPS, JSON.stringify(workshops));
+  renderWorkshopsTable();
+
+  if (ws.isBooked) {
+    showToast(`🔴 „${ws.title}“ als AUSGEBUCHT markiert`);
+  } else {
+    showToast(`🟢 „${ws.title}“ wieder für Buchungen FREIGEGEBEN`);
+  }
+};
 
 window.deleteWorkshop = function(id) {
   if (!confirm('Diesen Workshop wirklich löschen?')) return;
@@ -196,6 +229,7 @@ window.editWorkshop = function(id) {
   document.getElementById('ws-title').value = ws.title;
   document.getElementById('ws-category').value = ws.category;
   document.getElementById('ws-format').value = ws.format;
+  document.getElementById('ws-status').value = ws.isBooked ? 'booked' : 'open';
   document.getElementById('ws-image').value = ws.image;
   document.getElementById('ws-description').value = ws.description;
 
@@ -327,6 +361,7 @@ function initFormHandlers() {
       const title = document.getElementById('ws-title').value;
       const category = document.getElementById('ws-category').value;
       const format = document.getElementById('ws-format').value;
+      const isBooked = document.getElementById('ws-status').value === 'booked';
       const image = document.getElementById('ws-image').value || 'assets/images/airbnb_01_wohnbereich_kamin.jpeg';
       const description = document.getElementById('ws-description').value;
 
@@ -334,10 +369,10 @@ function initFormHandlers() {
       const existingIdx = workshops.findIndex(w => w.id === id);
 
       if (existingIdx >= 0) {
-        workshops[existingIdx] = { id, title, category, format, image, description };
+        workshops[existingIdx] = { id, title, category, format, image, description, isBooked };
         showToast('Workshop aktualisiert!');
       } else {
-        workshops.push({ id, title, category, format, image, description });
+        workshops.push({ id, title, category, format, image, description, isBooked });
         showToast('Neuer Workshop erstellt!');
       }
 
@@ -400,6 +435,7 @@ function resetWorkshopForm() {
   const wsForm = document.getElementById('workshop-form');
   if (wsForm) wsForm.reset();
   document.getElementById('ws-id').value = '';
+  document.getElementById('ws-status').value = 'open';
   document.getElementById('ws-form-title').textContent = 'Neuen Workshop anlegen';
   document.getElementById('ws-cancel-btn').style.display = 'none';
 }

@@ -107,6 +107,14 @@
             </div>
 
             <div class="admin-form-group">
+              <label for="ws-status">Status / Verfügbarkeit</label>
+              <select id="ws-status">
+                <option value="open">🟢 Buchung offen (Plätze frei)</option>
+                <option value="booked">🔴 Ausgebucht (Warteliste)</option>
+              </select>
+            </div>
+
+            <div class="admin-form-group">
               <label for="ws-image">Bild-Pfad oder URL</label>
               <select id="ws-image">
                 <option value="assets/images/stephanie_heiduk_portrait.jpg">Stephanie Heiduk Porträt / Atelier</option>
@@ -144,6 +152,7 @@
               <th>Bild</th>
               <th>Workshop / Kategorie</th>
               <th>Format</th>
+              <th>Status</th>
               <th>Beschreibung</th>
               <th style="text-align: right;">Aktionen</th>
             </tr>

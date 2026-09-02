@@ -170,24 +170,33 @@ function syncDynamicContent() {
     try {
       const workshops = JSON.parse(savedWorkshops);
       if (workshops.length > 0) {
-        workshopsContainer.innerHTML = workshops.map(ws => `
-          <article class="workshop-card">
-            <div class="workshop-card-media">
-              <img src="${ws.image}" alt="${ws.title}" loading="lazy">
-              <span class="workshop-card-badge">${ws.category}</span>
-            </div>
-            <div class="workshop-card-body">
-              <h3>${ws.title}</h3>
-              <p>${ws.description}</p>
-              <div class="workshop-card-footer">
-                <span style="font-size: 0.8125rem; color: var(--color-ink-500);">${ws.format}</span>
-                <button class="btn btn-subtle" data-open-modal="inquiry" data-inquiry-type="${ws.title}">
-                  Termin anfragen
-                </button>
+        workshopsContainer.innerHTML = workshops.map(ws => {
+          const isBooked = !!ws.isBooked;
+          return `
+            <article class="workshop-card ${isBooked ? 'workshop-card--booked' : ''}">
+              <div class="workshop-card-media">
+                <img src="${ws.image}" alt="${ws.title}" loading="lazy">
+                ${
+                  isBooked
+                    ? `<span class="workshop-card-badge workshop-badge-booked">Ausgebucht</span>`
+                    : `<span class="workshop-card-badge">${ws.category}</span>`
+                }
               </div>
-            </div>
-          </article>
-        `).join('');
+              <div class="workshop-card-body">
+                <h3>${ws.title}</h3>
+                <p>${ws.description}</p>
+                <div class="workshop-card-footer">
+                  <span style="font-size: 0.8125rem; color: var(--color-ink-500);">
+                    ${ws.format} ${isBooked ? '· <strong style="color: var(--color-terracotta);">Ausgebucht</strong>' : ''}
+                  </span>
+                  <button class="btn btn-subtle ${isBooked ? 'btn-booked' : ''}" data-open-modal="inquiry" data-inquiry-type="${isBooked ? 'Warteliste: ' + ws.title : ws.title}">
+                    ${isBooked ? 'Warteliste anfragen' : 'Termin anfragen'}
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join('');
       }
     } catch (e) {
       console.warn('Error parsing dynamic workshops:', e);
