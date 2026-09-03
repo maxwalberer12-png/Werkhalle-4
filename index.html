@@ -764,24 +764,28 @@
   </div>
 
   <!-- ==========================================================================
-       MODAL: LIGHTBOX
+       MODAL: LIGHTBOX (LUXURY EDITORIAL ART GALLERY VIEWER)
        ========================================================================== -->
-  <div class="modal-backdrop lightbox-modal" id="gallery-lightbox" role="dialog" aria-modal="true">
-    <div class="modal-card">
-      <button class="modal-close-btn" id="lightbox-close" style="background: rgba(255,255,255,0.12); color: #FFFFFF;" aria-label="Schließen">✕</button>
+  <div class="modal-backdrop lightbox-modal" id="gallery-lightbox" role="dialog" aria-modal="true" aria-label="Großansicht Kunstwerk">
+    <button class="lightbox-close-btn" id="lightbox-close" aria-label="Schließen">✕</button>
+    
+    <button class="lightbox-nav-btn prev" id="lightbox-prev" aria-label="Vorheriges Bild">‹</button>
+    
+    <div class="lightbox-container">
       <div class="lightbox-img-wrapper">
-        <button class="lightbox-nav-btn prev" id="lightbox-prev" aria-label="Vorheriges Bild">‹</button>
-        <img id="lightbox-img" src="" alt="Großansicht">
-        <button class="lightbox-nav-btn next" id="lightbox-next" aria-label="Nächstes Bild">›</button>
+        <img id="lightbox-img" src="" alt="Großansicht" decoding="async">
       </div>
       <div class="lightbox-caption">
-        <div>
-          <h4 id="lightbox-title" style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 2px;"></h4>
-          <p id="lightbox-desc" style="color: #AAA69C; font-size: 0.8125rem;"></p>
+        <div class="lightbox-caption-text">
+          <span class="lightbox-counter" id="lightbox-counter">01 / 09</span>
+          <h4 id="lightbox-title" class="lightbox-title"></h4>
+          <p id="lightbox-desc" class="lightbox-desc"></p>
         </div>
-        <span style="font-size: 0.75rem; color: #6E6B63;">[Esc] Schließen · [←] [→] Blättern</span>
+        <span class="lightbox-shortcuts">[Esc] Schließen · [←] [→] Blättern</span>
       </div>
     </div>
+    
+    <button class="lightbox-nav-btn next" id="lightbox-next" aria-label="Nächstes Bild">›</button>
   </div>
 
   <script defer src="js/vendor/gsap.min.js"></script>

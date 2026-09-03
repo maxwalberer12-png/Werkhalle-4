@@ -46,161 +46,100 @@
     buildUltraCleanTimeline() {
       if (this.timeline) this.timeline.kill();
 
-      const vh = window.innerHeight;
-
-      // 1. Initial State: Centered title clean, columns primed below
+      // 1. Initial State: Centered title clean, columns primed cleanly
       if (this.header) {
         gsap.set(this.header, {
           y: 0,
           opacity: 1,
           scale: 1,
           display: 'block',
-          force3D: true
+          clearProps: 'transform'
         });
       }
       if (this.bottomIndicator) {
-        gsap.set(this.bottomIndicator, { y: 0, opacity: 1, force3D: true });
+        gsap.set(this.bottomIndicator, { y: 0, opacity: 1, clearProps: 'transform' });
       }
 
-      // Column start positions
-      const col1StartY = vh * 0.90;
-      const col2StartY = vh * 1.05;
-
+      // Column start positions: Clean organic stagger
       if (this.col1) {
-        gsap.set(this.col1, { y: col1StartY, force3D: true });
+        gsap.set(this.col1, { y: 0, clearProps: 'transform' });
       }
       if (this.col2) {
-        gsap.set(this.col2, { y: col2StartY, force3D: true });
+        gsap.set(this.col2, { y: 70, clearProps: 'transform' });
       }
 
-      // Pre-cache static offsets once to completely eliminate layout thrashing during scroll
-      this.cardMeta = this.cards.map((card) => {
+      // Ensure all cards are clean, upright, flat in 2D space (100% clickable at any scroll position)
+      this.cards.forEach((card) => {
         gsap.set(card, {
-          transformPerspective: 800,
-          transformOrigin: 'center center',
-          force3D: true,
-          willChange: 'transform, opacity'
+          opacity: 1,
+          scale: 1,
+          rotateX: 0,
+          rotateY: 0,
+          rotateZ: 0,
+          z: 0,
+          clearProps: 'transform'
         });
-        const isCol1 = card.closest('.stream-col-1') !== null;
-        return {
-          el: card,
-          top: card.offsetTop,
-          height: card.offsetHeight || 380,
-          isCol1: isCol1
-        };
       });
 
       // Calculate travel distances
+      const vh = window.innerHeight;
       const col1Height = this.col1 ? this.col1.scrollHeight : 2200;
       const col2Height = this.col2 ? this.col2.scrollHeight : 1800;
 
-      const travelDist1 = col1Height - vh * 0.25;
-      const travelDist2 = col2Height - vh * 0.25;
-      const totalScrollDist = Math.max(travelDist1, travelDist2) + vh * 0.95;
+      const travelDist1 = Math.max(col1Height - vh * 0.45, vh * 1.6);
+      const travelDist2 = Math.max(col2Height - vh * 0.45, vh * 1.4);
+      const totalScrollDist = Math.max(travelDist1, travelDist2) + 200;
 
-      // Pure math zero-reflow 3D update
-      const updateCardsPureMath = () => {
-        const viewportHeight = window.innerHeight;
-        const currentY1 = gsap.getProperty(this.col1, 'y') || col1StartY;
-        const currentY2 = gsap.getProperty(this.col2, 'y') || col2StartY;
-
-        for (let i = 0; i < this.cardMeta.length; i++) {
-          const item = this.cardMeta[i];
-          const colY = item.isCol1 ? currentY1 : currentY2;
-          const cardAbsCenter = colY + item.top + item.height * 0.5;
-          const relY = cardAbsCenter / viewportHeight;
-
-          let rotateX = 0;
-          let scale = 1;
-          let translateZ = 0;
-          let opacity = 1;
-
-          // Bottom Entry Zone (relY > 0.68)
-          if (relY > 0.68) {
-            const factor = Math.min(Math.max((relY - 0.68) / 0.35, 0), 1);
-            rotateX = factor * -15;
-            scale = 1 - factor * 0.15;
-            translateZ = factor * -80;
-            opacity = 1 - factor * 0.30;
-          }
-          // Top Exit Zone (relY < 0.32)
-          else if (relY < 0.32) {
-            const factor = Math.min(Math.max((0.32 - relY) / 0.35, 0), 1);
-            rotateX = factor * 15;
-            scale = 1 - factor * 0.15;
-            translateZ = factor * -80;
-            opacity = 1 - factor * 0.30;
-          }
-
-          gsap.set(item.el, {
-            rotateX: rotateX,
-            scale: scale,
-            z: translateZ,
-            opacity: opacity,
-            force3D: true
-          });
-        }
-      };
-
-      // Master Pinned Timeline with ultra-smooth 0.8s scrub
+      // Master Pinned Timeline with ultra-smooth 1.1s scrub
       this.timeline = gsap.timeline({
         scrollTrigger: {
           trigger: this.root,
           start: 'top top',
           end: `+=${Math.round(totalScrollDist)}px`,
           pin: true,
-          scrub: 0.8,
+          scrub: 1.1,
           anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: updateCardsPureMath
+          invalidateOnRefresh: true
         }
       });
 
-      // ======================================================================
-      // 1. SWIFT TITLE FADE (0.00 -> 0.08)
-      // ======================================================================
+      // 1. Header & Bottom Indicator Fade Out smoothly as scroll starts
       if (this.header) {
         this.timeline.to(
           this.header,
           {
+            y: -45,
             opacity: 0,
-            scale: 0.95,
-            y: -35,
-            duration: 0.08,
+            duration: 0.12,
             ease: 'power1.out'
           },
           0
         );
-
-        this.timeline.set(this.header, { display: 'none' }, 0.09);
       }
 
       if (this.bottomIndicator) {
         this.timeline.to(
           this.bottomIndicator,
           {
+            y: 25,
             opacity: 0,
-            y: 20,
-            duration: 0.06,
+            duration: 0.10,
             ease: 'power1.out'
           },
-          0.01
+          0.02
         );
       }
 
-      // ======================================================================
-      // 2. BUTTERY SMOOTH PARALLAX COLUMN STREAM (0.05 -> 1.00)
-      // ======================================================================
+      // 2. Buttery smooth continuous vertical column stream
       if (this.col1) {
         this.timeline.to(
           this.col1,
           {
             y: -travelDist1,
-            duration: 0.95,
-            ease: 'none',
-            force3D: true
+            duration: 1.0,
+            ease: 'none'
           },
-          0.05
+          0
         );
       }
 
@@ -209,11 +148,10 @@
           this.col2,
           {
             y: -travelDist2,
-            duration: 0.95,
-            ease: 'none',
-            force3D: true
+            duration: 1.0,
+            ease: 'none'
           },
-          0.05
+          0
         );
       }
     }

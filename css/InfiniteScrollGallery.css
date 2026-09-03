@@ -27,14 +27,13 @@
   box-sizing: border-box;
 }
 
-/* Centered Title Hero (Visible at start, fades smoothly on scroll) */
+/* Header Container (Visible at start, fades smoothly on scroll) */
 .parallax-gallery-header-wrapper {
   position: absolute;
-  top: 50%;
+  top: clamp(28px, 4.5vh, 48px);
   left: 0;
   right: 0;
-  transform: translateY(-50%);
-  z-index: 5;
+  z-index: 50;
   pointer-events: none;
   will-change: transform, opacity;
 }
@@ -44,7 +43,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  max-width: 840px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 0 var(--space-md);
   gap: var(--space-xs);
@@ -56,21 +55,21 @@
 }
 
 .parallax-gallery-header .heading-xl {
-  font-size: clamp(2.6rem, 5vw, 4.4rem);
-  line-height: 1.1;
-  letter-spacing: -0.025em;
+  font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
   color: var(--color-ink-950);
 }
 
 .parallax-gallery-header p {
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
   color: var(--color-ink-600);
-  max-width: 580px;
+  max-width: 540px;
   margin: 6px auto 0;
   line-height: 1.5;
 }
 
-/* 2-Column Grid Stage (Clean Fullscreen Stream with 3D Perspective) */
+/* 2-Column Grid Stage (Clean 2D Stream, 100% Clickable at Any Position) */
 .stream-columns-stage {
   position: absolute;
   top: 0;
@@ -81,9 +80,8 @@
   overflow: hidden;
   display: flex;
   justify-content: center;
-  padding-top: clamp(60px, 8vh, 100px);
+  padding-top: clamp(210px, 28vh, 270px);
   will-change: transform;
-  perspective: 950px;
 }
 
 .stream-columns-grid {
@@ -101,10 +99,9 @@
 .stream-col {
   display: flex;
   flex-direction: column;
-  gap: clamp(56px, 9.5vh, 95px);
+  gap: clamp(48px, 8vh, 85px);
   will-change: transform;
   transform: translate3d(0, 0, 0);
-  transform-style: preserve-3d;
 }
 
 /* Organic Asymmetric Horizontal Offsets */
@@ -113,28 +110,29 @@
 .stream-card.offset-left-md  { transform: translateX(clamp(-32px, -3vw, -16px)); }
 .stream-card.offset-right-md { transform: translateX(clamp(20px, 3vw, 36px)); }
 
-/* Stream Cards (Clean Architectural Exhibition Framing & 3D Kinematics) */
+/* Stream Cards (Clean Framing, Instant Click Response) */
 .stream-card {
   position: relative;
   width: 100%;
   border-radius: 4px;
   overflow: hidden;
-  background-color: #FFFFFF;
+  background-color: var(--color-surface, #F4F1EA);
   box-shadow:
-    0 18px 45px -10px rgba(20, 20, 19, 0.24),
+    0 18px 45px -10px rgba(20, 20, 19, 0.20),
     0 2px 10px rgba(20, 20, 19, 0.06),
     0 0 0 1px rgba(20, 20, 19, 0.08);
   cursor: pointer;
-  will-change: transform, opacity;
+  will-change: transform;
   opacity: 1;
-  transform-style: preserve-3d;
-  transition: box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: box-shadow 0.35s ease, filter 0.35s ease;
   box-sizing: border-box;
+  pointer-events: auto;
+  z-index: 10;
 }
 
 .stream-card:hover {
   box-shadow:
-    0 30px 65px -12px rgba(20, 20, 19, 0.38),
+    0 28px 65px -12px rgba(20, 20, 19, 0.35),
     0 6px 20px rgba(20, 20, 19, 0.12),
     0 0 0 1.5px var(--color-terracotta, #A44C2E);
 }

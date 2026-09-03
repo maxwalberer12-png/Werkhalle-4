@@ -344,6 +344,7 @@ function initLightbox() {
   const lightboxImg = document.getElementById('lightbox-img');
   const lightboxTitle = document.getElementById('lightbox-title');
   const lightboxDesc = document.getElementById('lightbox-desc');
+  const lightboxCounter = document.getElementById('lightbox-counter');
   const closeBtn = document.getElementById('lightbox-close');
   const prevBtn = document.getElementById('lightbox-prev');
   const nextBtn = document.getElementById('lightbox-next');
@@ -374,16 +375,30 @@ function initLightbox() {
     const src = (img && (img.currentSrc || img.getAttribute('src'))) || '';
 
     if (src) {
-      lightboxImg.style.opacity = '0';
-      lightboxImg.src = src;
       lightboxImg.alt = title;
-      lightboxImg.onload = () => {
+      if (lightboxImg.src === src && lightboxImg.complete) {
         lightboxImg.style.opacity = '1';
-      };
+      } else {
+        lightboxImg.style.opacity = '0';
+        lightboxImg.src = src;
+        if (lightboxImg.complete) {
+          lightboxImg.style.opacity = '1';
+        } else {
+          lightboxImg.onload = () => {
+            lightboxImg.style.opacity = '1';
+          };
+        }
+      }
     }
 
     if (lightboxTitle) lightboxTitle.textContent = title;
     if (lightboxDesc) lightboxDesc.textContent = desc;
+
+    if (lightboxCounter) {
+      const current = String(currentIndex + 1).padStart(2, '0');
+      const total = String(cards.length).padStart(2, '0');
+      lightboxCounter.textContent = `${current} / ${total}`;
+    }
 
     lightbox.classList.add('is-active');
     lockBodyScroll();
@@ -457,8 +472,9 @@ function initLightbox() {
     });
   }
 
+  // Close on clicking backdrop outside image and controls
   lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox || e.target.classList.contains('lightbox-modal')) {
+    if (e.target === lightbox || e.target.classList.contains('lightbox-container') || e.target.classList.contains('lightbox-modal')) {
       closeLightbox();
     }
   });
