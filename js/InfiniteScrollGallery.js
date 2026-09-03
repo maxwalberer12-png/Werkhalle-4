@@ -68,17 +68,29 @@
         gsap.set(this.col2, { y: 70, clearProps: 'transform' });
       }
 
-      // Ensure all cards are clean, upright, flat in 2D space (100% straight, no 3D slant)
-      this.cards.forEach((card) => {
+      // Cache card geometry and offsets for high-performance zero-reflow updates
+      this.cardMeta = this.cards.map((card) => {
+        let offsetX = 0;
+        if (card.classList.contains('offset-left-sm')) offsetX = -16;
+        else if (card.classList.contains('offset-right-sm')) offsetX = 18;
+        else if (card.classList.contains('offset-left-md')) offsetX = -26;
+        else if (card.classList.contains('offset-right-md')) offsetX = 28;
+
         gsap.set(card, {
-          opacity: 1,
-          scale: 1,
-          rotateX: 0,
-          rotateY: 0,
-          rotateZ: 0,
-          z: 0,
-          clearProps: 'transform'
+          transformPerspective: 800,
+          transformOrigin: 'center center',
+          force3D: true,
+          willChange: 'transform, opacity'
         });
+
+        const isCol1 = card.closest('.stream-col-1') !== null;
+        return {
+          el: card,
+          top: card.offsetTop,
+          height: card.offsetHeight || 380,
+          isCol1: isCol1,
+          offsetX: offsetX
+        };
       });
 
       // Calculate travel distances
@@ -90,7 +102,53 @@
       const travelDist2 = Math.max(col2Height - vh * 0.45, vh * 1.4);
       const totalScrollDist = Math.max(travelDist1, travelDist2) + 200;
 
-      // Master Pinned Timeline with snappy, perfectly damped 0.75s scrub
+      // Pure mathematical 3D cylinder perspective (3D tilt at top/bottom, 100% flat in middle)
+      const updateCardsPerspective = () => {
+        const viewportHeight = window.innerHeight;
+        const currentY1 = gsap.getProperty(this.col1, 'y') || 0;
+        const currentY2 = gsap.getProperty(this.col2, 'y') || 70;
+
+        for (let i = 0; i < this.cardMeta.length; i++) {
+          const item = this.cardMeta[i];
+          const colY = item.isCol1 ? currentY1 : currentY2;
+          const cardCenterY = colY + item.top + item.height * 0.5;
+          const relY = cardCenterY / viewportHeight;
+
+          let rotateX = 0;
+          let scale = 1;
+          let translateZ = 0;
+          let opacity = 1;
+
+          // Bottom Entry Zone (relY > 0.72): 3D Cylinder curve coming up from below
+          if (relY > 0.72) {
+            const factor = Math.min(Math.max((relY - 0.72) / 0.28, 0), 1);
+            rotateX = factor * -14;
+            scale = 1 - factor * 0.12;
+            translateZ = factor * -60;
+            opacity = 1 - factor * 0.22;
+          }
+          // Top Exit Zone (relY < 0.28): 3D Cylinder curve exiting above
+          else if (relY < 0.28) {
+            const factor = Math.min(Math.max((0.28 - relY) / 0.28, 0), 1);
+            rotateX = factor * 14;
+            scale = 1 - factor * 0.12;
+            translateZ = factor * -60;
+            opacity = 1 - factor * 0.22;
+          }
+          // Middle Zone (0.28 <= relY <= 0.72): 100% upright, flat, sharp and clickable!
+
+          gsap.set(item.el, {
+            x: item.offsetX,
+            rotateX: rotateX,
+            scale: scale,
+            z: translateZ,
+            opacity: opacity,
+            force3D: true
+          });
+        }
+      };
+
+      // Master Pinned Timeline with snappy, perfectly damped 0.75s scrub (identical to site-wide kinetic physics)
       this.timeline = gsap.timeline({
         scrollTrigger: {
           trigger: this.root,
@@ -99,9 +157,13 @@
           pin: true,
           scrub: 0.75,
           anticipatePin: 1,
-          invalidateOnRefresh: true
+          invalidateOnRefresh: true,
+          onUpdate: updateCardsPerspective
         }
       });
+
+      // Initialize perspective on initial frame
+      updateCardsPerspective();
 
       // 1. Header & Bottom Indicator Fade Out smoothly as scroll starts
       if (this.header) {
