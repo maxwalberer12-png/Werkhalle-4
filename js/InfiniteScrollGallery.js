@@ -62,8 +62,8 @@
       }
 
       // Column start positions: positioned safely below viewport so entry view is pure clean title screen
-      const col1StartY = vh * 1.0;
-      const col2StartY = vh * 1.16;
+      const col1StartY = vh * 1.05;
+      const col2StartY = vh * 1.20;
 
       if (this.col1) {
         gsap.set(this.col1, { y: col1StartY, clearProps: 'transform' });
@@ -91,32 +91,32 @@
 
       const travelDist1 = Math.max(col1Height - vh * 0.25, vh * 1.6);
       const travelDist2 = Math.max(col2Height - vh * 0.25, vh * 1.4);
-      const totalScrollDist = Math.max(travelDist1 + col1StartY, travelDist2 + col2StartY) * 0.75 + vh * 0.4;
+      const totalScrollDist = Math.max(travelDist1 + col1StartY, travelDist2 + col2StartY) * 0.85 + vh * 0.8;
 
-      // Master Pinned Timeline with ultra-smooth 0.8s scrub
+      // Master Pinned Timeline with ultra-smooth 0.85s scrub
       this.timeline = gsap.timeline({
         scrollTrigger: {
           trigger: this.root,
           start: 'top top',
           end: `+=${Math.round(totalScrollDist)}px`,
           pin: true,
-          scrub: 0.8,
+          scrub: 0.85,
           anticipatePin: 1,
           invalidateOnRefresh: true
         }
       });
 
-      // 1. Centered Title & Bottom Indicator Fade Out smoothly as scroll starts (0.00 -> 0.12)
+      // 1. Calm hold on centered title (0.00 -> 0.14), then gentle fade out (0.14 -> 0.28)
       if (this.header) {
         this.timeline.to(
           this.header,
           {
             y: -50,
             autoAlpha: 0,
-            duration: 0.12,
+            duration: 0.14,
             ease: 'power1.out'
           },
-          0
+          0.14
         );
       }
 
@@ -124,26 +124,26 @@
         this.timeline.to(
           this.bottomIndicator,
           {
-            y: 30,
+            y: 25,
             autoAlpha: 0,
-            duration: 0.08,
+            duration: 0.10,
             ease: 'power1.out'
           },
-          0.01
+          0.12
         );
       }
 
-      // 2. Buttery smooth continuous vertical column stream rising from below (0.05 -> 1.00)
+      // 2. Buttery smooth continuous vertical column stream rising after title has been appreciated (0.20 -> 1.00)
       if (this.col1) {
         this.timeline.fromTo(
           this.col1,
           { y: col1StartY },
           {
             y: -travelDist1,
-            duration: 0.95,
+            duration: 0.80,
             ease: 'none'
           },
-          0.05
+          0.20
         );
       }
 
@@ -153,10 +153,10 @@
           { y: col2StartY },
           {
             y: -travelDist2,
-            duration: 0.95,
+            duration: 0.80,
             ease: 'none'
           },
-          0.05
+          0.20
         );
       }
     }
