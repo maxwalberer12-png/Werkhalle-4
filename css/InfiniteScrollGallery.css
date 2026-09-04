@@ -27,12 +27,16 @@
   box-sizing: border-box;
 }
 
-/* Header Container (Visible at start, fades smoothly on scroll) */
+/* Header Container (Centered intro screen, fades smoothly on scroll) */
 .parallax-gallery-header-wrapper {
   position: absolute;
-  top: clamp(28px, 4.5vh, 48px);
+  top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   z-index: 50;
   pointer-events: none;
   will-change: transform, opacity;
@@ -80,7 +84,7 @@
   overflow: hidden;
   display: flex;
   justify-content: center;
-  padding-top: clamp(210px, 28vh, 270px);
+  padding-top: clamp(40px, 6vh, 80px);
   will-change: transform;
 }
 
@@ -273,6 +277,7 @@
   .parallax-gallery-header-wrapper {
     position: relative !important;
     top: auto !important;
+    bottom: auto !important;
     transform: none !important;
     margin-bottom: var(--space-xl) !important;
     display: block !important;

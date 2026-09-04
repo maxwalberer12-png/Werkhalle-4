@@ -46,13 +46,14 @@
     buildUltraCleanTimeline() {
       if (this.timeline) this.timeline.kill();
 
+      const vh = window.innerHeight;
+
       // 1. Initial State: Centered title clean, columns primed cleanly
       if (this.header) {
         gsap.set(this.header, {
           y: 0,
           opacity: 1,
           scale: 1,
-          display: 'block',
           clearProps: 'transform'
         });
       }
@@ -60,12 +61,15 @@
         gsap.set(this.bottomIndicator, { y: 0, opacity: 1, clearProps: 'transform' });
       }
 
-      // Column start positions: Clean organic stagger
+      // Column start positions: positioned safely below viewport so entry view is pure clean title screen
+      const col1StartY = vh * 1.0;
+      const col2StartY = vh * 1.16;
+
       if (this.col1) {
-        gsap.set(this.col1, { y: 0, clearProps: 'transform' });
+        gsap.set(this.col1, { y: col1StartY, clearProps: 'transform' });
       }
       if (this.col2) {
-        gsap.set(this.col2, { y: 70, clearProps: 'transform' });
+        gsap.set(this.col2, { y: col2StartY, clearProps: 'transform' });
       }
 
       // Ensure all cards are clean, upright, flat in 2D space (100% clickable at any scroll position)
@@ -82,34 +86,33 @@
       });
 
       // Calculate travel distances
-      const vh = window.innerHeight;
       const col1Height = this.col1 ? this.col1.scrollHeight : 2200;
       const col2Height = this.col2 ? this.col2.scrollHeight : 1800;
 
-      const travelDist1 = Math.max(col1Height - vh * 0.45, vh * 1.6);
-      const travelDist2 = Math.max(col2Height - vh * 0.45, vh * 1.4);
-      const totalScrollDist = Math.max(travelDist1, travelDist2) + 200;
+      const travelDist1 = Math.max(col1Height - vh * 0.25, vh * 1.6);
+      const travelDist2 = Math.max(col2Height - vh * 0.25, vh * 1.4);
+      const totalScrollDist = Math.max(travelDist1 + col1StartY, travelDist2 + col2StartY) * 0.75 + vh * 0.4;
 
-      // Master Pinned Timeline with ultra-smooth 1.1s scrub
+      // Master Pinned Timeline with ultra-smooth 0.8s scrub
       this.timeline = gsap.timeline({
         scrollTrigger: {
           trigger: this.root,
           start: 'top top',
           end: `+=${Math.round(totalScrollDist)}px`,
           pin: true,
-          scrub: 1.1,
+          scrub: 0.8,
           anticipatePin: 1,
           invalidateOnRefresh: true
         }
       });
 
-      // 1. Header & Bottom Indicator Fade Out smoothly as scroll starts
+      // 1. Centered Title & Bottom Indicator Fade Out smoothly as scroll starts (0.00 -> 0.12)
       if (this.header) {
         this.timeline.to(
           this.header,
           {
-            y: -45,
-            opacity: 0,
+            y: -50,
+            autoAlpha: 0,
             duration: 0.12,
             ease: 'power1.out'
           },
@@ -121,37 +124,39 @@
         this.timeline.to(
           this.bottomIndicator,
           {
-            y: 25,
-            opacity: 0,
-            duration: 0.10,
+            y: 30,
+            autoAlpha: 0,
+            duration: 0.08,
             ease: 'power1.out'
           },
-          0.02
+          0.01
         );
       }
 
-      // 2. Buttery smooth continuous vertical column stream
+      // 2. Buttery smooth continuous vertical column stream rising from below (0.05 -> 1.00)
       if (this.col1) {
-        this.timeline.to(
+        this.timeline.fromTo(
           this.col1,
+          { y: col1StartY },
           {
             y: -travelDist1,
-            duration: 1.0,
+            duration: 0.95,
             ease: 'none'
           },
-          0
+          0.05
         );
       }
 
       if (this.col2) {
-        this.timeline.to(
+        this.timeline.fromTo(
           this.col2,
+          { y: col2StartY },
           {
             y: -travelDist2,
-            duration: 1.0,
+            duration: 0.95,
             ease: 'none'
           },
-          0
+          0.05
         );
       }
     }
