@@ -432,6 +432,9 @@ h1, h2, h3, h4, h5, .font-serif {
   letter-spacing: 0.02em;
   transition: all var(--transition-fast);
   white-space: nowrap;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
 }
 
 .btn-primary {

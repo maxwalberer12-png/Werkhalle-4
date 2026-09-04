@@ -140,7 +140,7 @@ let savedScrollY = 0;
 function lockBodyScroll() {
   activeScrollLocks++;
   if (activeScrollLocks === 1) {
-    savedScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    savedScrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
     document.body.style.position = 'fixed';
     document.body.style.top = `-${savedScrollY}px`;
     document.body.style.left = '0';
@@ -153,13 +153,23 @@ function lockBodyScroll() {
 function unlockBodyScroll() {
   activeScrollLocks = Math.max(0, activeScrollLocks - 1);
   if (activeScrollLocks === 0) {
+    const html = document.documentElement;
+    const prevScrollBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
     document.body.style.position = '';
     document.body.style.top = '';
     document.body.style.left = '';
     document.body.style.right = '';
     document.body.style.width = '';
     document.body.style.overflow = '';
-    window.scrollTo(0, savedScrollY);
+    window.scrollTo({
+      top: savedScrollY,
+      left: 0,
+      behavior: 'instant'
+    });
+    requestAnimationFrame(() => {
+      html.style.scrollBehavior = prevScrollBehavior;
+    });
   }
 }
 
@@ -534,24 +544,50 @@ function initInquiryModal() {
     }
   };
 
-  const closeModal = () => {
+  const closeModal = (e) => {
+    if (e && typeof e.preventDefault === 'function') {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     modal.classList.remove('is-active');
     unlockBodyScroll();
   };
 
+  // Direct trigger listener for immediate response without bubbling issues
+  document.querySelectorAll('[data-open-modal="inquiry"]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const type = btn.getAttribute('data-inquiry-type') || 'allgemein';
+      openModal(type);
+    });
+  });
+
+  // Delegated fallback
   document.addEventListener('click', (e) => {
     const trigger = e.target.closest('[data-open-modal="inquiry"]');
     if (trigger) {
       e.preventDefault();
+      e.stopPropagation();
       const type = trigger.getAttribute('data-inquiry-type') || 'allgemein';
       openModal(type);
     }
   });
 
-  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (closeBtn) {
+    closeBtn.addEventListener('click', (e) => {
+      closeModal(e);
+    });
+  }
 
   modal.addEventListener('click', (e) => {
-    if (e.target === modal) closeModal();
+    if (e.target === modal) closeModal(e);
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+      closeModal(e);
+    }
   });
 
   if (form) {
